@@ -5,8 +5,12 @@
  * فراخوانی در front-page.php:  get_template_part( 'template-parts/home/products' );
  *
  * مثل کاروسل تخفیف‌دار، اما با تبِ دسته‌ها: چای‌ساز/اسپرسوساز/سرخ‌کن/فلاسک/اتو بخار.
- *   - تعویض دسته و «لودِ ادامهٔ لیست در انتهای ریل» هر دو با AJAXِ WooCommerce Store API (same-origin).
- *   - لودِ اولِ دستهٔ اول سمت سرور رندر می‌شود (SEO + بدون‌JS)؛ بقیه کلاینتی.
+ *   - هر پنج تب سمت سرور رندر می‌شوند (هر کدام یک ریل و $ks_per محصول)؛ تعویضِ تب فقط نمایش/پنهان است
+ *     و به شبکه نیاز ندارد. قبلاً فقط تبِ اول سمت سرور بود و بقیه با AJAX می‌آمدند؛ روی سایت فیلترِ
+ *     دسته در پاسخ اعمال نمی‌شد و همیشه پرفروش‌ها (چای‌سازها) برمی‌گشت.
+ *   - کاروسل بی‌پایان نیست: در انتهای هر ریل فقط یک بار ۶ محصولِ دیگر با Store API می‌آید (home.js)،
+ *     نتیجه سمتِ مرورگر دوباره بر اساسِ دسته فیلتر و تکراری‌ها حذف می‌شود، بعد کارتِ «مشاهده همه».
+ *   - تصاویرِ تب‌های پنهان lazy هستند و تا تب باز نشود دانلود نمی‌شوند.
  *   - کارت و استایل عیناً مثل sale؛ گوشهٔ ۴px، فقط رنگ‌های اصلی.
  */
 
@@ -26,24 +30,13 @@ $ks_tabs = array();
 foreach ( $ks_prod_cats as $c ) {
 	$term = get_term_by( 'slug', $c['slug'], 'product_cat' );
 	if ( $term && ! is_wp_error( $term ) ) {
-		$ks_tabs[] = array( 'id' => (int) $term->term_id, 'slug' => $c['slug'], 'label' => $c['label'] );
+		$ks_link = get_term_link( $term );
+		$ks_tabs[] = array( 'id' => (int) $term->term_id, 'slug' => $c['slug'], 'label' => $c['label'], 'link' => is_wp_error( $ks_link ) ? '' : $ks_link );
 	}
 }
 if ( empty( $ks_tabs ) ) { return; } // هیچ‌کدام از دسته‌ها نبود
 
-$ks_per   = 8;
-$ks_first = $ks_tabs[0];
-
-$ks_pq = new WP_Query( array(
-	'post_type'           => 'product',
-	'post_status'         => 'publish',
-	'posts_per_page'      => $ks_per,
-	'orderby'             => 'date',
-	'order'               => 'DESC',
-	'ignore_sticky_posts' => true,
-	'no_found_rows'       => true,
-	'tax_query'           => array( array( 'taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $ks_first['id'] ) ),
-) );
+$ks_per = 6; // محصولِ سمت‌سرورِ هر تب؛ home.js در انتهای ریل یک بار ۶تای دیگر می‌آورد
 
 $ks_shop_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/shop/' );
 $ks_store    = esc_url_raw( rest_url( 'wc/store/v1/products' ) );
@@ -94,7 +87,7 @@ if ( ! function_exists( 'ks_prod_card' ) ) {
 ?>
 
 <section class="ks-prod" id="home-sec-6" aria-label="محصولات بر اساس دسته"
-         data-ks-prod data-store="<?php echo esc_attr( $ks_store ); ?>" data-per="<?php echo (int) $ks_per; ?>" data-active="<?php echo (int) $ks_first['id']; ?>">
+         data-ks-prod data-store="<?php echo esc_attr( $ks_store ); ?>">
   <div class="ks-prod__in">
     <div class="ks-prod__head">
       <div>
@@ -112,12 +105,28 @@ if ( ! function_exists( 'ks_prod_card' ) ) {
 
     <div class="ks-prod__tabs" role="tablist" data-ks-prod-tabs>
       <?php foreach ( $ks_tabs as $i => $t ) : ?>
-      <button class="ks-prod__tab<?php echo 0 === $i ? ' is-active' : ''; ?>" type="button" role="tab" data-cat-id="<?php echo (int) $t['id']; ?>" data-cat-slug="<?php echo esc_attr( $t['slug'] ); ?>" aria-selected="<?php echo 0 === $i ? 'true' : 'false'; ?>"><?php echo esc_html( $t['label'] ); ?></button>
+      <button class="ks-prod__tab<?php echo 0 === $i ? ' is-active' : ''; ?>" type="button" role="tab" id="ks-prod-tab-<?php echo esc_attr( $t['slug'] ); ?>" aria-controls="ks-prod-panel-<?php echo esc_attr( $t['slug'] ); ?>" data-ks-prod-tab="<?php echo esc_attr( $t['slug'] ); ?>" aria-selected="<?php echo 0 === $i ? 'true' : 'false'; ?>"><?php echo esc_html( $t['label'] ); ?></button>
       <?php endforeach; ?>
     </div>
 
     <div class="ks-prod__railwrap">
-      <div class="ks-prod__rail" data-ks-prod-rail>
+      <?php foreach ( $ks_tabs as $i => $t ) :
+        $ks_pq = new WP_Query( array(
+          'post_type'           => 'product',
+          'post_status'         => 'publish',
+          'posts_per_page'      => $ks_per,
+          'orderby'             => 'date',
+          'order'               => 'DESC',
+          'ignore_sticky_posts' => true,
+          'no_found_rows'       => true,
+          'tax_query'           => array( array( 'taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $t['id'] ) ),
+        ) );
+        $ks_ids = wp_list_pluck( $ks_pq->posts, 'ID' );
+        ?>
+      <div class="ks-prod__rail" data-ks-prod-rail role="tabpanel" id="ks-prod-panel-<?php echo esc_attr( $t['slug'] ); ?>" aria-labelledby="ks-prod-tab-<?php echo esc_attr( $t['slug'] ); ?>"
+           data-cat-id="<?php echo (int) $t['id']; ?>" data-cat-slug="<?php echo esc_attr( $t['slug'] ); ?>"
+           data-ids="<?php echo esc_attr( implode( ',', $ks_ids ) ); ?>" data-more="<?php echo count( $ks_ids ) >= $ks_per ? '1' : '0'; ?>"
+           data-all="<?php echo esc_url( $t['link'] ? $t['link'] : $ks_shop_url ); ?>" data-all-label="<?php echo esc_attr( $t['label'] ); ?>"<?php echo 0 === $i ? '' : ' hidden'; ?>>
         <?php
         if ( $ks_pq->have_posts() ) :
             while ( $ks_pq->have_posts() ) : $ks_pq->the_post();
@@ -130,6 +139,7 @@ if ( ! function_exists( 'ks_prod_card' ) ) {
         endif;
         ?>
       </div>
+      <?php endforeach; ?>
     </div>
   </div>
 </section>

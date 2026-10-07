@@ -35,6 +35,26 @@ add_action( 'wp_enqueue_scripts', function () {
 	wp_enqueue_script( 'ks-home', $uri . '/assets/js/home.js', array(), (string) @filemtime( $dir . '/assets/js/home.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
 }, 999 );
 
+/*
+ * پیش‌لودر: درست بعد از <body> (قبل از هدر) چاپ می‌شود تا از اولین فریم روی صفحه باشد.
+ * استایلش در home.css (داخلِ <head>) است؛ home.js بعد از لود محوش می‌کند و بدون JS خودِ CSS بعد از ۴٫۵ ثانیه.
+ */
+add_action( 'wp_body_open', function () {
+	?>
+<div class="ks-pl" data-ks-pl aria-hidden="true">
+  <div class="ks-pl__in">
+    <svg class="ks-pl__mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+      <path pathLength="1" d="M7 31 32 10l25 21"/>
+      <path pathLength="1" d="M14 25v29h36V25"/>
+      <path class="ks-pl__door" pathLength="1" d="M27 54V41h10v13"/>
+    </svg>
+    <span class="ks-pl__word">خانه سعادت</span>
+    <span class="ks-pl__bar"><span></span></span>
+  </div>
+</div>
+	<?php
+}, 1 );
+
 get_header();
 ?>
 <main id="content" class="site-main">

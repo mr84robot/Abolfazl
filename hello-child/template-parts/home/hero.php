@@ -17,10 +17,12 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 $hero = array(
 	'video_mp4'   => '', // اختیاری: نسخهٔ mp4 برای سازگاری بیشتر (سافاری قدیمی). مثال: get_stylesheet_directory_uri() . '/assets/video/hero.mp4'
 	'video_webm'  => 'https://khanehsaadat.com/wp-content/uploads/2026/10/hiro-video-saadat.webm',
-	'poster'      => 'https://khanehsaadat.com/wp-content/uploads/2026/01/بنر-سعادت-پی-scaled-1.webp', // موقت — با پوسترِ ویدیو عوض شود
-	'title_pre'   => 'لوازم خانگی اصل در همدان؛',
-	'title_em'    => 'فراتر از یک خرید',
-	'subtitle'    => 'از سال ۱۳۵۷ در همدان کنار شما هستیم؛ کالای اصل با گارانتی رسمی، مشاوره قبل از خرید، فروش اقساطی و پشتیبانی بعد از فروش.',
+	// پوستر عمداً خالی است: بنرِ قبلی (سعادت‌پی) تا رسیدنِ ویدیو روی هیرو دیده می‌شد. اگر از فریمِ اولِ
+	// خودِ ویدیو یک webp ساختید، آدرسش را اینجا بگذارید؛ تا آن موقع هیرو تیره می‌ماند تا ویدیو محو شود.
+	'poster'      => '',
+	'title_pre'   => 'فروشگاه اینترنتی لوازم خانگی خانه سعادت',
+	'title_em'    => 'برای خانه‌ای بهتر',
+	'subtitle'    => 'از سال ۱۳۵۷ کنار شما هستیم؛ کالای اصل با گارانتی رسمی، مشاوره قبل از خرید، فروش اقساطی و پشتیبانی بعد از فروش.',
 	'cta1_text'   => 'خرید لوازم خانگی',
 	'cta1_url'    => home_url( '/shop/' ),
 	'cta2_text'   => 'شرایط خرید اقساطی',
@@ -33,7 +35,7 @@ $hero = array(
   <div class="ks-hero__frame">
 
     <?php // پوستر یک <img> واقعی با اولویت بالاست: مرورگر زود پیدایش می‌کند و همین LCP صفحه است. ?>
-    <img class="ks-hero__poster" src="<?php echo esc_url( $hero['poster'] ); ?>" alt="" fetchpriority="high" decoding="async">
+    <?php if ( $hero['poster'] ) : ?><img class="ks-hero__poster" src="<?php echo esc_url( $hero['poster'] ); ?>" alt="" fetchpriority="high" decoding="async"><?php endif; ?>
     <?php // ویدیو در HTML آدرس ندارد (data-src)؛ home.js بعد از لودِ کاملِ صفحه آن را وصل و پخش می‌کند. ?>
     <video class="ks-hero__video" muted loop playsinline preload="none" aria-hidden="true" data-ks-hero-video>
       <?php if ( $hero['video_webm'] ) : ?><source data-src="<?php echo esc_url( $hero['video_webm'] ); ?>" type="video/webm"><?php endif; ?>
@@ -58,7 +60,7 @@ $hero = array(
       </div>
 
       <h1 class="ks-hero__title ks-anim">
-        <?php echo esc_html( $hero['title_pre'] ); ?> <span class="ks-hero__title-em"><?php echo esc_html( $hero['title_em'] ); ?></span>
+        <?php echo esc_html( $hero['title_pre'] ); ?> <span class="ks-hero__title-tail"><span class="ks-hero__title-sep" aria-hidden="true">|</span> <span class="ks-hero__title-em"><?php echo esc_html( $hero['title_em'] ); ?></span></span>
       </h1>
 
       <p class="ks-hero__sub ks-anim"><?php echo esc_html( $hero['subtitle'] ); ?></p>

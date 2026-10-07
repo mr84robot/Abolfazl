@@ -5,7 +5,8 @@
  * فراخوانی در front-page.php:  get_template_part( 'template-parts/home/sale' );  (بعد از کتگوری)
  *
  * داده: محصولاتِ حراجِ ووکامرس (wc_get_product_ids_on_sale). اگر ووکامرس نبود یا حراجی نبود، هیچ رندر نمی‌شود.
- * کاروسل: اسکرول افقی + scroll-snap + فلش (RTL)، وانیلا JS. گوشهٔ ۴px، فقط رنگ‌های اصلی (سبز/کهربایی).
+ * کاروسل: اسکرول افقی + scroll-snap + فلش (RTL) + کشیدن با موس، وانیلا JS. گوشهٔ ۴px، فقط رنگ‌های اصلی.
+ * بی‌پایان نیست: ۱۲ محصول سمتِ سرور، در انتهای ریل یک بار ۶تای دیگر با Store API، بعد کارتِ «همه محصولات».
  * قیمت از get_price_html خودِ ووکامرس (ارز/تخفیف درست)؛ درصد تخفیف جدا محاسبه و روی بَج کهربایی.
  */
 
@@ -39,7 +40,7 @@ if ( ! function_exists( 'ks_fa_digits' ) ) {
 $ks_cart_svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17.5" cy="20" r="1.4"/><path d="M3 4h2.2l2 11a1.6 1.6 0 0 0 1.6 1.3h7.8a1.6 1.6 0 0 0 1.6-1.2L20.4 8H6"/></svg>';
 ?>
 
-<section class="ks-sale" id="home-sec-4" aria-label="لوازم خانگی تخفیف‌دار" data-ks-sale data-store="<?php echo esc_attr( $ks_store ); ?>" data-per="12">
+<section class="ks-sale" id="home-sec-4" aria-label="لوازم خانگی تخفیف‌دار" data-ks-sale data-store="<?php echo esc_attr( $ks_store ); ?>">
   <div class="ks-sale__in">
     <div class="ks-sale__head">
       <div>
@@ -56,7 +57,9 @@ $ks_cart_svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strok
       </div>
     </div>
 
-    <div class="ks-sale__rail" data-ks-sale-rail>
+    <?php $ks_sale_shown = wp_list_pluck( $ks_sale_q->posts, 'ID' ); ?>
+    <div class="ks-sale__rail" data-ks-sale-rail data-ids="<?php echo esc_attr( implode( ',', $ks_sale_shown ) ); ?>" data-more="<?php echo count( $ks_sale_shown ) >= 12 ? '1' : '0'; ?>"
+         data-all="<?php echo esc_url( $ks_shop_url ); ?>" data-all-label="همه محصولات">
       <?php
       while ( $ks_sale_q->have_posts() ) :
           $ks_sale_q->the_post();

@@ -1,0 +1,8 @@
+/* فقط تست (build.php --hostile): بدترین حالتِ استایلِ قالب/المنتور روی تیترها و دکمه‌ها، قبل از استایلِ ما. */
+body{font-family:Georgia,serif}
+h1,h2,h3{font-family:"Times New Roman",serif!important;font-size:44px;line-height:1;margin:1.2em 0;color:#c36;text-transform:uppercase;font-weight:300;letter-spacing:3px}
+body h2,body h3{font-size:40px;color:#c36}
+button,[type=button],[type=submit]{display:inline-block;border:1px solid #c36;color:#c36;background:transparent;padding:.5rem 1rem;font-size:1rem;border-radius:3px;font-family:serif}
+[type=button]:hover,button:hover{background:#c36;color:#fff}
+a{color:#c36}
+img{height:auto;max-width:100%}

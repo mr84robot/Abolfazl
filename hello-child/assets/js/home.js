@@ -4,10 +4,188 @@
  * با defer در فوتر لود می‌شود. هر بخش یک IIFEِ مستقل است و اگر سکشنش در صفحه نباشد کاری نمی‌کند.
  */
 
+/* ===================== core ===================== */
+/* ابزارهای مشترکِ کاروسل‌ها: کارت از پاسخِ Store API، اسکلتون، کارتِ پایانی، بارگذاریِ محدود، کشیدن با موس. */
+var ksHome = (function(){
+  var root = document.documentElement;
+  root.classList.add('ks-js');
+
+  var CART = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17.5" cy="20" r="1.4"/><path d="M3 4h2.2l2 11a1.6 1.6 0 0 0 1.6 1.3h7.8a1.6 1.6 0 0 0 1.6-1.2L20.4 8H6"/></svg>';
+  var ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>';
+  var MORE = 6; // کاروسل بی‌پایان نیست: فقط یک بار، ۶ محصولِ دیگر
+
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function faNum(n){ return String(n).replace(/[0-9]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'[+d];}); }
+  function money(pr){ var mu=parseInt(pr.currency_minor_unit||0,10),pre=pr.currency_prefix||'',suf=pr.currency_suffix||''; return function(v){ v=parseInt(v||'0',10)/Math.pow(10,mu); return pre+v.toLocaleString('fa-IR')+suf; }; }
+  function priceHtml(p){ var pr=p.prices||{},f=money(pr); if(p.on_sale&&pr.regular_price&&pr.regular_price!==pr.price){return '<del>'+f(pr.regular_price)+'</del><ins>'+f(pr.price)+'</ins>';} return '<ins>'+f(pr.price)+'</ins>'; }
+  function badge(p){ var pr=p.prices||{}; if(p.on_sale&&+pr.regular_price>0&&+pr.price<+pr.regular_price){return Math.round((1-(+pr.price)/(+pr.regular_price))*100);} return 0; }
+
+  /* px = پیشوندِ کلاس: 'ks-sale' یا 'ks-prod' — مارک‌آپ عیناً مثلِ رندرِ سمتِ سرور */
+  function card(px, p){
+    var img = (p.images && p.images[0]) ? p.images[0].src : '';
+    var pct = badge(p);
+    var cart = ( p.type==='simple' && p.is_purchasable && p.is_in_stock && p.add_to_cart && p.add_to_cart.url )
+      ? '<a href="'+esc(p.add_to_cart.url)+'" data-quantity="1" rel="nofollow" class="'+px+'__cart add_to_cart_button ajax_add_to_cart" data-product_id="'+p.id+'" aria-label="افزودن به سبد: '+esc(p.name)+'">'+CART+'</a>'
+      : '<a href="'+esc(p.permalink)+'" class="'+px+'__cart" aria-label="مشاهده محصول: '+esc(p.name)+'">'+CART+'</a>';
+    return '<div class="'+px+'__card"><a class="'+px+'__link" href="'+esc(p.permalink)+'">'
+      + '<div class="'+px+'__media'+(img?'':' is-loaded')+'">'+(img?'<img src="'+esc(img)+'" alt="'+esc(p.name)+'" loading="lazy" decoding="async">':'')
+      + (pct>0?'<span class="'+px+'__badge">'+faNum(pct)+'٪</span>':'')+'</div>'
+      + '<h3 class="'+px+'__name">'+esc(p.name)+'</h3></a>'
+      + '<div class="'+px+'__foot"><div class="'+px+'__price">'+priceHtml(p)+'</div>'+cart+'</div></div>';
+  }
+  function skeleton(px, n){
+    var one = '<div class="'+px+'__card ks-skelcard" aria-hidden="true"><div class="'+px+'__media ks-skel"></div><div class="ks-skelcard__body">'
+      + '<span class="ks-skel ks-skelcard__line"></span><span class="ks-skel ks-skelcard__line ks-skelcard__line--s"></span><span class="ks-skel ks-skelcard__line ks-skelcard__line--p"></span></div></div>';
+    var h=''; for (var i=0;i<n;i++){ h+=one; } return h;
+  }
+  function endCard(px, href, label){
+    return '<a class="'+px+'__card ks-endcard" href="'+esc(href)+'"><span class="ks-endcard__ic">'+ARROW+'</span>'
+      + '<span class="ks-endcard__t">مشاهده همه</span>'+(label?'<span class="ks-endcard__s">'+esc(label)+'</span>':'')+'</a>';
+  }
+  function storeUrl(base, params){
+    var q=[]; for (var k in params){ if (params[k]!=='' && params[k]!=null) q.push(encodeURIComponent(k)+'='+encodeURIComponent(params[k])); }
+    return base + (base.indexOf('?')>-1 ? '&' : '?') + q.join('&');
+  }
+
+  /* اسکلتونِ عکس‌ها: ظرفِ هر عکس تا لود شدن برق می‌زند */
+  var MEDIA = '.ks-sale__media,.ks-prod__media,.ks-blog__media,.ks-vid__media,.ks-cat__ic';
+  function markMedia(scope){
+    (scope||document).querySelectorAll(MEDIA).forEach(function(m){
+      var img = m.querySelector('img');
+      if ( ! img || ( img.complete && img.naturalWidth > 0 ) ) { m.classList.add('is-loaded'); }
+    });
+  }
+  function onImg(e){ var t=e.target; if ( t && t.tagName==='IMG' ) { var m=t.closest(MEDIA); if (m) { m.classList.add('is-loaded'); } } }
+  document.addEventListener('load', onImg, true);
+  document.addEventListener('error', onImg, true);
+  markMedia();
+
+  /*
+   * بارگذاریِ محدود: وقتی کاربر به انتهای ریل نزدیک شد، فقط یک بار MORE محصولِ دیگر می‌آید؛ بعد کارتِ «مشاهده همه».
+   * fetchMore(ids) باید Promise<آرایهٔ محصول> بدهد. نتیجه سمتِ مرورگر با accept() فیلتر و با ids بدون تکرار می‌شود،
+   * تا اگر سرور فیلتر را نادیده گرفت، محصولِ اشتباه داخلِ ریل نیاید.
+   */
+  function finite(rail, px, fetchMore, accept){
+    var ids = (rail.getAttribute('data-ids')||'').split(',').filter(Boolean).map(Number);
+    var href = rail.getAttribute('data-all'), label = rail.getAttribute('data-all-label');
+    var state = rail.getAttribute('data-more') === '1' ? 'idle' : 'done';
+    if ( state === 'done' ) { if ( href ) { rail.insertAdjacentHTML('beforeend', endCard(px, href, label)); } return { check:function(){} }; }
+    function nearEnd(){ return Math.abs(rail.scrollLeft) + rail.clientWidth >= rail.scrollWidth - 360; }
+    function run(){
+      if ( state !== 'idle' || rail.hidden || ! nearEnd() ) { return; }
+      state = 'loading';
+      rail.insertAdjacentHTML('beforeend', skeleton(px, Math.min(MORE, 3)));
+      fetchMore(ids).then(function(list){
+        // تکراری با شناسه یا آدرس (مثلاً متغیرِ همان محصول) هم حذف می‌شود
+        var seen = {}; ids.forEach(function(i){ seen['i'+i]=1; });
+        rail.querySelectorAll('a[href]').forEach(function(a){ seen['u'+a.href]=1; });
+        return (list||[]).filter(function(p){
+          if ( ! p || seen['i'+p.id] || seen['u'+p.permalink] || ! accept(p) ) { return false; }
+          seen['i'+p.id]=1; seen['u'+p.permalink]=1; return true;
+        }).slice(0, MORE);
+      }).catch(function(){ return []; }).then(function(list){
+        rail.querySelectorAll('.ks-skelcard').forEach(function(n){ n.remove(); });
+        var h=''; list.forEach(function(p){ h += card(px, p); });
+        if ( href ) { h += endCard(px, href, label); }
+        rail.insertAdjacentHTML('beforeend', h);
+        state = 'done';
+      });
+    }
+    rail.addEventListener('scroll', run, { passive:true });
+    if ( 'IntersectionObserver' in window ) {
+      var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if ( e.isIntersecting ) { run(); } }); }, { rootMargin:'200px 0px' });
+      io.observe(rail);
+    }
+    return { check: run };
+  }
+  function fetchJSON(url){
+    return fetch(url, { headers:{ 'Accept':'application/json' }, credentials:'same-origin' })
+      .then(function(r){ return r.ok ? r.json() : []; })
+      .then(function(d){ return Array.isArray(d) ? d : []; });
+  }
+
+  /* فلش‌ها: «بعدی» = جلو رفتن در محتوا؛ در RTL محتوای بعدی سمت چپ است و scrollLeft منفی می‌شود */
+  function step(rail, dir){
+    if ( ! rail ) { return; }
+    var rtl = getComputedStyle(rail).direction === 'rtl';
+    rail.scrollBy({ left: ( rtl ? -dir : dir ) * Math.max( rail.clientWidth * 0.8, 260 ), behavior:'smooth' });
+  }
+
+  /* کشیدن با موس: محتوا دنبالِ موس می‌آید، با رها کردن روی نزدیک‌ترین کارت می‌نشیند؛ کلیک بعد از کشیدن لغو می‌شود */
+  function drag(rail){
+    var down=false, moved=false, sx=0, sl=0;
+    function grabbable(){ rail.classList.toggle('ks-rail-grab', rail.scrollWidth > rail.clientWidth + 2); }
+    grabbable(); window.addEventListener('resize', grabbable, { passive:true });
+    new MutationObserver(grabbable).observe(rail, { childList:true });
+    rail.addEventListener('pointerdown', function(e){
+      if ( e.pointerType !== 'mouse' || e.button !== 0 || rail.scrollWidth <= rail.clientWidth + 2 ) { return; }
+      down=true; moved=false; sx=e.clientX; sl=rail.scrollLeft;
+    });
+    window.addEventListener('pointermove', function(e){
+      if ( ! down ) { return; }
+      var dx = e.clientX - sx;
+      if ( ! moved && Math.abs(dx) > 6 ) { moved=true; rail.classList.add('ks-rail-dragging'); }
+      if ( moved ) { rail.scrollLeft = sl - dx; e.preventDefault(); }
+    });
+    function up(){
+      if ( ! down ) { return; }
+      down=false;
+      if ( ! moved ) { return; }
+      settle();
+      setTimeout(function(){ moved=false; }, 0);
+    }
+    function settle(){
+      var cs = getComputedStyle(rail), rb = rail.getBoundingClientRect(), rtl = cs.direction === 'rtl';
+      var edge = rtl ? rb.right - parseFloat(cs.paddingRight) : rb.left + parseFloat(cs.paddingLeft);
+      var best = null;
+      Array.prototype.forEach.call(rail.children, function(c){
+        if ( ! c.offsetWidth ) { return; }
+        var r = c.getBoundingClientRect(), d = ( rtl ? r.right : r.left ) - edge;
+        if ( best === null || Math.abs(d) < Math.abs(best) ) { best = d; }
+      });
+      rail.scrollTo({ left: rail.scrollLeft + (best||0), behavior:'smooth' });
+      setTimeout(function(){ rail.classList.remove('ks-rail-dragging'); }, 450);
+    }
+    window.addEventListener('pointerup', up);
+    window.addEventListener('pointercancel', up);
+    rail.addEventListener('click', function(e){ if ( moved ) { e.preventDefault(); e.stopPropagation(); } }, true);
+    rail.addEventListener('dragstart', function(e){ e.preventDefault(); });
+  }
+  document.querySelectorAll('.ks-sale__rail,.ks-prod__rail,.ks-blog__rail,.ks-vid__rail,.ks-cats__rail').forEach(drag);
+
+  return { card:card, finite:finite, fetchJSON:fetchJSON, storeUrl:storeUrl, step:step, markMedia:markMedia };
+})();
+
+/* ===================== preloader ===================== */
+(function(){
+  var pl = document.querySelector('[data-ks-pl]');
+  if ( ! pl ) { return; }
+  var root = document.documentElement, done = false;
+  root.classList.add('ks-pl-lock');
+  // حداقل ۱ ثانیه دیده شود تا حرکتِ لوگو کامل شود، حداکثر ۳ ثانیه بماند حتی اگر چیزی دیر برسد
+  function hide(){
+    if ( done ) { return; } done = true;
+    setTimeout(function(){
+      pl.classList.add('is-done'); root.classList.remove('ks-pl-lock');
+      setTimeout(function(){ pl.hidden = true; }, 700);
+    }, Math.max(0, 1000 - performance.now()));
+  }
+  if ( document.readyState === 'complete' ) { hide(); } else { window.addEventListener('load', hide, { once:true }); }
+  setTimeout(hide, Math.max(0, 3000 - performance.now()));
+})();
+
+/* ===================== header on home ===================== */
+(function(){
+  var h = document.querySelector('[data-ks-hdr]');
+  if ( ! h ) { return; }
+  function on(){ h.classList.toggle('ks-hdr--shown', window.scrollY > 80); }
+  on(); window.addEventListener('scroll', on, { passive:true });
+})();
+
 /* ===================== hero ===================== */
 (function(){
-  // ویدیوی هیرو بعد از لودِ کاملِ صفحه وصل می‌شود تا با پوستر (LCP)، CSS و فونت سرِ پهنای باند رقابت نکند.
-  // با «کاهش حرکت» یا «صرفه‌جویی داده»/اینترنت 2G اصلاً دانلود نمی‌شود و فقط پوستر می‌ماند.
+  // ویدیوی هیرو همین که اسکریپت اجرا شد وصل و پخش می‌شود (زیرِ پیش‌لودر بافر می‌شود) و با شروعِ پخش محو می‌شود.
+  // با «کاهش حرکت» یا «صرفه‌جویی داده»/اینترنت 2G اصلاً دانلود نمی‌شود و هیرو تیره می‌ماند.
   var v = document.querySelector('[data-ks-hero-video]');
   if ( ! v ) { return; }
   if ( window.matchMedia('(prefers-reduced-motion: reduce)').matches ) { return; }
@@ -19,7 +197,7 @@
     v.load();
     var p = v.play(); if ( p && p.catch ) { p.catch(function(){}); }
   }
-  if ( document.readyState === 'complete' ) { start(); } else { window.addEventListener('load', start, { once:true }); }
+  start();
 })();
 
 /* ===================== trust ===================== */
@@ -48,143 +226,47 @@
   if ( ! sec ) { return; }
   var rail = sec.querySelector('[data-ks-sale-rail]');
   var base = sec.getAttribute('data-store');
-  var per  = parseInt( sec.getAttribute('data-per') || '12', 10 );
-  var st = { page: 1, loading: false, done: false };
-  var CART = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17.5" cy="20" r="1.4"/><path d="M3 4h2.2l2 11a1.6 1.6 0 0 0 1.6 1.3h7.8a1.6 1.6 0 0 0 1.6-1.2L20.4 8H6"/></svg>';
-
-  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
-  function faNum(n){ return String(n).replace(/[0-9]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'[+d];}); }
-  function money(pr){ var mu=parseInt(pr.currency_minor_unit||0,10),pre=pr.currency_prefix||'',suf=pr.currency_suffix||''; return function(v){ v=parseInt(v||'0',10)/Math.pow(10,mu); return pre+v.toLocaleString('fa-IR')+suf; }; }
-  function priceHtml(p){ var pr=p.prices||{},f=money(pr); if(p.on_sale&&pr.regular_price&&pr.regular_price!==pr.price){return '<del>'+f(pr.regular_price)+'</del><ins>'+f(pr.price)+'</ins>';} return '<ins>'+f(pr.price)+'</ins>'; }
-  function badge(p){ var pr=p.prices||{}; if(p.on_sale&&+pr.regular_price>0&&+pr.price<+pr.regular_price){return Math.round((1-(+pr.price)/(+pr.regular_price))*100);} return 0; }
-  function cartBtn(p){ if(p.type==='simple'&&p.is_purchasable&&p.is_in_stock&&p.add_to_cart&&p.add_to_cart.url){ return '<a href="'+esc(p.add_to_cart.url)+'" data-quantity="1" rel="nofollow" class="ks-sale__cart add_to_cart_button ajax_add_to_cart" data-product_id="'+p.id+'" aria-label="افزودن به سبد">'+CART+'</a>'; } return '<a href="'+esc(p.permalink)+'" class="ks-sale__cart" aria-label="مشاهده محصول">'+CART+'</a>'; }
-  function card(p){ var img=(p.images&&p.images[0])?p.images[0].src:''; var pct=badge(p);
-    return '<div class="ks-sale__card"><a class="ks-sale__link" href="'+esc(p.permalink)+'"><div class="ks-sale__media">'+(img?'<img src="'+esc(img)+'" alt="'+esc(p.name)+'" loading="lazy" decoding="async">':'')+(pct>0?'<span class="ks-sale__badge">'+faNum(pct)+'٪</span>':'')+'</div><h3 class="ks-sale__name">'+esc(p.name)+'</h3></a><div class="ks-sale__foot"><div class="ks-sale__price">'+priceHtml(p)+'</div>'+cartBtn(p)+'</div></div>'; }
-
-  function more(){
-    if ( st.loading || st.done ) { return; }
-    st.loading = true; st.page += 1;
-    fetch( base + '?on_sale=true&per_page=' + per + '&page=' + st.page + '&orderby=date&order=desc', { headers:{ 'Accept':'application/json' }, credentials:'same-origin' } )
-      .then(function(r){ return r.ok ? r.json() : []; })
-      .then(function(list){
-        if ( !list || !list.length ) { st.done = true; }
-        else { if ( list.length < per ) { st.done = true; } var h=''; list.forEach(function(p){ h += card(p); }); rail.insertAdjacentHTML('beforeend', h); }
-      })
-      .catch(function(){ st.done = true; })
-      .then(function(){ st.loading = false; });
-  }
-
-  rail.addEventListener('scroll', function(){
-    if ( st.loading || st.done ) { return; }
-    if ( Math.abs(rail.scrollLeft) + rail.clientWidth >= rail.scrollWidth - 320 ) { more(); }
-  }, { passive:true });
-
-  // «بعدی» = جلو رفتن در محتوا. در RTL محتوای بعدی سمت چپ است و scrollLeft منفی می‌شود.
-  function s(dir){
-    var rtl = getComputedStyle(rail).direction === 'rtl';
-    rail.scrollBy({ left: ( rtl ? -dir : dir ) * 512, behavior:'smooth' });
-  }
+  ksHome.finite(rail, 'ks-sale', function(ids){
+    return ksHome.fetchJSON( ksHome.storeUrl(base, { on_sale:'true', per_page:12, orderby:'date', order:'desc', exclude:ids.join(',') }) );
+  }, function(p){ return !! p.on_sale; });
   var n = sec.querySelector('[data-ks-sale-next]'), p = sec.querySelector('[data-ks-sale-prev]');
-  n && n.addEventListener('click', function(){ s(1); });
-  p && p.addEventListener('click', function(){ s(-1); });
+  n && n.addEventListener('click', function(){ ksHome.step(rail, 1); });
+  p && p.addEventListener('click', function(){ ksHome.step(rail, -1); });
 })();
 
 /* ===================== products ===================== */
 (function(){
   var sec = document.querySelector('[data-ks-prod]');
   if ( ! sec ) { return; }
-  var rail = sec.querySelector('[data-ks-prod-rail]');
-  var base = sec.getAttribute('data-store');
-  var per  = parseInt( sec.getAttribute('data-per') || '8', 10 );
-  var state = { cat: sec.getAttribute('data-active'), page: 1, loading: false, done: false };
-  var CART = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17.5" cy="20" r="1.4"/><path d="M3 4h2.2l2 11a1.6 1.6 0 0 0 1.6 1.3h7.8a1.6 1.6 0 0 0 1.6-1.2L20.4 8H6"/></svg>';
+  var base  = sec.getAttribute('data-store');
+  var rails = {}, loaders = {};
+  sec.querySelectorAll('[data-ks-prod-rail]').forEach(function(rail){
+    var id = rail.getAttribute('data-cat-id'), slug = rail.getAttribute('data-cat-slug');
+    rails[slug] = rail;
+    loaders[slug] = ksHome.finite(rail, 'ks-prod', function(ids){
+      return ksHome.fetchJSON( ksHome.storeUrl(base, { category:id, per_page:12, orderby:'date', order:'desc', exclude:ids.join(',') }) );
+    }, function(p){
+      // فقط محصولِ همین دسته؛ اگر سرور فیلترِ دسته را نادیده بگیرد، چیزِ اشتباهی وارد نمی‌شود
+      return ( p.categories || [] ).some(function(c){ return String(c.id) === String(id) || c.slug === slug; });
+    });
+  });
+  function current(){ return sec.querySelector('[data-ks-prod-rail]:not([hidden])'); }
 
-  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
-  function faNum(n){ return String(n).replace(/[0-9]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'[+d];}); }
-  function money(pr){
-    var mu = parseInt(pr.currency_minor_unit||0,10), pre = pr.currency_prefix||'', suf = pr.currency_suffix||'';
-    function f(v){ v = parseInt(v||'0',10)/Math.pow(10,mu); return pre + v.toLocaleString('fa-IR') + suf; }
-    return { f:f };
-  }
-  function priceHtml(p){
-    var pr = p.prices||{}, m = money(pr);
-    if ( p.on_sale && pr.regular_price && pr.regular_price !== pr.price ) {
-      return '<del>'+m.f(pr.regular_price)+'</del><ins>'+m.f(pr.price)+'</ins>';
-    }
-    return '<ins>'+m.f(pr.price)+'</ins>';
-  }
-  function badge(p){
-    var pr = p.prices||{};
-    if ( p.on_sale && +pr.regular_price > 0 && +pr.price < +pr.regular_price ) {
-      return Math.round((1 - (+pr.price)/(+pr.regular_price))*100);
-    }
-    return 0;
-  }
-  function cartBtn(p){
-    if ( p.type==='simple' && p.is_purchasable && p.is_in_stock && p.add_to_cart && p.add_to_cart.url ) {
-      return '<a href="'+esc(p.add_to_cart.url)+'" data-quantity="1" rel="nofollow" class="ks-prod__cart add_to_cart_button ajax_add_to_cart" data-product_id="'+p.id+'" aria-label="افزودن به سبد">'+CART+'</a>';
-    }
-    return '<a href="'+esc(p.permalink)+'" class="ks-prod__cart" aria-label="مشاهده محصول">'+CART+'</a>';
-  }
-  function card(p){
-    var img = (p.images && p.images[0]) ? (p.images[0].src) : '';
-    var pct = badge(p);
-    return '<div class="ks-prod__card"><a class="ks-prod__link" href="'+esc(p.permalink)+'">'
-      + '<div class="ks-prod__media">' + (img ? '<img src="'+esc(img)+'" alt="'+esc(p.name)+'" loading="lazy" decoding="async">' : '')
-      + (pct>0 ? '<span class="ks-prod__badge">'+faNum(pct)+'٪</span>' : '') + '</div>'
-      + '<h3 class="ks-prod__name">'+esc(p.name)+'</h3></a>'
-      + '<div class="ks-prod__foot"><div class="ks-prod__price">'+priceHtml(p)+'</div>'+cartBtn(p)+'</div></div>';
-  }
-
-  function load(replace){
-    if ( state.loading || (state.done && !replace) ) { return; }
-    state.loading = true; sec.classList.add('is-loading');
-    var url = base + '?category=' + encodeURIComponent(state.cat) + '&per_page=' + per + '&page=' + state.page + '&orderby=popularity';
-    fetch(url, { headers:{ 'Accept':'application/json' }, credentials:'same-origin' })
-      .then(function(r){ return r.ok ? r.json() : []; })
-      .then(function(list){
-        if ( replace ) { rail.innerHTML = ''; }
-        if ( !list || !list.length ) {
-          state.done = true;
-          if ( replace ) { rail.innerHTML = '<p class="ks-prod__empty">فعلاً محصولی در این دسته موجود نیست.</p>'; }
-        } else {
-          if ( list.length < per ) { state.done = true; }
-          var html = ''; list.forEach(function(p){ html += card(p); });
-          rail.insertAdjacentHTML('beforeend', html);
-        }
-      })
-      .catch(function(){ /* شکست شبکه: رندرِ سمت‌سرور باقی می‌ماند */ })
-      .then(function(){ state.loading = false; sec.classList.remove('is-loading'); });
-  }
-
-  // تب‌ها: تعویض دسته
-  sec.querySelectorAll('[data-cat-id]').forEach(function(btn){
+  // تب‌ها: همهٔ دسته‌ها سمتِ سرور رندر شده‌اند؛ تعویض فقط نمایش/پنهان است، بدونِ شبکه
+  sec.querySelectorAll('[data-ks-prod-tab]').forEach(function(btn){
     btn.addEventListener('click', function(){
       if ( btn.classList.contains('is-active') ) { return; }
-      sec.querySelectorAll('[data-cat-id]').forEach(function(b){ b.classList.remove('is-active'); b.setAttribute('aria-selected','false'); });
-      btn.classList.add('is-active'); btn.setAttribute('aria-selected','true');
-      state.cat = btn.getAttribute('data-cat-id'); state.page = 1; state.done = false;
-      try { rail.scrollTo({ left:0, behavior:'auto' }); } catch(e){ rail.scrollLeft = 0; }
-      load(true);
+      var slug = btn.getAttribute('data-ks-prod-tab');
+      sec.querySelectorAll('[data-ks-prod-tab]').forEach(function(b){ var on = b === btn; b.classList.toggle('is-active', on); b.setAttribute('aria-selected', on ? 'true' : 'false'); });
+      Object.keys(rails).forEach(function(k){ rails[k].hidden = ( k !== slug ); });
+      var r = rails[slug];
+      if ( r ) { r.scrollLeft = 0; ksHome.markMedia(r); loaders[slug].check(); }
     });
   });
 
-  // لودِ ادامهٔ لیست در انتهای ریل (RTL: scrollLeft منفی)
-  rail.addEventListener('scroll', function(){
-    if ( state.loading || state.done ) { return; }
-    var nearEnd = Math.abs(rail.scrollLeft) + rail.clientWidth >= rail.scrollWidth - 320;
-    if ( nearEnd ) { state.page += 1; load(false); }
-  }, { passive:true });
-
-  // فلش‌ها
-  // «بعدی» = جلو رفتن در محتوا. در RTL محتوای بعدی سمت چپ است و scrollLeft منفی می‌شود.
-  function s(dir){
-    var rtl = getComputedStyle(rail).direction === 'rtl';
-    rail.scrollBy({ left: ( rtl ? -dir : dir ) * 512, behavior:'smooth' });
-  }
   var n = sec.querySelector('[data-ks-prod-next]'), p = sec.querySelector('[data-ks-prod-prev]');
-  n && n.addEventListener('click', function(){ s(1); });
-  p && p.addEventListener('click', function(){ s(-1); });
+  n && n.addEventListener('click', function(){ ksHome.step(current(), 1); });
+  p && p.addEventListener('click', function(){ ksHome.step(current(), -1); });
 })();
 
 /* ===================== showroom ===================== */

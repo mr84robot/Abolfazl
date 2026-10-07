@@ -1,0 +1,104 @@
+/*!
+ * خانه سعادت — استایلِ هدرِ سراسری (همهٔ صفحه‌ها)
+ * محل:  wp-content/themes/hello-child/assets/css/header.css  — header.php صفش می‌کند.
+ */
+.ks-hdr{--ks-green:#005949;--ks-amber:#F2A900;--ks-ink:#1f2b28;--ks-line:#e8ece9;--ks-font:"Yekan Bakh FaNum","Vazirmatn",system-ui,-apple-system,"Segoe UI",sans-serif;--ks-mh-h:60px;position:sticky;top:0;z-index:999;background:#fff;box-shadow:0 1px 0 var(--ks-line);font-family:var(--ks-font);direction:rtl;transition:box-shadow .3s ease}
+.ks-hdr.is-stuck{box-shadow:0 6px 24px rgba(0,0,0,.08)}
+.ks-hdr *{box-sizing:border-box}
+.ks-hdr a{text-decoration:none;color:inherit}
+.ks-hdr__inner{max-width:1310px;margin-inline:auto;padding-inline:16px;display:flex;align-items:center;gap:14px}
+
+/* ---------- MOBILE top bar ---------- */
+.ks-mh{height:var(--ks-mh-h);display:flex;align-items:center;justify-content:space-between;gap:10px;padding-inline:12px;max-width:1310px;margin-inline:auto}
+.ks-mh__btn{flex:0 0 auto;width:42px;height:42px;display:inline-flex;align-items:center;justify-content:center;border:0;background:#f3f6f5;border-radius:12px;color:var(--ks-green);cursor:pointer;transition:background .2s ease,transform .15s ease}
+.ks-mh__btn:active{transform:scale(.92)}
+.ks-mh__btn svg{width:21px;height:21px}
+.ks-mh__logo{flex:1 1 auto;display:flex;justify-content:center;min-width:0}
+.ks-mh__logo img{height:27px;width:auto;max-width:130px;object-fit:contain}
+.ks-hdr__bar,.ks-hdr__nav{display:none}
+
+/* ---------- search overlay (mobile) ---------- */
+.ks-mh-overlay{position:fixed;inset:0;z-index:1000;background:#fff;font-family:var(--ks-font);display:flex;flex-direction:column;opacity:0;transform:translateY(-10px);transition:opacity .22s ease,transform .22s ease}
+.ks-mh-overlay.is-open{opacity:1;transform:none}
+.ks-mh-overlay[hidden]{display:none}
+.ks-mh-overlay *{font-family:var(--ks-font)!important;box-sizing:border-box}
+.ks-mh-overlay__head{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--ks-line);position:sticky;top:0;background:#fff}
+.ks-mh-overlay__head button{flex:0 0 auto;width:40px;height:40px;border:0;background:#f3f6f5;border-radius:11px;color:var(--ks-ink);display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+.ks-mh-overlay__title{font-weight:700;font-size:16px;color:var(--ks-ink)}
+.ks-mh-overlay__body{flex:1 1 auto;overflow:auto;width:100%;max-width:620px;margin-inline:auto;padding:22px 16px 48px}
+.ks-mh-overlay__lead{margin:0 0 14px;color:#6b7a75;font-size:14px;line-height:1.9}
+.ks-mh-overlay__body input{font-size:16px}
+
+/* ---------- DESKTOP / TABLET main bar ---------- */
+.ks-hdr__bar{padding:11px 0;transition:padding .25s ease}
+.ks-hdr.is-stuck .ks-hdr__bar{padding:7px 0}
+.ks-hdr__logo{flex:0 0 auto}
+.ks-hdr__logo img{height:32px;width:auto;max-width:150px;object-fit:contain;transition:height .25s ease}
+.ks-hdr.is-stuck .ks-hdr__logo img{height:28px}
+.ks-hdr__search{flex:1 1 auto;min-width:0;margin-inline-start:2px}
+.ks-hdr__actions{flex:0 0 auto;display:flex;align-items:center;gap:4px}
+.ks-hdr__icon{display:inline-flex;align-items:center;gap:7px;padding:8px 10px;border-radius:12px;color:var(--ks-ink);font-size:14px;font-weight:600;position:relative;transition:background .2s ease,color .2s ease,transform .15s ease}
+.ks-hdr__icon svg{width:24px;height:24px;color:var(--ks-green)}
+.ks-hdr__icon:hover{background:#f3f6f5;transform:translateY(-1px)}
+.ks-hdr__cart-badge{position:absolute;top:2px;inset-inline-start:4px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:var(--ks-amber);color:#3a2a00;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;line-height:1}
+.ks-hdr__cart-badge.is-empty{display:none}
+
+/* ---------- cart dropdown (mini-cart) ---------- */
+.ks-hdr__cart-wrap{position:relative}
+.ks-hdr__cart-dd{position:absolute;top:calc(100% + 10px);inset-inline-end:0;width:340px;max-width:92vw;background:#fff;border:1px solid var(--ks-line);border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,.16);padding:14px;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .2s ease,transform .2s ease,visibility .2s;z-index:30}
+.ks-hdr__cart-wrap:hover .ks-hdr__cart-dd,.ks-hdr__cart-wrap:focus-within .ks-hdr__cart-dd{opacity:1;visibility:visible;transform:none}
+.ks-hdr__cart-dd .widget_shopping_cart_content{font-size:13px}
+.ks-hdr__cart-dd .elementor-menu-cart__products{max-height:300px;overflow:auto;margin:0;padding:0;display:block}
+.ks-hdr__cart-dd .elementor-menu-cart__product{display:grid;grid-template-columns:52px 1fr auto;grid-template-areas:"img name remove" "img price remove";align-items:center;column-gap:10px;row-gap:3px;padding:10px 2px;border-bottom:1px solid var(--ks-line)}
+.ks-hdr__cart-dd .elementor-menu-cart__product-image{grid-area:img}
+.ks-hdr__cart-dd .elementor-menu-cart__product-image img{width:52px!important;height:52px!important;max-width:52px!important;object-fit:cover;border-radius:9px;display:block}
+.ks-hdr__cart-dd .elementor-menu-cart__product-name{grid-area:name;font-weight:600;line-height:1.6}
+.ks-hdr__cart-dd .elementor-menu-cart__product-name a{color:var(--ks-ink);display:block}
+.ks-hdr__cart-dd .elementor-menu-cart__product-price{grid-area:price;color:#6b7a75;font-weight:700;font-size:12px}
+.ks-hdr__cart-dd .elementor-menu-cart__product-remove{grid-area:remove;justify-self:end}
+.ks-hdr__cart-dd .elementor-menu-cart__product-remove a.elementor_remove_from_cart_button{display:none!important}
+.ks-hdr__cart-dd .elementor-menu-cart__product-remove a.remove_from_cart_button{visibility:visible!important;display:inline-flex!important;width:22px;height:22px;align-items:center;justify-content:center;border-radius:50%;background:#f3f6f5;color:#c0392b!important;text-decoration:none;font-size:0;line-height:1}
+.ks-hdr__cart-dd .elementor-menu-cart__product-remove a.remove_from_cart_button::before{content:"×";font-size:15px;font-weight:700}
+.ks-hdr__cart-dd .elementor-menu-cart__subtotal{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 2px;font-weight:800;color:var(--ks-ink);border-bottom:1px solid var(--ks-line);margin-bottom:10px;font-size:14px}
+.ks-hdr__cart-dd .elementor-menu-cart__subtotal strong{font-weight:800}
+.ks-hdr__cart-dd .elementor-menu-cart__footer-buttons{display:flex;gap:8px}
+.ks-hdr__cart-dd .elementor-menu-cart__footer-buttons a{flex:1;text-align:center;padding:11px 8px;border-radius:11px;font-weight:700;font-size:13px;text-decoration:none;transition:filter .2s ease,transform .15s ease}
+.ks-hdr__cart-dd .elementor-menu-cart__footer-buttons a:hover{filter:brightness(.97);transform:translateY(-1px)}
+.ks-hdr__cart-dd .elementor-button--view-cart{background:#f3f6f5;color:var(--ks-ink)}
+.ks-hdr__cart-dd .elementor-button--checkout{background:var(--ks-green);color:#fff}
+.ks-hdr__cart-dd .elementor-menu-cart__empty,.ks-hdr__cart-dd .woocommerce-mini-cart__empty-message,.ks-hdr__cart-dd p.empty{padding:28px 6px;text-align:center;color:#8a978f;margin:0}
+
+/* ---------- DESKTOP/TABLET nav strip (mega + links) ---------- */
+.ks-hdr__nav{border-top:1px solid var(--ks-line)}
+.ks-hdr__nav .ks-hdr__inner{padding-block:0;gap:10px}
+.ks-hdr__mega{flex:0 0 auto}
+.ks-hdr__links-scroll{flex:1 1 auto;min-width:0;overflow-x:auto;scrollbar-width:none}
+.ks-hdr__links-scroll::-webkit-scrollbar{display:none}
+.ks-hdr__links{list-style:none;margin:0;padding:0;display:flex;align-items:center;gap:2px;white-space:nowrap}
+.ks-hdr__links a{display:inline-block;padding:12px 12px;font-size:15px;color:var(--ks-ink);position:relative}
+.ks-hdr__links a::after{content:"";position:absolute;inset-inline:12px;bottom:6px;height:2px;background:var(--ks-amber);transform:scaleX(0);transform-origin:center;transition:transform .25s ease}
+.ks-hdr__links a:hover{color:var(--ks-green)}
+.ks-hdr__links a:hover::after{transform:scaleX(1)}
+.ks-hdr__phone{flex:0 0 auto;display:none;align-items:center;gap:8px;font-weight:700;color:var(--ks-ink);font-size:14px;white-space:nowrap}
+.ks-hdr__phone-ic{flex:0 0 auto;width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(0,89,73,.09);color:var(--ks-green)}
+.ks-hdr__phone-ic svg{width:17px;height:17px;display:block;color:var(--ks-green)}
+.ks-hdr__phone-txt bdi{direction:ltr;color:var(--ks-green);font-weight:800}
+
+/* tablet: 768–1024 → main bar + nav strip (icons only, no phone) */
+@media (min-width:768px){
+  .ks-mh{display:none}
+  .ks-hdr__bar{display:block}
+  .ks-hdr__nav{display:block}
+  .ks-hdr__icon span{display:none}
+}
+/* desktop: ≥1025 → labels + phone */
+@media (min-width:1025px){
+  .ks-hdr__icon span{display:inline}
+  .ks-hdr__phone{display:inline-flex}
+}
+@media (prefers-reduced-motion:reduce){
+  .ks-hdr,.ks-hdr *{transition:none!important}
+  .ks-mh-overlay{transition:opacity .01s linear}
+}
+.ks-hdr__sprite{position:absolute;width:0;height:0;overflow:hidden}
+

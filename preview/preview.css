@@ -1,0 +1,7 @@
+/* فقط پیش‌نمایش: جای‌نگهدارِ فرمِ جستجو و دکمهٔ مگامنو که روی سایت از CodeLock می‌آیند، و فوترِ ساده. */
+body{margin:0;background:#fff}
+.pv-search input{width:100%;max-width:720px;height:42px;border:1px solid #e8ece9;border-radius:2px;background:#f6f8f7;padding:0 14px;font:inherit;font-size:14px}
+.pv-mega{height:44px;border:0;background:transparent;font:inherit;font-weight:700;font-size:15px;color:#1f2b28;padding:0 6px;cursor:pointer}
+.pv-footer{padding:40px 16px;text-align:center;background:#02392f;color:#cfe0db;font-family:"Yekan Bakh FaNum","Vazirmatn",system-ui,sans-serif}
+/* کلاسِ استانداردِ وردپرس که قالب مخفی‌اش می‌کند (لینکِ «پرش به محتوا») */
+.screen-reader-text{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
