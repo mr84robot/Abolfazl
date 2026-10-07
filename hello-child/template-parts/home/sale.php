@@ -88,8 +88,8 @@ $ks_cart_svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strok
       </div>
       <div class="ks-sale__nav">
         <div class="ks-sale__arrows">
-          <button class="ks-sale__arrow" data-ks-sale-next aria-label="بعدی" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></button>
-          <button class="ks-sale__arrow" data-ks-sale-prev aria-label="قبلی" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button>
+          <button class="ks-sale__arrow" data-ks-sale-prev aria-label="قبلی" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></button>
+          <button class="ks-sale__arrow" data-ks-sale-next aria-label="بعدی" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button>
         </div>
         <a class="ks-sale__all" href="<?php echo esc_url( $ks_shop_url ); ?>">همه محصولات <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></a>
       </div>
@@ -181,7 +181,11 @@ $ks_cart_svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strok
     if ( Math.abs(rail.scrollLeft) + rail.clientWidth >= rail.scrollWidth - 320 ) { more(); }
   }, { passive:true });
 
-  function s(dir){ rail.scrollBy({ left: dir*512, behavior:'smooth' }); }
+  // «بعدی» = جلو رفتن در محتوا. در RTL محتوای بعدی سمت چپ است و scrollLeft منفی می‌شود.
+  function s(dir){
+    var rtl = getComputedStyle(rail).direction === 'rtl';
+    rail.scrollBy({ left: ( rtl ? -dir : dir ) * 512, behavior:'smooth' });
+  }
   var n = sec.querySelector('[data-ks-sale-next]'), p = sec.querySelector('[data-ks-sale-prev]');
   n && n.addEventListener('click', function(){ s(1); });
   p && p.addEventListener('click', function(){ s(-1); });

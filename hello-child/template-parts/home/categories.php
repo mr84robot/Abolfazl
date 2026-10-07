@@ -145,8 +145,8 @@ $ks_all_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink
             </a>
         <?php endforeach; ?>
       </div>
-      <button class="ks-cats__arrow ks-cats__arrow--prev" data-ks-rail-prev aria-label="قبلی"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button>
-      <button class="ks-cats__arrow ks-cats__arrow--next" data-ks-rail-next aria-label="بعدی"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></button>
+      <button class="ks-cats__arrow ks-cats__arrow--prev" data-ks-rail-prev aria-label="قبلی"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></button>
+      <button class="ks-cats__arrow ks-cats__arrow--next" data-ks-rail-next aria-label="بعدی"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button>
     </div>
   </div>
 </section>

@@ -151,8 +151,8 @@ if ( ! function_exists( 'ks_prod_card' ) ) {
       </div>
       <div class="ks-prod__nav">
         <div class="ks-prod__arrows">
-          <button class="ks-prod__arrow" data-ks-prod-next aria-label="بعدی" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></button>
-          <button class="ks-prod__arrow" data-ks-prod-prev aria-label="قبلی" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button>
+          <button class="ks-prod__arrow" data-ks-prod-prev aria-label="قبلی" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></button>
+          <button class="ks-prod__arrow" data-ks-prod-next aria-label="بعدی" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button>
         </div>
       </div>
     </div>
@@ -269,7 +269,11 @@ if ( ! function_exists( 'ks_prod_card' ) ) {
   }, { passive:true });
 
   // فلش‌ها
-  function s(dir){ rail.scrollBy({ left: dir*512, behavior:'smooth' }); }
+  // «بعدی» = جلو رفتن در محتوا. در RTL محتوای بعدی سمت چپ است و scrollLeft منفی می‌شود.
+  function s(dir){
+    var rtl = getComputedStyle(rail).direction === 'rtl';
+    rail.scrollBy({ left: ( rtl ? -dir : dir ) * 512, behavior:'smooth' });
+  }
   var n = sec.querySelector('[data-ks-prod-next]'), p = sec.querySelector('[data-ks-prod-prev]');
   n && n.addEventListener('click', function(){ s(1); });
   p && p.addEventListener('click', function(){ s(-1); });
