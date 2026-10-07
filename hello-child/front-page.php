@@ -29,6 +29,7 @@ get_header();
 	get_template_part( 'template-parts/home/products' );
 	get_template_part( 'template-parts/home/saadat-pay' );
 	get_template_part( 'template-parts/home/showroom' );
+	get_template_part( 'template-parts/home/seo-guide' );
 	// سکشن‌های بعدی صفحهٔ اصلی اینجا اضافه می‌شوند…
 	?>
 </main>

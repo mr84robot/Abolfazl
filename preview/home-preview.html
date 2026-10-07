@@ -284,6 +284,36 @@ body{background:#05080a;font-family:var(--hero-font);color:#fff}
 .show__close svg{width:22px;height:22px}
 @media (max-width:640px){.show{min-height:auto}}
 @media (prefers-reduced-motion:reduce){.show__frame{opacity:1;transform:none;transition:none}.show__play::after{animation:none}.show__modal{animation:none}}
+
+/* ===================== SEO GUIDE (باکس راهنمای خرید — بدون JS) ===================== */
+.seo{--gold-d:#cf9100;--seo-ink:#10322a;--seo-body:#46554f;--cream:#faf7f0;--seo-line:#ece7dc;--soft:#e9f2ef;background:#f4f4f4;direction:rtl;text-align:right}
+.seo__in{max-width:1310px;margin-inline:auto;padding:clamp(56px,8vw,96px) clamp(16px,3vw,32px) clamp(64px,9vw,96px)}
+.seo__wrap{background:var(--cream);border:1px solid var(--seo-line);border-radius:22px;padding:clamp(24px,3.4vw,44px)}
+.seo__eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--gold-d);font-weight:800;font-size:14px;margin-bottom:10px}
+.seo__eyebrow::before{content:"";width:22px;height:2px;border-radius:2px;background:var(--accent)}
+.seo__title{color:var(--seo-ink);font-weight:800;line-height:1.4;font-size:clamp(20px,2.6vw,26px);letter-spacing:-.01em;margin:0 0 6px}
+.seo__cb{position:absolute;width:1px;height:1px;opacity:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%)}
+.seo__content{position:relative;overflow:hidden;max-height:300px;margin-top:16px;transition:max-height .6s cubic-bezier(.22,1,.36,1)}
+.seo__cb:checked ~ .seo__content{max-height:3200px}
+@media (max-width:900px){.seo__cb:checked ~ .seo__content{max-height:7000px}}
+@media (max-width:480px){.seo__cb:checked ~ .seo__content{max-height:9600px}}
+.seo__content h3{color:var(--seo-ink);font-weight:700;line-height:1.6;font-size:clamp(16px,1.8vw,18px);margin:22px 0 8px}
+.seo__content p{color:var(--seo-body);line-height:2.05;font-size:16px;margin:0 0 12px}
+.seo__content ul{list-style:disc;padding-inline-start:1.4em;margin:6px 0 14px}
+.seo__content li{color:var(--seo-body);line-height:1.95;font-size:16px;margin-bottom:6px}
+.seo__content a{color:var(--brand);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.seo__content a:hover{color:var(--gold-d)}
+.seo__fade{position:absolute;inset-inline:0;bottom:0;height:120px;pointer-events:none;background:linear-gradient(to top,var(--cream),rgb(250 247 240 / 0));transition:opacity .3s ease}
+.seo__cb:checked ~ .seo__content .seo__fade{opacity:0}
+.seo__btn{display:inline-flex;align-items:center;gap:8px;margin-top:16px;cursor:pointer;background:transparent;color:var(--brand);font-weight:800;font-size:15px;padding:11px 22px;border:2px solid rgb(0 89 73 / .25);border-radius:999px;transition:background-color .2s ease,border-color .2s ease;-webkit-user-select:none;user-select:none}
+.seo__btn:hover{background:var(--soft);border-color:var(--brand)}
+.seo__btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s ease}
+.seo__cb:checked ~ .seo__btn svg{transform:rotate(180deg)}
+.seo__less{display:none}
+.seo__cb:checked ~ .seo__btn .seo__more{display:none}
+.seo__cb:checked ~ .seo__btn .seo__less{display:inline}
+.seo__cb:focus-visible ~ .seo__btn{outline:3px solid var(--accent);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.seo__content,.seo__fade,.seo__btn,.seo__btn svg{transition:none}}
 </style>
 </head>
 <body>
@@ -542,6 +572,57 @@ body{background:#05080a;font-family:var(--hero-font);color:#fff}
   <div class="show__modal" data-show-modal hidden>
     <button class="show__close" type="button" data-show-close aria-label="بستن ویدیو"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     <div class="show__modal-in"><video class="show__modal-video" data-show-modal-video controls playsinline preload="none"><source src="https://khanehsaadat.com/wp-content/uploads/2026/10/showroom-saadat.webm" type="video/webm"></video></div>
+  </div>
+</section>
+
+<!-- ===== SEO GUIDE (باکس راهنمای خرید — «مشاهده بیشتر» بدون JS) ===== -->
+<section class="seo" id="home-sec-9" aria-label="راهنمای خرید لوازم خانگی">
+  <div class="seo__in">
+    <div class="seo__wrap">
+      <span class="seo__eyebrow">راهنمای خرید</span>
+      <h2 class="seo__title">خرید لوازم خانگی؛ راهنمای انتخاب، قیمت و خرید مطمئن</h2>
+
+      <input type="checkbox" id="seo-toggle" class="seo__cb">
+
+      <div class="seo__content">
+        <p>خرید لوازم خانگی یکی از تصمیم‌های مهم هر خانه است؛ از یخچال فریزر و ماشین لباسشویی گرفته تا لوازم برقی کوچک آشپزخانه، کیفیت و قیمت این کالاها مستقیماً روی راحتی زندگی روزمره اثر می‌گذارد. فروشگاه اینترنتی خانه سعادت با تنوع محصولات اصل، نمایش شفاف قیمت و امکان خرید آنلاین و اقساطی، مسیر خرید لوازم خانگی را ساده و مطمئن کرده است.</p>
+
+        <h3>لوازم خانگی را آنلاین بخریم یا حضوری؟</h3>
+        <p>خرید اینترنتی لوازم خانگی این امکان را می‌دهد که ده‌ها مدل را کنار هم مقایسه کنید، قیمت‌ها را ببینید و در هر ساعت از شبانه‌روز سفارش دهید. در خانه سعادت می‌توانید محصول موردنظرتان را آنلاین انتخاب و ثبت کنید و بدون رفت‌وآمد، خریدتان را کامل کنید. خرید آنلاین لوازم خانگی هم در زمان صرفه‌جویی می‌کند و هم انتخاب را دقیق‌تر و آگاهانه‌تر می‌کند. برای شروع می‌توانید وارد <a href="https://khanehsaadat.com/shop/">محصولات خانه سعادت</a> شوید و محصولات را ببینید.</p>
+
+        <h3>قیمت لوازم خانگی به چه چیزهایی بستگی دارد؟</h3>
+        <p>قیمت لوازم خانگی بیش از هر چیز به برند، ظرفیت، امکانات و اصل بودن کالا بستگی دارد؛ نوسان بازار و نرخ ارز هم روی قیمت روز لوازم خانگی اثر می‌گذارد. به همین دلیل بهتر است پیش از خرید، چند مدل هم‌رده را با هم مقایسه کنید و قیمت روز را ببینید. اگر به‌دنبال لوازم خانگی ارزان یا با قیمت مناسب هستید، مقایسه‌ی مدل‌ها و توجه به تناسب امکانات با نیازتان، کمک می‌کند بهترین انتخاب را با بودجه‌تان داشته باشید. خانه سعادت قیمت‌ها را شفاف نمایش می‌دهد تا با آگاهی کامل تصمیم بگیرید.</p>
+
+        <h3>لوازم خانگی اصل و باکیفیت را چطور تشخیص بدهیم؟</h3>
+        <p>لوازم خانگی اصل معمولاً گارانتی رسمی، برچسب اصالت کالا و خدمات پس از فروش مشخص دارد. هنگام خرید لوازم خانگی با کیفیت، به برند معتبر، ضمانت اصالت و شرایط گارانتی توجه کنید. گارانتی یعنی تعهد رسمی برند به تعمیر یا تعویض کالا در یک بازه‌ی زمانی مشخص؛ همین موضوع خیال شما را از بابت خرید راحت می‌کند. خرید از یک فروشگاه معتبر مانند خانه سعادت، ریسک خرید کالای غیراصل را به‌شدت کم می‌کند.</p>
+
+        <h3>کدام لوازم خانگی برای خانه یا جهیزیه مناسب است؟</h3>
+        <p>برای تجهیز خانه یا تهیه‌ی جهیزیه، معمولاً به ترکیبی از لوازم بزرگ و لوازم برقی آشپزخانه نیاز دارید. بسته به سلیقه و بودجه می‌توانید بین مدل‌های ایرانی و خارجی انتخاب کنید. مهم‌ترین گروه‌های پرتقاضا عبارت‌اند از:</p>
+        <ul>
+          <li>یخچال فریزر، ماشین لباسشویی و ماشین ظرفشویی</li>
+          <li>اجاق گاز و لوازم پخت‌وپز</li>
+          <li>لوازم برقی آشپزخانه: جاروبرقی، سرخ‌کن، غذاساز، چای‌ساز، اسپرسوساز و اتو</li>
+        </ul>
+        <p>پیشنهاد می‌شود ابتدا فهرست نیازهای خانه را مشخص کنید و بعد بر اساس اولویت و بودجه، خرید لوازم خانگی جدید را مرحله‌به‌مرحله انجام دهید.</p>
+
+        <h3>آیا امکان خرید اقساطی لوازم خانگی وجود دارد؟</h3>
+        <p>بله. خانه سعادت امکان خرید اقساطی لوازم خانگی بدون ضامن را فراهم کرده تا بتوانید یک خرید بزرگ را بدون فشار مالی انجام دهید و هزینه را مرحله‌ای بپردازید. جزئیات کامل، میزان پیش‌پرداخت و مدارک لازم در صفحه‌ی <a href="https://khanehsaadat.com/installments/">خرید اقساطی</a> توضیح داده شده است.</p>
+
+        <h3>بهترین فروشگاه لوازم خانگی چه ویژگی‌هایی دارد؟</h3>
+        <p>بهترین فروشگاه لوازم خانگی معمولاً چند ویژگی مشترک دارد: تنوع کافی محصولات، نمایش شفاف قیمت، ضمانت اصالت کالا، پرداخت امن و خدمات پس از فروش قابل‌اتکا. یک سایت خرید لوازم خانگی معتبر باید امکان مقایسه‌ی محصولات و مشاوره‌ی پیش از خرید را هم فراهم کند تا با خیال راحت انتخاب کنید. وقتی این موارد کنار هم باشند، خرید اینترنتی لوازم خانگی به‌اندازه‌ی خرید حضوری مطمئن می‌شود.</p>
+
+        <h3>چرا از فروشگاه اینترنتی خانه سعادت خرید کنیم؟</h3>
+        <p>خانه سعادت یک فروشگاه اینترنتی لوازم خانگی با تنوع محصولات اصل، نمایش شفاف قیمت، امکان خرید آنلاین و اقساطی و خدمات پس از فروش است. تجربه‌ی چندین‌ساله در بازار لوازم خانگی باعث شده انتخاب مطمئن‌تر و مشاوره‌ی بهتری برای مشتریان فراهم شود. اگر ساکن همدان هستید، می‌توانید امکانات و شعب محلی را در صفحه‌ی <a href="https://khanehsaadat.com/hamedan/">لوازم خانگی همدان</a> ببینید و در صورت تمایل خرید حضوری داشته باشید. برای دیدن محصولات و قیمت‌ها همین حالا وارد فروشگاه شوید و خرید مطمئن لوازم خانگی را تجربه کنید.</p>
+
+        <span class="seo__fade" aria-hidden="true"></span>
+      </div>
+
+      <label for="seo-toggle" class="seo__btn">
+        <span class="seo__more">مشاهده بیشتر</span>
+        <span class="seo__less">بستن</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+      </label>
+    </div>
   </div>
 </section>
 
