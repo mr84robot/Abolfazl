@@ -5,7 +5,8 @@
  * فراخوانی در front-page.php:  get_template_part( 'template-parts/home/brands' );  (بعد از تخفیف‌دار)
  *
  * طراحی: گریدِ لبه‌دار (۲ ستون موبایل / ۴ ستون دسکتاپ) با پلاس‌مارکِ گوشه‌ها (الهام از کامپوننت logo-cloud).
- *   - هر سلول = نامِ انگلیسیِ برند با فونت بولد (Montserrat)، لینک مستقیم به صفحهٔ برند. بدون تصویر لوگو.
+ *   - هر سلول = نامِ انگلیسیِ برند با فونت بولد (Montserrat) و زیرش نامِ فارسی ریز؛ لینک مستقیم به صفحهٔ برند.
+ *     نامِ فارسی متنِ واقعیِ لینک است (نه aria-label)، چون کاربر بیشتر «دلمونتی» را جست‌وجو می‌کند تا «Delmonti».
  *   - افکت هاور: متن از خاکستری به سبزِ برند، کمی بزرگ‌تر و بالاتر؛ پس‌زمینهٔ سلول تینتِ سبزِ ملایم.
  *   - فقط رنگ‌های اصلی، گوشهٔ ۴px، بدون JS.
  *   نکتهٔ پرفورمنس: فونت Montserrat از گوگل لود می‌شود؛ مثل Yekan Bakh بهتر است بعداً self-host شود.
@@ -14,14 +15,14 @@
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 $ks_brands = array(
-	array( 'name' => 'Unique',   'url' => 'https://khanehsaadat.com/brand/unique/' ),
-	array( 'name' => 'MGS',      'url' => 'https://khanehsaadat.com/brand/mgs/' ),
-	array( 'name' => 'HONIRA',   'url' => 'https://khanehsaadat.com/brand/honira/' ),
-	array( 'name' => 'MIGEL',    'url' => 'https://khanehsaadat.com/brand/migel/' ),
-	array( 'name' => 'SAPOR',    'url' => 'https://khanehsaadat.com/brand/sapor/' ),
-	array( 'name' => 'Delmonti', 'url' => 'https://khanehsaadat.com/brand/delmonti/' ),
-	array( 'name' => 'BEEM',     'url' => 'https://khanehsaadat.com/brand/beem/' ),
-	array( 'name' => 'JANOME',   'url' => 'https://khanehsaadat.com/brand/janome/' ),
+	array( 'name' => 'Unique',   'fa' => 'یونیک', 'url' => 'https://khanehsaadat.com/brand/unique/' ),
+	array( 'name' => 'MGS',      'fa' => 'ام جی اس', 'url' => 'https://khanehsaadat.com/brand/mgs/' ),
+	array( 'name' => 'HONIRA',   'fa' => 'هونیرا', 'url' => 'https://khanehsaadat.com/brand/honira/' ),
+	array( 'name' => 'MIGEL',    'fa' => 'میگل', 'url' => 'https://khanehsaadat.com/brand/migel/' ),
+	array( 'name' => 'SAPOR',    'fa' => 'ساپر', 'url' => 'https://khanehsaadat.com/brand/sapor/' ),
+	array( 'name' => 'Delmonti', 'fa' => 'دلمونتی', 'url' => 'https://khanehsaadat.com/brand/delmonti/' ),
+	array( 'name' => 'BEEM',     'fa' => 'بیم', 'url' => 'https://khanehsaadat.com/brand/beem/' ),
+	array( 'name' => 'JANOME',   'fa' => 'ژانومه', 'url' => 'https://khanehsaadat.com/brand/janome/' ),
 );
 ?>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,9 +40,11 @@ $ks_brands = array(
 .ks-brands__gridwrap{position:relative}
 .ks-brands__grid{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--line);border-inline-start:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:#fff}
 @media (min-width:768px){.ks-brands__grid{grid-template-columns:repeat(4,1fr)}}
-.ks-brand{position:relative;display:flex;align-items:center;justify-content:center;min-height:clamp(92px,12vw,128px);padding:22px 14px;background:#fff;border-inline-end:1px solid var(--line);border-block-end:1px solid var(--line);text-decoration:none;transition:background .25s ease}
+.ks-brand{position:relative;display:flex;flex-direction:column;gap:9px;align-items:center;justify-content:center;min-height:clamp(92px,12vw,128px);padding:22px 14px;background:#fff;border-inline-end:1px solid var(--line);border-block-end:1px solid var(--line);text-decoration:none;transition:background .25s ease}
 .ks-brand__wm{font-family:"Montserrat","Helvetica Neue",Arial,sans-serif;font-weight:800;font-size:clamp(18px,2.3vw,25px);letter-spacing:.06em;text-transform:uppercase;color:#adb5b2;line-height:1;transition:color .25s ease,transform .25s cubic-bezier(.16,1,.3,1)}
+.ks-brand__fa{font-size:12.5px;font-weight:600;color:#8a948f;line-height:1;transition:color .25s ease}
 .ks-brand:hover{background:rgb(0 89 73 / .04)}
+.ks-brand:hover .ks-brand__fa{color:var(--ink)}
 .ks-brand:hover .ks-brand__wm{color:var(--brand);transform:translateY(-2px) scale(1.05)}
 .ks-brand:focus-visible{outline:2px solid var(--brand);outline-offset:-2px}
 .ks-brands__plus{position:absolute;width:13px;height:13px;transform:translate(-50%,-50%);z-index:2;pointer-events:none;color:#c6cdca}
@@ -53,19 +56,20 @@ $ks_brands = array(
 @media (prefers-reduced-motion:reduce){.ks-brand:hover .ks-brand__wm{transform:none}}
 </style>
 
-<section class="ks-brands" id="home-sec-5" aria-label="برندهای همکار">
+<section class="ks-brands" id="home-sec-5" aria-label="برندهای لوازم خانگی">
   <div class="ks-brands__in">
     <div class="ks-brands__head">
-      <span class="ks-brands__eyebrow">برندهای معتبر</span>
-      <h2 class="ks-brands__title">برندهای خانه سعادت</h2>
-      <p class="ks-brands__sub">عرضهٔ مستقیم و اصل، با گارانتی رسمی.</p>
+      <span class="ks-brands__eyebrow">برندها</span>
+      <h2 class="ks-brands__title">برندهای معتبر لوازم خانگی</h2>
+      <p class="ks-brands__sub">دلمونتی، ژانومه، یونیک و برندهای دیگر؛ همه اصل و با گارانتی رسمی.</p>
     </div>
 
     <div class="ks-brands__gridwrap">
       <div class="ks-brands__grid">
         <?php foreach ( $ks_brands as $b ) : ?>
-        <a class="ks-brand" href="<?php echo esc_url( $b['url'] ); ?>" aria-label="برند <?php echo esc_attr( $b['name'] ); ?>">
-          <span class="ks-brand__wm"><?php echo esc_html( $b['name'] ); ?></span>
+        <a class="ks-brand" href="<?php echo esc_url( $b['url'] ); ?>">
+          <span class="ks-brand__wm" lang="en"><?php echo esc_html( $b['name'] ); ?></span>
+          <span class="ks-brand__fa"><?php echo esc_html( $b['fa'] ); ?></span>
         </a>
         <?php endforeach; ?>
       </div>

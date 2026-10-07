@@ -18,12 +18,12 @@ $hero = array(
 	'video_mp4'   => '', // اختیاری: نسخهٔ mp4 برای سازگاری بیشتر (سافاری قدیمی). مثال: get_stylesheet_directory_uri() . '/assets/video/hero.mp4'
 	'video_webm'  => 'https://khanehsaadat.com/wp-content/uploads/2026/10/hiro-video-saadat.webm',
 	'poster'      => 'https://khanehsaadat.com/wp-content/uploads/2026/01/بنر-سعادت-پی-scaled-1.webp', // موقت — با پوسترِ ویدیو عوض شود
-	'title_pre'   => 'خانه سعادت؛ فراتر از',
-	'title_em'    => 'یک خرید…',
-	'subtitle'    => 'از سال ۱۳۵۷ در کنار شما؛ لوازم خانگی اصل با ضمانت واقعی، مشاوره تخصصی و پشتیبانی بعد از فروش.',
-	'cta1_text'   => 'مشاهده محصولات',
+	'title_pre'   => 'لوازم خانگی اصل در همدان؛',
+	'title_em'    => 'فراتر از یک خرید',
+	'subtitle'    => 'از سال ۱۳۵۷ در همدان کنار شما هستیم؛ کالای اصل با گارانتی رسمی، مشاوره قبل از خرید، فروش اقساطی و پشتیبانی بعد از فروش.',
+	'cta1_text'   => 'خرید لوازم خانگی',
 	'cta1_url'    => home_url( '/shop/' ),
-	'cta2_text'   => 'شرایط اقساطی',
+	'cta2_text'   => 'شرایط خرید اقساطی',
 	'cta2_url'    => home_url( '/installments/' ),
 	'next_anchor' => '#home-sec-2',
 );

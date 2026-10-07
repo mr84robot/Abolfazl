@@ -14,10 +14,10 @@
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 $ks_trust = array(
-	array( 'icon' => 'installment', 'title' => 'اقساط بدون ضامن', 'desc' => '۴ قسط بدون سود با چک صیادی' ),
-	array( 'icon' => 'shield',      'title' => 'گارانتی رسمی',    'desc' => '۱۸ تا ۲۴ ماه، مستقیم از برند' ),
-	array( 'icon' => 'truck',       'title' => 'ارسال سریع',      'desc' => 'همدان همان‌روز، سراسر ایران' ),
-	array( 'icon' => 'support',     'title' => 'مشاوره تخصصی',    'desc' => 'دو شعبه حضوری + پشتیبانی تلفنی' ),
+	array( 'icon' => 'installment', 'title' => 'خرید اقساطی بدون ضامن', 'desc' => '۴ قسط بدون سود، فقط با چک صیادی' ),
+	array( 'icon' => 'shield',      'title' => 'گارانتی رسمی',    'desc' => '۱۸ تا ۲۴ ماه، از خود برند' ),
+	array( 'icon' => 'truck',       'title' => 'ارسال سریع',      'desc' => 'همدان همان‌روز؛ سراسر ایران' ),
+	array( 'icon' => 'support',     'title' => 'مشاوره تخصصی',    'desc' => 'حضوری در دو شعبه یا تلفنی' ),
 );
 
 if ( ! function_exists( 'ks_trust_icon' ) ) {

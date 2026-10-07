@@ -1,6 +1,6 @@
 <?php
 /**
- * سکشن «محصولات تخفیف‌دار» — کاروسل ساده و لبه‌تیز — خانه سعادت
+ * سکشن «لوازم خانگی تخفیف‌دار» — کاروسل ساده و لبه‌تیز — خانه سعادت
  * محل نصب:  wp-content/themes/hello-child/template-parts/home/sale.php
  * فراخوانی در front-page.php:  get_template_part( 'template-parts/home/sale' );  (بعد از کتگوری)
  *
@@ -78,20 +78,20 @@ $ks_cart_svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strok
 @media (prefers-reduced-motion:reduce){.ks-sale__card:hover{transform:none}.ks-sale__rail{scroll-behavior:auto}}
 </style>
 
-<section class="ks-sale" id="home-sec-4" aria-label="محصولات تخفیف‌دار" data-ks-sale data-store="<?php echo esc_attr( $ks_store ); ?>" data-per="12">
+<section class="ks-sale" id="home-sec-4" aria-label="لوازم خانگی تخفیف‌دار" data-ks-sale data-store="<?php echo esc_attr( $ks_store ); ?>" data-per="12">
   <div class="ks-sale__in">
     <div class="ks-sale__head">
       <div>
         <span class="ks-sale__eyebrow">پیشنهاد ویژه</span>
-        <h2 class="ks-sale__title">محصولات تخفیف‌دار</h2>
-        <p class="ks-sale__sub">تخفیف‌های فعال؛ تا پایان موجودی.</p>
+        <h2 class="ks-sale__title">لوازم خانگی تخفیف‌دار</h2>
+        <p class="ks-sale__sub">قیمت‌های ویژه‌ی این روزها، تا وقتی موجودی تمام نشده.</p>
       </div>
       <div class="ks-sale__nav">
         <div class="ks-sale__arrows">
           <button class="ks-sale__arrow" data-ks-sale-next aria-label="بعدی" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></button>
           <button class="ks-sale__arrow" data-ks-sale-prev aria-label="قبلی" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button>
         </div>
-        <a class="ks-sale__all" href="<?php echo esc_url( $ks_shop_url ); ?>">مشاهده همه <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></a>
+        <a class="ks-sale__all" href="<?php echo esc_url( $ks_shop_url ); ?>">همه محصولات <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></a>
       </div>
     </div>
 
@@ -159,7 +159,7 @@ $ks_cart_svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strok
   function money(pr){ var mu=parseInt(pr.currency_minor_unit||0,10),pre=pr.currency_prefix||'',suf=pr.currency_suffix||''; return function(v){ v=parseInt(v||'0',10)/Math.pow(10,mu); return pre+v.toLocaleString('fa-IR')+suf; }; }
   function priceHtml(p){ var pr=p.prices||{},f=money(pr); if(p.on_sale&&pr.regular_price&&pr.regular_price!==pr.price){return '<del>'+f(pr.regular_price)+'</del><ins>'+f(pr.price)+'</ins>';} return '<ins>'+f(pr.price)+'</ins>'; }
   function badge(p){ var pr=p.prices||{}; if(p.on_sale&&+pr.regular_price>0&&+pr.price<+pr.regular_price){return Math.round((1-(+pr.price)/(+pr.regular_price))*100);} return 0; }
-  function cartBtn(p){ if(p.type==='simple'&&p.is_purchasable&&p.is_in_stock&&p.add_to_cart&&p.add_to_cart.url){ return '<a href="'+esc(p.add_to_cart.url)+'" data-quantity="1" rel="nofollow" class="ks-sale__cart add_to_cart_button ajax_add_to_cart" data-product_id="'+p.id+'" aria-label="افزودن به سبد">'+CART+'</a>'; } return '<a href="'+esc(p.permalink)+'" class="ks-sale__cart" aria-label="مشاهده">'+CART+'</a>'; }
+  function cartBtn(p){ if(p.type==='simple'&&p.is_purchasable&&p.is_in_stock&&p.add_to_cart&&p.add_to_cart.url){ return '<a href="'+esc(p.add_to_cart.url)+'" data-quantity="1" rel="nofollow" class="ks-sale__cart add_to_cart_button ajax_add_to_cart" data-product_id="'+p.id+'" aria-label="افزودن به سبد">'+CART+'</a>'; } return '<a href="'+esc(p.permalink)+'" class="ks-sale__cart" aria-label="مشاهده محصول">'+CART+'</a>'; }
   function card(p){ var img=(p.images&&p.images[0])?p.images[0].src:''; var pct=badge(p);
     return '<div class="ks-sale__card"><a class="ks-sale__link" href="'+esc(p.permalink)+'"><div class="ks-sale__media">'+(img?'<img src="'+esc(img)+'" alt="'+esc(p.name)+'" loading="lazy" decoding="async">':'')+(pct>0?'<span class="ks-sale__badge">'+faNum(pct)+'٪</span>':'')+'</div><h3 class="ks-sale__name">'+esc(p.name)+'</h3></a><div class="ks-sale__foot"><div class="ks-sale__price">'+priceHtml(p)+'</div>'+cartBtn(p)+'</div></div>'; }
 

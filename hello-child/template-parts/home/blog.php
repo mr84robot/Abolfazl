@@ -95,7 +95,7 @@ if ( ! function_exists( 'ks_fa_digits' ) ) {
       <div>
         <span class="ks-blog__eyebrow">وبلاگ سعادت</span>
         <h2 class="ks-blog__title">قبل از خرید، این‌ها را بخوانید</h2>
-        <p class="ks-blog__sub">راهنماهای خرید و بررسی‌های واقعی، نوشتهٔ تیم خانه سعادت.</p>
+        <p class="ks-blog__sub">راهنمای انتخاب و بررسی محصولات، نوشته‌ی تیم خانه سعادت.</p>
       </div>
 
       <div class="ks-blog__nav">

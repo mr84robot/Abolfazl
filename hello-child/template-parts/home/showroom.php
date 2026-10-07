@@ -28,8 +28,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 $ks_show = array(
 	'video' => 'https://khanehsaadat.com/wp-content/uploads/2026/10/showroom-saadat.webm',
-	'title' => 'نمایی از شوروم بزرگ خانه سعادت',
-	'sub'   => 'تنها و قوی‌ترین شوروم غرب کشور - خانه سعادت',
+	'title' => 'شوروم خانه سعادت در همدان',
+	'sub'   => 'بزرگ‌ترین شوروم لوازم خانگی غرب کشور؛ قبل از خرید، کالا را از نزدیک ببینید.',
 	'bg'     => 'https://khanehsaadat.com/wp-content/uploads/2026/10/showroom-bg-hamedan.webp',
 	'bg_sm'  => 'https://khanehsaadat.com/wp-content/uploads/2026/10/showroom-bg-hamedan-960.webp',
 	'poster' => 'https://khanehsaadat.com/wp-content/uploads/2026/10/تامنیل-ویدیو-.webp',

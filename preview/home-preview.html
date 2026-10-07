@@ -217,10 +217,12 @@ body{background:#05080a;font-family:var(--hero-font);color:#fff}
 .brands__gridwrap{position:relative}
 .brands__grid{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid #e7eae9;border-inline-start:1px solid #e7eae9;border-radius:var(--r);overflow:hidden;background:#fff}
 @media (min-width:768px){.brands__grid{grid-template-columns:repeat(4,1fr)}}
-.brand{position:relative;display:flex;align-items:center;justify-content:center;min-height:clamp(92px,12vw,128px);padding:22px 14px;background:#fff;border-inline-end:1px solid #e7eae9;border-block-end:1px solid #e7eae9;text-decoration:none;transition:background .25s ease}
+.brand{position:relative;display:flex;flex-direction:column;gap:9px;align-items:center;justify-content:center;min-height:clamp(92px,12vw,128px);padding:22px 14px;background:#fff;border-inline-end:1px solid #e7eae9;border-block-end:1px solid #e7eae9;text-decoration:none;transition:background .25s ease}
 .brand__wm{font-family:"Montserrat","Helvetica Neue",Arial,sans-serif;font-weight:800;font-size:clamp(18px,2.3vw,25px);letter-spacing:.06em;text-transform:uppercase;color:#adb5b2;line-height:1;transition:color .25s ease,transform .25s cubic-bezier(.16,1,.3,1)}
 .brand:hover{background:rgb(0 89 73 / .04)}
 .brand:hover .brand__wm{color:var(--brand);transform:translateY(-2px) scale(1.05)}
+.brand__fa{font-size:12.5px;font-weight:600;color:#8a948f;line-height:1;transition:color .25s ease}
+.brand:hover .brand__fa{color:var(--ink)}
 .brand:focus-visible{outline:2px solid var(--brand);outline-offset:-2px}
 .brands__plus{position:absolute;width:13px;height:13px;transform:translate(-50%,-50%);z-index:2;pointer-events:none;color:#c6cdca}
 .brands__plus::before,.brands__plus::after{content:"";position:absolute;background:currentColor}
@@ -421,7 +423,7 @@ body{background:#05080a;font-family:var(--hero-font);color:#fff}
 <header class="site-hdr" data-site-hdr>
   <div class="site-hdr__inner">
     <a class="site-hdr__logo" href="#"><span class="site-hdr__logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 4l9 6.5"/><path d="M5.5 9.5V20h13V9.5"/></svg></span><span class="site-hdr__logo-word">SAADAT</span></a>
-    <nav class="site-hdr__nav" aria-label="منوی اصلی"><a href="#">دسته‌بندی محصولات</a><a href="#">فروشگاه</a><a href="#">خرید اقساطی</a><a href="#">وبلاگ</a><a href="#">تماس با ما</a></nav>
+    <nav class="site-hdr__nav" aria-label="منوی اصلی"><a href="#">دسته‌بندی لوازم خانگی</a><a href="#">فروشگاه</a><a href="#">خرید اقساطی</a><a href="#">وبلاگ</a><a href="#">تماس با ما</a></nav>
     <div class="site-hdr__act"><a class="site-hdr__ico" href="#" aria-label="جستجو"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-3.6-3.6"/></svg></a><a class="site-hdr__ico" href="#" aria-label="سبد خرید"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 3.5 4.8 7.2V19a1.8 1.8 0 0 0 1.8 1.8h10.8A1.8 1.8 0 0 0 19.2 19V7.2l-2.7-3.7z"/><path d="M4.8 7.2h14.4"/><path d="M15.4 10.8a3.4 3.4 0 0 1-6.8 0"/></svg></a></div>
   </div>
 </header>
@@ -443,11 +445,11 @@ body{background:#05080a;font-family:var(--hero-font);color:#fff}
     <div class="hero__core">
       <div class="hero__glow" aria-hidden="true"></div>
       <div class="hero__wordmark hero-animate" style="--d:0ms" aria-hidden="true"><span class="hero__ltr" style="--i:0">S</span><span class="hero__ltr" style="--i:1">A</span><span class="hero__ltr" style="--i:2">A</span><span class="hero__ltr" style="--i:3">D</span><span class="hero__ltr" style="--i:4">A</span><span class="hero__ltr" style="--i:5">T</span></div>
-      <h1 class="hero__title hero-animate" style="--d:120ms">خانه سعادت؛ فراتر از <span class="hero__title-em">یک خرید…</span></h1>
-      <p class="hero__sub hero-animate" style="--d:240ms">از سال ۱۳۵۷ در کنار شما؛ لوازم خانگی اصل با ضمانت واقعی، مشاوره تخصصی و پشتیبانی بعد از فروش.</p>
+      <h1 class="hero__title hero-animate" style="--d:120ms">لوازم خانگی اصل در همدان؛ <span class="hero__title-em">فراتر از یک خرید</span></h1>
+      <p class="hero__sub hero-animate" style="--d:240ms">از سال ۱۳۵۷ در همدان کنار شما هستیم؛ کالای اصل با گارانتی رسمی، مشاوره قبل از خرید، فروش اقساطی و پشتیبانی بعد از فروش.</p>
       <div class="hero__cta hero-animate" style="--d:360ms">
-        <a class="hero__btn hero__btn--primary" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg>مشاهده محصولات</a>
-        <a class="hero__btn hero__btn--ghost" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2.4"/><path d="M3 10h18"/></svg>شرایط اقساطی</a>
+        <a class="hero__btn hero__btn--primary" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg>خرید لوازم خانگی</a>
+        <a class="hero__btn hero__btn--ghost" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2.4"/><path d="M3 10h18"/></svg>شرایط خرید اقساطی</a>
       </div>
     </div>
     <a class="hero__scroll" href="#categories" aria-label="رفتن به دسته‌بندی‌ها"><span class="hero__scroll-dot"></span></a>
@@ -457,15 +459,15 @@ body{background:#05080a;font-family:var(--hero-font);color:#fff}
 <!-- ===== TRUST / FEATURES (نوار تمام‌عرض، یک‌ردیفه) ===== -->
 <section class="trust" aria-label="مزایای خرید از خانه سعادت" data-trust>
   <ul class="trust__grid">
-    <li style="--i:0"><div class="trust__card"><span class="trust__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="13" rx="2"/><path d="M3 9.2h18"/><path d="M6.4 14.3h3.4"/><path d="m13.6 14.8 1.7 1.7 3.1-3.3"/></svg></span><div class="trust__tx"><h3 class="trust__t">اقساط بدون ضامن</h3><p class="trust__d">۴ قسط بدون سود با چک صیادی</p></div></div></li>
-    <li style="--i:1"><div class="trust__card"><span class="trust__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 5 5.8v4.9c0 4.2 2.9 7.4 7 8.6 4.1-1.2 7-4.4 7-8.6V5.8z"/><path d="m9.1 11.6 2 2 3.9-4.1"/></svg></span><div class="trust__tx"><h3 class="trust__t">گارانتی رسمی</h3><p class="trust__d">۱۸ تا ۲۴ ماه، مستقیم از برند</p></div></div></li>
-    <li style="--i:2"><div class="trust__card"><span class="trust__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.6 6.6h10.9v8.2H2.6z"/><path d="M13.5 9.4h3.3l2.6 2.7v2.7h-5.9z"/><circle cx="6.4" cy="17.3" r="1.7"/><circle cx="16" cy="17.3" r="1.7"/><path d="M1 9.6h2.2M.4 12.4h2"/></svg></span><div class="trust__tx"><h3 class="trust__t">ارسال سریع</h3><p class="trust__d">همدان همان‌روز، سراسر ایران</p></div></div></li>
-    <li style="--i:3"><div class="trust__card"><span class="trust__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.6v-1.1a7 7 0 0 1 14 0v1.1"/><rect x="3.3" y="12.4" width="3.4" height="6" rx="1.6"/><rect x="17.3" y="12.4" width="3.4" height="6" rx="1.6"/><path d="M18.8 18.4a4 4 0 0 1-3.8 2.8h-2"/><circle cx="12.6" cy="21.2" r="1"/></svg></span><div class="trust__tx"><h3 class="trust__t">مشاوره تخصصی</h3><p class="trust__d">دو شعبه حضوری + پشتیبانی تلفنی</p></div></div></li>
+    <li style="--i:0"><div class="trust__card"><span class="trust__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="13" rx="2"/><path d="M3 9.2h18"/><path d="M6.4 14.3h3.4"/><path d="m13.6 14.8 1.7 1.7 3.1-3.3"/></svg></span><div class="trust__tx"><h3 class="trust__t">خرید اقساطی بدون ضامن</h3><p class="trust__d">۴ قسط بدون سود، فقط با چک صیادی</p></div></div></li>
+    <li style="--i:1"><div class="trust__card"><span class="trust__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 5 5.8v4.9c0 4.2 2.9 7.4 7 8.6 4.1-1.2 7-4.4 7-8.6V5.8z"/><path d="m9.1 11.6 2 2 3.9-4.1"/></svg></span><div class="trust__tx"><h3 class="trust__t">گارانتی رسمی</h3><p class="trust__d">۱۸ تا ۲۴ ماه، از خود برند</p></div></div></li>
+    <li style="--i:2"><div class="trust__card"><span class="trust__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.6 6.6h10.9v8.2H2.6z"/><path d="M13.5 9.4h3.3l2.6 2.7v2.7h-5.9z"/><circle cx="6.4" cy="17.3" r="1.7"/><circle cx="16" cy="17.3" r="1.7"/><path d="M1 9.6h2.2M.4 12.4h2"/></svg></span><div class="trust__tx"><h3 class="trust__t">ارسال سریع</h3><p class="trust__d">همدان همان‌روز؛ سراسر ایران</p></div></div></li>
+    <li style="--i:3"><div class="trust__card"><span class="trust__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.6v-1.1a7 7 0 0 1 14 0v1.1"/><rect x="3.3" y="12.4" width="3.4" height="6" rx="1.6"/><rect x="17.3" y="12.4" width="3.4" height="6" rx="1.6"/><path d="M18.8 18.4a4 4 0 0 1-3.8 2.8h-2"/><circle cx="12.6" cy="21.2" r="1"/></svg></span><div class="trust__tx"><h3 class="trust__t">مشاوره تخصصی</h3><p class="trust__d">حضوری در دو شعبه یا تلفنی</p></div></div></li>
   </ul>
 </section>
 
 <!-- ===== CATEGORIES ===== -->
-<section class="cats" id="categories" aria-label="دسته‌بندی محصولات">
+<section class="cats" id="categories" aria-label="دسته‌بندی لوازم خانگی">
   <!-- آیکن‌ها (یک‌بار تعریف، با use استفاده می‌شوند) -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
     <g id="ic-thermos"><rect x="8.5" y="7" width="7" height="14" rx="2"/><path d="M9 7V4.5h6V7"/><path d="M8.5 12h7"/></g>
@@ -503,8 +505,8 @@ body{background:#05080a;font-family:var(--hero-font);color:#fff}
     <div class="cats__head">
       <div>
         <span class="cats__eyebrow">خرید بر اساس دسته</span>
-        <h2 class="cats__title">دسته‌بندی محصولات</h2>
-        <p class="cats__sub">دسته‌های منتخب؛ از آشپزخانه تا نظافت و سرمایشی.</p>
+        <h2 class="cats__title">دسته‌بندی لوازم خانگی</h2>
+        <p class="cats__sub">از لوازم برقی آشپزخانه تا نظافت و سرمایش؛ از دسته‌ی مورد نظرتان شروع کنید.</p>
       </div>
     </div>
 
@@ -539,20 +541,20 @@ body{background:#05080a;font-family:var(--hero-font);color:#fff}
 </section>
 
 <!-- ===== SALE / DISCOUNTED (کاروسل) ===== -->
-<section class="sale" id="home-sec-4" aria-label="محصولات تخفیف‌دار">
+<section class="sale" id="home-sec-4" aria-label="لوازم خانگی تخفیف‌دار">
   <div class="sale__in">
     <div class="sale__head">
       <div>
         <span class="sale__eyebrow">پیشنهاد ویژه</span>
-        <h2 class="sale__title">محصولات تخفیف‌دار</h2>
-        <p class="sale__sub">تخفیف‌های فعال؛ تا پایان موجودی.</p>
+        <h2 class="sale__title">لوازم خانگی تخفیف‌دار</h2>
+        <p class="sale__sub">قیمت‌های ویژه‌ی این روزها، تا وقتی موجودی تمام نشده.</p>
       </div>
       <div class="sale__nav">
         <div class="sale__arrows">
           <button class="sale__arrow" data-sale-next aria-label="بعدی" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></button>
           <button class="sale__arrow" data-sale-prev aria-label="قبلی" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button>
         </div>
-        <a class="sale__all" href="#">مشاهده همه <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></a>
+        <a class="sale__all" href="#">همه محصولات <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></a>
       </div>
     </div>
 
@@ -570,23 +572,23 @@ body{background:#05080a;font-family:var(--hero-font);color:#fff}
 </section>
 
 <!-- ===== BRANDS (logo-cloud متنی) ===== -->
-<section class="brands" id="home-sec-5" aria-label="برندهای همکار">
+<section class="brands" id="home-sec-5" aria-label="برندهای لوازم خانگی">
   <div class="brands__in">
     <div class="brands__head">
-      <span class="brands__eyebrow">برندهای معتبر</span>
-      <h2 class="brands__title">برندهای خانه سعادت</h2>
-      <p class="brands__sub">عرضهٔ مستقیم و اصل، با گارانتی رسمی.</p>
+      <span class="brands__eyebrow">برندها</span>
+      <h2 class="brands__title">برندهای معتبر لوازم خانگی</h2>
+      <p class="brands__sub">دلمونتی، ژانومه، یونیک و برندهای دیگر؛ همه اصل و با گارانتی رسمی.</p>
     </div>
     <div class="brands__gridwrap">
       <div class="brands__grid">
-        <a class="brand" href="https://khanehsaadat.com/brand/unique/" aria-label="برند Unique"><span class="brand__wm">Unique</span></a>
-        <a class="brand" href="https://khanehsaadat.com/brand/mgs/" aria-label="برند MGS"><span class="brand__wm">MGS</span></a>
-        <a class="brand" href="https://khanehsaadat.com/brand/honira/" aria-label="برند HONIRA"><span class="brand__wm">HONIRA</span></a>
-        <a class="brand" href="https://khanehsaadat.com/brand/migel/" aria-label="برند MIGEL"><span class="brand__wm">MIGEL</span></a>
-        <a class="brand" href="https://khanehsaadat.com/brand/sapor/" aria-label="برند SAPOR"><span class="brand__wm">SAPOR</span></a>
-        <a class="brand" href="https://khanehsaadat.com/brand/delmonti/" aria-label="برند Delmonti"><span class="brand__wm">Delmonti</span></a>
-        <a class="brand" href="https://khanehsaadat.com/brand/beem/" aria-label="برند BEEM"><span class="brand__wm">BEEM</span></a>
-        <a class="brand" href="https://khanehsaadat.com/brand/janome/" aria-label="برند JANOME"><span class="brand__wm">JANOME</span></a>
+        <a class="brand" href="https://khanehsaadat.com/brand/unique/"><span class="brand__wm" lang="en">Unique</span><span class="brand__fa">یونیک</span></a>
+        <a class="brand" href="https://khanehsaadat.com/brand/mgs/"><span class="brand__wm" lang="en">MGS</span><span class="brand__fa">ام جی اس</span></a>
+        <a class="brand" href="https://khanehsaadat.com/brand/honira/"><span class="brand__wm" lang="en">HONIRA</span><span class="brand__fa">هونیرا</span></a>
+        <a class="brand" href="https://khanehsaadat.com/brand/migel/"><span class="brand__wm" lang="en">MIGEL</span><span class="brand__fa">میگل</span></a>
+        <a class="brand" href="https://khanehsaadat.com/brand/sapor/"><span class="brand__wm" lang="en">SAPOR</span><span class="brand__fa">ساپر</span></a>
+        <a class="brand" href="https://khanehsaadat.com/brand/delmonti/"><span class="brand__wm" lang="en">Delmonti</span><span class="brand__fa">دلمونتی</span></a>
+        <a class="brand" href="https://khanehsaadat.com/brand/beem/"><span class="brand__wm" lang="en">BEEM</span><span class="brand__fa">بیم</span></a>
+        <a class="brand" href="https://khanehsaadat.com/brand/janome/"><span class="brand__wm" lang="en">JANOME</span><span class="brand__fa">ژانومه</span></a>
       </div>
       <span class="brands__plus brands__plus--m" style="left:50%;top:25%"></span>
       <span class="brands__plus brands__plus--m" style="left:50%;top:50%"></span>
@@ -603,9 +605,9 @@ body{background:#05080a;font-family:var(--hero-font);color:#fff}
   <div class="prod__in">
     <div class="prod__head">
       <div>
-        <span class="prod__eyebrow">با خانه سعادت بروز باش</span>
-        <h2 class="prod__title">جدیدترین محصولات خانه سعادت</h2>
-        <p class="prod__sub">تازه‌ترین لوازم خانگیِ اصل را زودتر از همه ببینید؛ با بهترین قیمت و گارانتی رسمی.</p>
+        <span class="prod__eyebrow">تازه‌های فروشگاه</span>
+        <h2 class="prod__title">جدیدترین محصولات</h2>
+        <p class="prod__sub">تازه‌ترین مدل‌ها، اصل و با گارانتی رسمی؛ دسته‌ی دلخواهتان را انتخاب کنید.</p>
       </div>
       <div class="prod__nav">
         <div class="prod__arrows">
@@ -640,8 +642,8 @@ body{background:#05080a;font-family:var(--hero-font);color:#fff}
       <span class="pay__bg" aria-hidden="true"></span>
       <div class="pay__body">
         <span class="pay__brandtag">سعادت‌پی</span>
-        <h2 class="pay__title">قسطی بخر، <span class="pay__accent">بدون دردسر!</span></h2>
-        <p class="pay__desc">با «سعادت‌پی» لوازم خانگی‌تان را از ۴ تا ۲۴ قسط با کمترین سود تهیه کنید.</p>
+        <h2 class="pay__title">قسطی بخرید، <span class="pay__accent">بدون ضامن!</span></h2>
+        <p class="pay__desc">سعادت‌پی یعنی خرید اقساطی لوازم خانگی در ۴ تا ۲۴ قسط؛ فقط با چک صیادی و با کمترین سود.</p>
         <a class="pay__cta" href="#">شرایط و ثبت‌نام <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></a>
       </div>
       <div class="pay__art" aria-hidden="true">
@@ -663,14 +665,14 @@ body{background:#05080a;font-family:var(--hero-font);color:#fff}
   </picture>
   <span class="show__veil" aria-hidden="true"></span>
   <div class="show__in">
-    <div class="show__frame has-poster" data-show role="button" tabindex="0" aria-label="پخش ویدیو: نمایی از شوروم بزرگ خانه سعادت">
+    <div class="show__frame has-poster" data-show role="button" tabindex="0" aria-label="پخش ویدیو: شوروم خانه سعادت در همدان">
       <img class="show__poster" src="https://khanehsaadat.com/wp-content/uploads/2026/10/تامنیل-ویدیو-.webp" width="1280" height="720" alt="" loading="lazy" decoding="async">
       <span class="show__glow" aria-hidden="true"></span>
       <span class="show__ov" aria-hidden="true"></span>
       <button class="show__play" type="button" data-show-play aria-label="پخش ویدیو"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.52.86l10.5-6.86a1 1 0 0 0 0-1.72L9.52 4.28A1 1 0 0 0 8 5.14z"/></svg></button>
       <div class="show__cap">
-        <h2 class="show__title">نمایی از شوروم بزرگ خانه سعادت</h2>
-        <p class="show__sub">تنها و قوی‌ترین شوروم غرب کشور - خانه سعادت</p>
+        <h2 class="show__title">شوروم خانه سعادت در همدان</h2>
+        <p class="show__sub">بزرگ‌ترین شوروم لوازم خانگی غرب کشور؛ قبل از خرید، کالا را از نزدیک ببینید.</p>
       </div>
     </div>
   </div>
@@ -687,7 +689,7 @@ body{background:#05080a;font-family:var(--hero-font);color:#fff}
       <div>
         <span class="blog__eyebrow">وبلاگ سعادت</span>
         <h2 class="blog__title">قبل از خرید، این‌ها را بخوانید</h2>
-        <p class="blog__sub">راهنماهای خرید و بررسی‌های واقعی، نوشتهٔ تیم خانه سعادت.</p>
+        <p class="blog__sub">راهنمای انتخاب و بررسی محصولات، نوشته‌ی تیم خانه سعادت.</p>
       </div>
       <div class="blog__nav">
         <div class="blog__arrows">
@@ -871,13 +873,13 @@ body{background:#05080a;font-family:var(--hero-font);color:#fff}
 </section>
 
 <!-- ===== VIDEOS (کاروسل ویدیوی محصولات — روی سایت از متای CodeLock؛ اینجا ۳ نمونه) ===== -->
-<section class="vid" id="home-sec-11" aria-label="ویدیوی محصولات" data-vid>
+<section class="vid" id="home-sec-11" aria-label="بررسی ویدیویی محصولات" data-vid>
   <div class="vid__in">
     <div class="vid__head">
       <div>
         <span class="vid__eyebrow">ویدیوها</span>
-        <h2 class="vid__title">ویدیوی محصولات</h2>
-        <p class="vid__sub">محصولات را قبل از خرید در عمل ببینید.</p>
+        <h2 class="vid__title">بررسی ویدیویی محصولات</h2>
+        <p class="vid__sub">هر محصول را قبل از خرید در عمل ببینید؛ از کیفیت ساخت تا طرز کار.</p>
       </div>
       <div class="vid__nav">
         <div class="vid__arrows">

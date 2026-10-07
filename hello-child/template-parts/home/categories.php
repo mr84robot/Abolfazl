@@ -80,7 +80,7 @@ $ks_all_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink
 @media (prefers-reduced-motion:reduce){.ks-cat:hover{transform:none}}
 </style>
 
-<section class="ks-cats" id="home-sec-3" aria-label="دسته‌بندی محصولات">
+<section class="ks-cats" id="home-sec-3" aria-label="دسته‌بندی لوازم خانگی">
 
   <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
     <g id="ks-ic-blender"><path d="M8 3h8l-1 10H9z"/><rect x="9.5" y="13" width="5" height="7" rx="1.5"/><path d="M9.5 20h5"/></g>
@@ -108,8 +108,8 @@ $ks_all_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink
     <div class="ks-cats__head">
       <div>
         <span class="ks-cats__eyebrow">خرید بر اساس دسته</span>
-        <h2 class="ks-cats__title">دسته‌بندی محصولات</h2>
-        <p class="ks-cats__sub">دسته‌های منتخب؛ از آشپزخانه تا نظافت و سرمایشی.</p>
+        <h2 class="ks-cats__title">دسته‌بندی لوازم خانگی</h2>
+        <p class="ks-cats__sub">از لوازم برقی آشپزخانه تا نظافت و سرمایش؛ از دسته‌ی مورد نظرتان شروع کنید.</p>
       </div>
     </div>
 

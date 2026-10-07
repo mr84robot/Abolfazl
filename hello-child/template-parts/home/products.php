@@ -145,9 +145,9 @@ if ( ! function_exists( 'ks_prod_card' ) ) {
   <div class="ks-prod__in">
     <div class="ks-prod__head">
       <div>
-        <span class="ks-prod__eyebrow">با خانه سعادت بروز باش</span>
-        <h2 class="ks-prod__title">جدیدترین محصولات خانه سعادت</h2>
-        <p class="ks-prod__sub">تازه‌ترین لوازم خانگیِ اصل را زودتر از همه ببینید؛ با بهترین قیمت و گارانتی رسمی.</p>
+        <span class="ks-prod__eyebrow">تازه‌های فروشگاه</span>
+        <h2 class="ks-prod__title">جدیدترین محصولات</h2>
+        <p class="ks-prod__sub">تازه‌ترین مدل‌ها، اصل و با گارانتی رسمی؛ دسته‌ی دلخواهتان را انتخاب کنید.</p>
       </div>
       <div class="ks-prod__nav">
         <div class="ks-prod__arrows">
@@ -173,7 +173,7 @@ if ( ! function_exists( 'ks_prod_card' ) ) {
             endwhile;
             wp_reset_postdata();
         else :
-            echo '<p class="ks-prod__empty">محصولی در این دسته نیست.</p>';
+            echo '<p class="ks-prod__empty">فعلاً محصولی در این دسته موجود نیست.</p>';
         endif;
         ?>
       </div>
@@ -216,7 +216,7 @@ if ( ! function_exists( 'ks_prod_card' ) ) {
     if ( p.type==='simple' && p.is_purchasable && p.is_in_stock && p.add_to_cart && p.add_to_cart.url ) {
       return '<a href="'+esc(p.add_to_cart.url)+'" data-quantity="1" rel="nofollow" class="ks-prod__cart add_to_cart_button ajax_add_to_cart" data-product_id="'+p.id+'" aria-label="افزودن به سبد">'+CART+'</a>';
     }
-    return '<a href="'+esc(p.permalink)+'" class="ks-prod__cart" aria-label="مشاهده">'+CART+'</a>';
+    return '<a href="'+esc(p.permalink)+'" class="ks-prod__cart" aria-label="مشاهده محصول">'+CART+'</a>';
   }
   function card(p){
     var img = (p.images && p.images[0]) ? (p.images[0].src) : '';
@@ -238,7 +238,7 @@ if ( ! function_exists( 'ks_prod_card' ) ) {
         if ( replace ) { rail.innerHTML = ''; }
         if ( !list || !list.length ) {
           state.done = true;
-          if ( replace ) { rail.innerHTML = '<p class="ks-prod__empty">محصولی در این دسته نیست.</p>'; }
+          if ( replace ) { rail.innerHTML = '<p class="ks-prod__empty">فعلاً محصولی در این دسته موجود نیست.</p>'; }
         } else {
           if ( list.length < per ) { state.done = true; }
           var html = ''; list.forEach(function(p){ html += card(p); });

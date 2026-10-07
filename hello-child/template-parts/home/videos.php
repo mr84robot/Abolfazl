@@ -11,7 +11,8 @@
  *   - داده با CodeLock_Product_Meta::get_video() خوانده می‌شود و لینکِ هر کارت با
  *     CodeLock_Videos::video_url() ساخته می‌شود؛ پس تنظیمِ «لینک به صفحهٔ محصول / صفحهٔ ویدیو»
  *     در افزونه همین‌جا هم رعایت می‌شود و منطق دو جا تکرار نمی‌شود.
- *   - سرتیتر (ابرو، عنوان، توضیح) از تنظیماتِ ویدیوی افزونه می‌آید؛ همان متنِ صفحهٔ آرشیو.
+ *   - سرتیترِ این سکشن مخصوصِ صفحهٔ اصلی است و همین‌جا نوشته شده (کلیدواژه‌دار)؛ تنظیماتِ
+ *     ابرو/عنوان/توضیحِ افزونه همچنان برای صفحهٔ آرشیوِ ویدیو استفاده می‌شود.
  *   - شورت‌کد را صدا نمی‌زنیم چون گریدِ صفحه‌بندی‌شده با CSS خودش می‌دهد، نه کاروسل.
  *
  * اگر افزونه یا ماژولِ ویدیوی آن خاموش باشد، یا محصولی ویدیو نداشته باشد، سکشن چاپ نمی‌شود.
@@ -58,12 +59,11 @@ foreach ( $ks_vid_q->posts as $ks_p ) {
 if ( empty( $ks_vids ) ) { return; }
 
 $ks_vid_head = array(
-	'eyebrow' => (string) CodeLock_Settings::get( 'videos_eyebrow' ),
-	'title'   => (string) CodeLock_Settings::get( 'videos_title' ),
-	'desc'    => (string) CodeLock_Settings::get( 'videos_description' ),
+	'eyebrow' => 'ویدیوها',
+	'title'   => 'بررسی ویدیویی محصولات',
+	'desc'    => 'هر محصول را قبل از خرید در عمل ببینید؛ از کیفیت ساخت تا طرز کار.',
 	'all'     => CodeLock_Videos::archive_url(),
 );
-if ( '' === $ks_vid_head['title'] ) { $ks_vid_head['title'] = 'ویدیوی محصولات'; }
 
 if ( ! function_exists( 'ks_fa_digits' ) ) {
 	function ks_fa_digits( $str ) {
