@@ -15,11 +15,26 @@
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
+/*
+ * استایل و اسکریپتِ همهٔ سکشن‌ها در دو فایل است (هیچ CSS/JSِ درون‌خطی نمانده):
+ *   assets/css/home.css  ← در <head>
+ *   assets/js/home.js    ← در فوتر با defer
+ * نسخه = زمانِ تغییرِ فایل؛ پس بعد از هر آپلود، کشِ مرورگر خودکار تازه می‌شود.
+ *
+ * اولویت ۹۹۹: home.css باید آخرین استایلِ <head> باشد. قبلاً CSSِ سکشن‌ها داخلِ body و بعد از
+ * استایلِ قالب/المنتور می‌آمد و در تساویِ specificity برنده بود (مثلاً در برابرِ [type=button]:hover
+ * قالبِ Hello)؛ این ترتیب باید حفظ شود وگرنه دکمه‌ها روی سایت عوض می‌شوند.
+ */
+add_action( 'wp_enqueue_scripts', function () {
+	$dir = get_stylesheet_directory();
+	$uri = get_stylesheet_directory_uri();
+	wp_enqueue_style( 'ks-home', $uri . '/assets/css/home.css', array(), (string) @filemtime( $dir . '/assets/css/home.css' ) );
+	wp_enqueue_script( 'ks-home', $uri . '/assets/js/home.js', array(), (string) @filemtime( $dir . '/assets/js/home.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
+}, 999 );
+
 get_header();
 ?>
 <main id="content" class="site-main">
-	<?php // صفحهٔ اصلی: اسکرول‌کیوی تزئینیِ هیرو حذف می‌شود؛ نوارِ «مزایا» نقشِ پلِ هیرو→محتوا را دارد (مطابق گایدلاین دیزاین). ?>
-	<style>.ks-hero__scroll{display:none}</style>
 	<?php
 	get_template_part( 'template-parts/home/hero' );
 	get_template_part( 'template-parts/home/trust' );

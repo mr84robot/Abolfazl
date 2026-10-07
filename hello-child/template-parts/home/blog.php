@@ -26,6 +26,7 @@ $ks_blog_q = new WP_Query( array(
 	'order'               => 'DESC',
 	'ignore_sticky_posts' => true,
 	'no_found_rows'       => true,
+	'update_post_term_cache' => false, // دسته/برچسبِ مقاله نمایش داده نمی‌شود
 ) );
 
 if ( ! $ks_blog_q->have_posts() ) { return; } // هنوز مقاله‌ای منتشر نشده
@@ -38,55 +39,6 @@ if ( ! function_exists( 'ks_fa_digits' ) ) {
 	}
 }
 ?>
-<style id="ks-blog-css">
-.ks-blog{--brand:#005949;--accent:#F2A900;--ink:#1f2b28;--muted:#5b6472;--line:#e7eae9;--r:4px;background:#f6f8f7;color:var(--ink);direction:rtl;font-family:"Yekan Bakh FaNum","Vazirmatn",system-ui,-apple-system,sans-serif}
-.ks-blog *{box-sizing:border-box}
-.ks-blog__in{max-width:1310px;margin-inline:auto;padding:clamp(48px,7vw,84px) clamp(16px,3vw,32px)}
-.ks-blog__head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:26px}
-.ks-blog__eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:#8a6100}
-.ks-blog__eyebrow::before{content:"";width:24px;height:2px;background:var(--accent)}
-.ks-blog__title{margin:12px 0 6px;font-size:clamp(22px,3.2vw,30px);font-weight:800;color:#101828;line-height:1.4}
-.ks-blog__sub{margin:0;font-size:14.5px;color:var(--muted);line-height:1.8}
-.ks-blog__nav{display:flex;align-items:center;gap:10px;flex:0 0 auto}
-.ks-blog__all{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:0 18px;border:1px solid #d4dbd8;border-radius:var(--r);background:#fff;font-size:14px;font-weight:700;color:var(--brand);text-decoration:none;transition:border-color .2s,background .2s}
-.ks-blog__all:hover{border-color:var(--brand);background:#f3f8f6}
-.ks-blog__all svg{width:16px;height:16px}
-.ks-blog__arrows{display:flex;gap:8px}
-.ks-blog__arrow{width:42px;height:42px;border-radius:var(--r);border:1px solid #d4dbd8;background:#fff;color:var(--brand);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s,background .2s}
-.ks-blog__arrow:hover{border-color:var(--brand);background:#f3f8f6}
-.ks-blog__arrow svg{width:19px;height:19px}
-
-/* --cols کارتِ کامل دقیقاً عرض ریل را پر می‌کند؛ هیچ کارتِ نیمه‌ای لبِ قاب پیدا نمی‌شود */
-.ks-blog__rail{--cols:3;--gap:20px;display:flex;gap:var(--gap);overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:2px;padding:4px 2px 12px;scrollbar-width:none}
-.ks-blog__rail::-webkit-scrollbar{display:none}
-.ks-blog__card{flex:0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));scroll-snap-align:start;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:border-color .2s,transform .2s,box-shadow .2s}
-.ks-blog__card:hover{border-color:#b9d2cb;transform:translateY(-3px);box-shadow:0 16px 34px -20px rgb(0 89 73 / .4)}
-.ks-blog__link{text-decoration:none;color:inherit;display:flex;flex-direction:column;height:100%}
-
-.ks-blog__media{position:relative;aspect-ratio:768/538;background:#e9efec;overflow:hidden}
-.ks-blog__media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s cubic-bezier(.16,1,.3,1)}
-.ks-blog__card:hover .ks-blog__media img{transform:scale(1.05)}
-.ks-blog__ph{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(140deg,#0a5445 0%,#063d32 100%);color:rgb(255 255 255 / .34)}
-.ks-blog__ph svg{width:36%;height:36%}
-.ks-blog__date{position:absolute;inset-block-start:12px;inset-inline-start:12px;z-index:2;display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:var(--r);background:rgb(255 255 255 / .94);color:var(--ink);font-size:12px;font-weight:700;line-height:1;box-shadow:0 4px 14px -6px rgb(0 0 0 / .35)}
-.ks-blog__date svg{width:13px;height:13px;color:var(--brand)}
-
-/* لایهٔ هاور: فقط «مطالعه مقاله» — متنِ کارت زیرِ عکس می‌ماند، نه رویش */
-.ks-blog__ov{position:absolute;inset:0;z-index:1;display:grid;place-items:center;background:linear-gradient(to top,rgb(2 36 29 / .78),rgb(2 36 29 / .34));opacity:0;transition:opacity .3s ease}
-.ks-blog__card:hover .ks-blog__ov,.ks-blog__link:focus-visible .ks-blog__ov{opacity:1}
-.ks-blog__more{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border:1.5px solid rgb(255 255 255 / .75);border-radius:var(--r);color:#fff;font-size:14px;font-weight:700;transform:translateY(8px);transition:transform .3s cubic-bezier(.16,1,.3,1)}
-.ks-blog__card:hover .ks-blog__more{transform:none}
-.ks-blog__more svg{width:15px;height:15px}
-
-.ks-blog__body{display:flex;flex-direction:column;gap:9px;padding:16px 16px 18px}
-.ks-blog__name{margin:0;font-size:15.5px;font-weight:700;line-height:1.75;color:var(--ink);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:3.5em}
-.ks-blog__card:hover .ks-blog__name{color:var(--brand)}
-.ks-blog__ex{margin:0;font-size:13.5px;line-height:1.95;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-
-@media (max-width:1024px){.ks-blog__rail{--cols:2}}
-@media (max-width:640px){.ks-blog__rail{--cols:1}.ks-blog__arrows{display:none}}
-@media (prefers-reduced-motion:reduce){.ks-blog__card:hover{transform:none}.ks-blog__card:hover .ks-blog__media img{transform:none}.ks-blog__rail{scroll-behavior:auto}.ks-blog__more{transform:none}}
-</style>
 
 <section class="ks-blog" id="home-sec-9" aria-label="تازه‌های وبلاگ سعادت" data-ks-blog>
   <div class="ks-blog__in">
@@ -148,21 +100,3 @@ if ( ! function_exists( 'ks_fa_digits' ) ) {
   </div>
 </section>
 
-<script id="ks-blog-js">
-(function(){
-  var sec = document.querySelector('[data-ks-blog]');
-  if ( ! sec ) { return; }
-  var rail = sec.querySelector('[data-ks-blog-rail]');
-  if ( ! rail ) { return; }
-  // در RTL مقدار scrollLeft از صفر شروع و منفی می‌شود، پس «بعدی» باید منفی اسکرول کند.
-  // جهت از روی direction محاسبه می‌شود تا در هر دو حالت درست بماند.
-  function s(dir){
-    var rtl  = getComputedStyle(rail).direction === 'rtl';
-    var step = Math.max( rail.clientWidth * 0.8, 320 );
-    rail.scrollBy({ left: ( rtl ? -dir : dir ) * step, behavior:'smooth' });
-  }
-  var n = sec.querySelector('[data-ks-blog-next]'), p = sec.querySelector('[data-ks-blog-prev]');
-  n && n.addEventListener('click', function(){ s(1); });
-  p && p.addEventListener('click', function(){ s(-1); });
-})();
-</script>

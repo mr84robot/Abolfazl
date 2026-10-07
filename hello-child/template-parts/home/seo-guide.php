@@ -28,46 +28,6 @@ $ks_seo = array(
 	'hmd_url'  => home_url( '/hamedan/' ),
 );
 ?>
-<style id="ks-seo-css">
-.ks-seo{--r:4px;--brand:#005949;--gold:#f1a900;--gold-d:#cf9100;--ink:#10322a;--body:#46554f;--cream:#faf7f0;--line:#ece7dc;--soft:#e9f2ef;background:#f4f4f4;direction:rtl;text-align:right;font-family:"Yekan Bakh FaNum","Yekan Bakh","Vazirmatn",system-ui,-apple-system,Tahoma,sans-serif}
-.ks-seo *{box-sizing:border-box;margin:0;padding:0}
-.ks-seo__in{max-width:1310px;margin-inline:auto;padding:clamp(56px,8vw,96px) clamp(16px,3vw,32px) clamp(64px,9vw,96px)}
-.ks-seo__wrap{background:var(--cream);border:1px solid var(--line);border-radius:var(--r);padding:clamp(24px,3.4vw,44px)}
-
-.ks-seo__eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--gold-d);font-weight:800;font-size:14px;margin-bottom:10px}
-.ks-seo__eyebrow::before{content:"";width:22px;height:2px;background:var(--gold)}
-.ks-seo__title{color:var(--ink);font-weight:800;line-height:1.4;font-size:clamp(20px,2.6vw,26px);letter-spacing:-.01em;margin:0 0 6px}
-
-/* چک‌باکسِ مخفیِ مکانیزم «مشاهده بیشتر» — بدون جاوااسکریپت */
-.ks-seo__cb{position:absolute;width:1px;height:1px;opacity:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%)}
-
-.ks-seo__content{position:relative;overflow:hidden;max-height:300px;margin-top:16px;transition:max-height .6s cubic-bezier(.22,1,.36,1)}
-/* حالتِ باز: مقدار سخاوتمند و ریسپانسیو تا انتهای متن بریده نشود */
-.ks-seo__cb:checked ~ .ks-seo__content{max-height:3200px}
-@media (max-width:900px){.ks-seo__cb:checked ~ .ks-seo__content{max-height:7000px}}
-@media (max-width:480px){.ks-seo__cb:checked ~ .ks-seo__content{max-height:9600px}}
-
-.ks-seo__content h3{color:var(--ink);font-weight:700;line-height:1.6;font-size:clamp(16px,1.8vw,18px);margin:22px 0 8px}
-.ks-seo__content p{color:var(--body);line-height:2.05;font-size:16px;margin:0 0 12px}
-.ks-seo__content ul{list-style:disc;padding-inline-start:1.4em;margin:6px 0 14px}
-.ks-seo__content li{color:var(--body);line-height:1.95;font-size:16px;margin-bottom:6px}
-.ks-seo__content a{color:var(--brand);font-weight:700;text-decoration:underline;text-underline-offset:3px}
-.ks-seo__content a:hover{color:var(--gold-d)}
-
-.ks-seo__fade{position:absolute;inset-inline:0;bottom:0;height:120px;pointer-events:none;background:linear-gradient(to top,var(--cream),rgb(250 247 240 / 0));transition:opacity .3s ease}
-.ks-seo__cb:checked ~ .ks-seo__content .ks-seo__fade{opacity:0}
-
-.ks-seo__btn{display:inline-flex;align-items:center;gap:8px;margin-top:16px;cursor:pointer;background:transparent;color:var(--brand);font-weight:800;font-size:15px;padding:11px 22px;border:2px solid rgb(0 89 73 / .25);border-radius:var(--r);transition:background-color .2s ease,border-color .2s ease;-webkit-user-select:none;user-select:none}
-.ks-seo__btn:hover{background:var(--soft);border-color:var(--brand)}
-.ks-seo__btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s ease}
-.ks-seo__cb:checked ~ .ks-seo__btn svg{transform:rotate(180deg)}
-.ks-seo__less{display:none}
-.ks-seo__cb:checked ~ .ks-seo__btn .ks-seo__more{display:none}
-.ks-seo__cb:checked ~ .ks-seo__btn .ks-seo__less{display:inline}
-.ks-seo__cb:focus-visible ~ .ks-seo__btn{outline:3px solid var(--gold);outline-offset:3px}
-
-@media (prefers-reduced-motion:reduce){.ks-seo__content,.ks-seo__fade,.ks-seo__btn,.ks-seo__btn svg{transition:none}}
-</style>
 
 <section class="ks-seo" id="home-sec-10" aria-label="راهنمای خرید لوازم خانگی">
   <div class="ks-seo__in">

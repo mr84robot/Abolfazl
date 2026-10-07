@@ -34,29 +34,11 @@ if ( ! function_exists( 'ks_trust_icon' ) ) {
 	}
 }
 ?>
-<style id="ks-trust-css">
-.ks-trust{--brand:#005949;--accent:#F2A900;--ink:#1f2b28;--muted:#5b6472;--trust-font:"Yekan Bakh FaNum","Vazirmatn",system-ui,-apple-system,sans-serif;position:relative;z-index:6;background:#fff;color:var(--ink);direction:rtl;font-family:var(--trust-font);border-bottom:1px solid #ededed}
-.ks-trust *{box-sizing:border-box}
-.ks-trust__grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr)}
-.ks-trust__grid>li{border-inline-start:1px solid #ededed}
-.ks-trust__grid>li:first-child{border-inline-start:0}
-.ks-trust__card{height:100%;display:flex;align-items:center;gap:13px;padding:clamp(16px,2.2vw,26px) clamp(14px,2vw,30px)}
-.ks-trust__ic{flex:0 0 auto;width:46px;height:46px;display:grid;place-items:center;color:var(--brand)}
-.ks-trust__ic svg{width:30px;height:30px}
-.ks-trust__grid>li:nth-child(even) .ks-trust__ic{color:#c9870a}
-.ks-trust__tx{min-width:0}
-.ks-trust__t{margin:0;font-size:clamp(14px,1vw,15.5px);font-weight:800;color:#101828;line-height:1.5}
-.ks-trust__d{margin:3px 0 0;font-size:clamp(12px,.9vw,13px);color:var(--muted);line-height:1.6}
-.ks-trust--anim .ks-trust__grid>li{opacity:0;transform:translateY(16px);transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1);transition-delay:calc(var(--i,0) * 70ms)}
-.ks-trust--anim .ks-trust__grid>li.is-in{opacity:1;transform:none}
-@media (max-width:640px){.ks-trust__card{flex-direction:column;text-align:center;gap:8px;padding:16px 4px}.ks-trust__ic{width:40px;height:40px}.ks-trust__ic svg{width:26px;height:26px}.ks-trust__t{font-size:clamp(9.5px,2.95vw,12px);line-height:1.35;white-space:nowrap}.ks-trust__d{display:none}}
-@media (prefers-reduced-motion:reduce){.ks-trust--anim .ks-trust__grid>li{opacity:1;transform:none;transition:none}}
-</style>
 
 <section class="ks-trust" id="home-sec-2" aria-label="مزایای خرید از خانه سعادت" data-ks-trust>
 	<ul class="ks-trust__grid">
 		<?php foreach ( $ks_trust as $i => $item ) : ?>
-		<li style="--i:<?php echo (int) $i; ?>">
+		<li>
 			<div class="ks-trust__card">
 				<span class="ks-trust__ic"><?php echo ks_trust_icon( $item['icon'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped — SVGِ ایستا و مورد اعتماد ?></span>
 				<div class="ks-trust__tx">
@@ -69,15 +51,3 @@ if ( ! function_exists( 'ks_trust_icon' ) ) {
 	</ul>
 </section>
 
-<script id="ks-trust-js">
-(function(){
-	var sec = document.querySelector('[data-ks-trust]');
-	if ( ! sec ) { return; }
-	if ( window.matchMedia('(prefers-reduced-motion: reduce)').matches || ! ('IntersectionObserver' in window) ) { return; }
-	sec.classList.add('ks-trust--anim');
-	var io = new IntersectionObserver(function(entries){
-		entries.forEach(function(en){ if ( en.isIntersecting ) { en.target.classList.add('is-in'); io.unobserve(en.target); } });
-	}, { threshold:.2 });
-	sec.querySelectorAll('.ks-trust__grid > li').forEach(function(li){ io.observe(li); });
-})();
-</script>

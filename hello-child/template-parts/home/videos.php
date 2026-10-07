@@ -37,11 +37,15 @@ $ks_vid_q = new WP_Query( array(
 	'order'               => 'DESC',
 	'ignore_sticky_posts' => true,
 	'no_found_rows'       => true,
+	'update_post_term_cache' => false, // دسته‌های محصول اینجا لازم نیست
 	'meta_query'          => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 		array( 'key' => '_codelock_video_url', 'compare' => 'EXISTS' ),
 		array( 'key' => '_codelock_video_url', 'value' => '', 'compare' => '!=' ),
 	),
 ) );
+
+// عکسِ شاخصِ همهٔ محصول‌ها با یک کوئری، نه یکی‌یکی داخل حلقه
+update_post_thumbnail_cache( $ks_vid_q );
 
 $ks_vids = array();
 foreach ( $ks_vid_q->posts as $ks_p ) {
@@ -71,55 +75,6 @@ if ( ! function_exists( 'ks_fa_digits' ) ) {
 	}
 }
 ?>
-<style id="ks-vid-css">
-.ks-vid{--brand:#005949;--accent:#F2A900;--ink:#1f2b28;--muted:#5b6472;--line:#e7eae9;--r:4px;background:#fff;color:var(--ink);direction:rtl;font-family:"Yekan Bakh FaNum","Vazirmatn",system-ui,-apple-system,sans-serif}
-.ks-vid *{box-sizing:border-box}
-.ks-vid__in{max-width:1310px;margin-inline:auto;padding:clamp(48px,7vw,84px) clamp(16px,3vw,32px)}
-.ks-vid__head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:26px}
-.ks-vid__eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:#8a6100}
-.ks-vid__eyebrow::before{content:"";width:24px;height:2px;background:var(--accent)}
-.ks-vid__title{margin:12px 0 6px;font-size:clamp(22px,3.2vw,30px);font-weight:800;color:#101828;line-height:1.4}
-.ks-vid__sub{margin:0;font-size:14.5px;color:var(--muted);line-height:1.8}
-.ks-vid__nav{display:flex;align-items:center;gap:10px;flex:0 0 auto}
-.ks-vid__all{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:0 18px;border:1px solid #d4dbd8;border-radius:var(--r);background:#fff;font-size:14px;font-weight:700;color:var(--brand);text-decoration:none;transition:border-color .2s,background .2s}
-.ks-vid__all:hover{border-color:var(--brand);background:#f3f8f6}
-.ks-vid__all svg{width:16px;height:16px}
-.ks-vid__arrows{display:flex;gap:8px}
-.ks-vid__arrow{width:42px;height:42px;border-radius:var(--r);border:1px solid #d4dbd8;background:#fff;color:var(--brand);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s,background .2s}
-.ks-vid__arrow:hover{border-color:var(--brand);background:#f3f8f6}
-.ks-vid__arrow svg{width:19px;height:19px}
-
-/* --cols کارتِ کامل دقیقاً عرض ریل را پر می‌کند؛ هیچ کارتِ نیمه‌ای لبِ قاب پیدا نمی‌شود */
-.ks-vid__rail{--cols:3;--gap:20px;display:flex;gap:var(--gap);overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:2px;padding:4px 2px 12px;scrollbar-width:none}
-.ks-vid__rail::-webkit-scrollbar{display:none}
-.ks-vid__card{flex:0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));scroll-snap-align:start;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:border-color .2s,transform .2s,box-shadow .2s}
-.ks-vid__card:hover{border-color:#b9d2cb;transform:translateY(-3px);box-shadow:0 16px 34px -20px rgb(0 89 73 / .4)}
-.ks-vid__link{text-decoration:none;color:inherit;display:flex;flex-direction:column;height:100%}
-.ks-vid__link:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}
-
-.ks-vid__media{position:relative;aspect-ratio:16/9;background:linear-gradient(140deg,#0a5445 0%,#063d32 100%);overflow:hidden}
-.ks-vid__media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s cubic-bezier(.16,1,.3,1)}
-.ks-vid__card:hover .ks-vid__media img{transform:scale(1.05)}
-.ks-vid__media::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / 0);transition:background .3s ease;pointer-events:none}
-.ks-vid__card:hover .ks-vid__media::after{background:rgb(0 0 0 / .14)}
-.ks-vid__play{position:absolute;inset:0;margin:auto;z-index:2;width:62px;height:62px;border-radius:50%;background:rgb(255 255 255 / .94);color:var(--brand);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 28px -8px rgb(0 0 0 / .45);transition:transform .3s cubic-bezier(.16,1,.3,1),background .3s ease,color .3s ease}
-.ks-vid__card:hover .ks-vid__play{transform:scale(1.1);background:var(--brand);color:#fff}
-.ks-vid__play svg{width:24px;height:24px;margin-inline-start:4px}
-.ks-vid__dur{position:absolute;inset-block-end:10px;inset-inline-end:10px;z-index:2;padding:4px 8px;border-radius:var(--r);background:rgb(0 0 0 / .72);color:#fff;font-size:12px;font-weight:700;line-height:1.3;direction:ltr}
-
-.ks-vid__body{display:flex;flex-direction:column;gap:9px;padding:16px 16px 0;flex:1}
-.ks-vid__name{margin:0;font-size:15.5px;font-weight:700;line-height:1.75;color:var(--ink);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.ks-vid__card:hover .ks-vid__name{color:var(--brand)}
-.ks-vid__ex{margin:0;font-size:13.5px;line-height:1.95;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.ks-vid__prod{margin-top:auto;display:flex;align-items:center;gap:7px;padding:12px 0 15px;border-top:1px solid var(--line);font-size:13px;color:#8a948f;line-height:1.6}
-.ks-vid__sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
-.ks-vid__prod svg{flex:0 0 auto;width:15px;height:15px;color:var(--brand)}
-.ks-vid__prod span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-
-@media (max-width:1024px){.ks-vid__rail{--cols:2}}
-@media (max-width:640px){.ks-vid__rail{--cols:1}.ks-vid__arrows{display:none}}
-@media (prefers-reduced-motion:reduce){.ks-vid__card:hover{transform:none}.ks-vid__card:hover .ks-vid__media img{transform:none}.ks-vid__card:hover .ks-vid__play{transform:none}.ks-vid__rail{scroll-behavior:auto}}
-</style>
 
 <section class="ks-vid" id="home-sec-11" aria-label="<?php echo esc_attr( $ks_vid_head['title'] ); ?>" data-ks-vid>
   <div class="ks-vid__in">
@@ -171,20 +126,3 @@ if ( ! function_exists( 'ks_fa_digits' ) ) {
   </div>
 </section>
 
-<script id="ks-vid-js">
-(function(){
-  var sec = document.querySelector('[data-ks-vid]');
-  if ( ! sec ) { return; }
-  var rail = sec.querySelector('[data-ks-vid-rail]');
-  if ( ! rail ) { return; }
-  // در RTL مقدار scrollLeft منفی می‌شود، پس «بعدی» باید منفی اسکرول کند.
-  function s(dir){
-    var rtl  = getComputedStyle(rail).direction === 'rtl';
-    var step = Math.max( rail.clientWidth * 0.8, 320 );
-    rail.scrollBy({ left: ( rtl ? -dir : dir ) * step, behavior:'smooth' });
-  }
-  var n = sec.querySelector('[data-ks-vid-next]'), p = sec.querySelector('[data-ks-vid-prev]');
-  n && n.addEventListener('click', function(){ s(1); });
-  p && p.addEventListener('click', function(){ s(-1); });
-})();
-</script>
