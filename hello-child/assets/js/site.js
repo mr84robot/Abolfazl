@@ -1,7 +1,9 @@
 /*!
- * خانه سعادت — اسکریپتِ هدرِ سراسری (چسبیدن با اسکرول، اورلیِ جستجوی موبایل)
- * محل:  wp-content/themes/hello-child/assets/js/header.js  — header.php صفش می‌کند (defer، فوتر).
+ * خانه سعادت — اسکریپتِ سراسری: هدر (چسبیدن، جستجوی موبایل) و فوتر (آکاردئون، بازگشت به بالا)
+ * محل:  wp-content/themes/hello-child/assets/js/site.js  — header.php صفش می‌کند (defer، فوتر).
  */
+
+/* ===================== header ===================== */
 (function(){
   var h = document.querySelector('[data-ks-hdr]');
   if(h){
@@ -16,4 +18,20 @@
   openBtn && openBtn.addEventListener('click', openOv);
   closeBtn && closeBtn.addEventListener('click', closeOv);
   document.addEventListener('keydown', function(e){ if(e.key==='Escape' && ov && !ov.hidden) closeOv(); });
+})();
+
+/* ===================== footer ===================== */
+(function(){
+  var f = document.querySelector('.ks-footer'); if(!f){ return; }
+  var mq = window.matchMedia('(max-width:1024px)');
+  var accs = f.querySelectorAll('.ks-acc');
+  function sync(){ for(var i=0;i<accs.length;i++){ accs[i].open = !mq.matches; } }
+  sync();
+  if(mq.addEventListener){ mq.addEventListener('change', sync); } else if(mq.addListener){ mq.addListener(sync); }
+  var btt = f.querySelector('.ks-backtotop');
+  if(btt){ btt.addEventListener('click', function(e){
+    e.preventDefault();
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top:0, behavior: reduce ? 'auto' : 'smooth' });
+  }); }
 })();

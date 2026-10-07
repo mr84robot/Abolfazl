@@ -18,7 +18,8 @@ var ksHome = (function(){
   function faNum(n){ return String(n).replace(/[0-9]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'[+d];}); }
   function money(pr){ var mu=parseInt(pr.currency_minor_unit||0,10),pre=pr.currency_prefix||'',suf=pr.currency_suffix||''; return function(v){ v=parseInt(v||'0',10)/Math.pow(10,mu); return pre+v.toLocaleString('fa-IR')+suf; }; }
   function priceHtml(p){ var pr=p.prices||{},f=money(pr); if(p.on_sale&&pr.regular_price&&pr.regular_price!==pr.price){return '<del>'+f(pr.regular_price)+'</del><ins>'+f(pr.price)+'</ins>';} return '<ins>'+f(pr.price)+'</ins>'; }
-  function badge(p){ var pr=p.prices||{}; if(p.on_sale&&+pr.regular_price>0&&+pr.price<+pr.regular_price){return Math.round((1-(+pr.price)/(+pr.regular_price))*100);} return 0; }
+  // برای محصولِ متغیر Store API کمترین قیمت‌ها را می‌دهد؛ همان مبنای درصد است (درصدِ دقیقِ هر متغیر را سرور در کارت‌های سمتِ سرور می‌گذارد)
+  function badge(p){ var pr=p.prices||{}, reg=+pr.regular_price, now=+pr.price; if(p.on_sale&&reg>0&&now>0&&now<reg){return Math.round((1-now/reg)*100);} return 0; }
 
   /* px = پیشوندِ کلاس: 'ks-sale' یا 'ks-prod' — مارک‌آپ عیناً مثلِ رندرِ سمتِ سرور */
   function card(px, p){
@@ -115,7 +116,11 @@ var ksHome = (function(){
   function drag(rail){
     var down=false, moved=false, sx=0, sl=0;
     function grabbable(){ rail.classList.toggle('ks-rail-grab', rail.scrollWidth > rail.clientWidth + 2); }
-    grabbable(); window.addEventListener('resize', grabbable, { passive:true });
+    // ResizeObserver بعد از layoutِ خودِ مرورگر صدا زده می‌شود، پس خواندنِ scrollWidth رفلوی اجباری نمی‌سازد
+    // (قبلاً موقعِ لود ۵ ریل پشتِ هم layout را جلو می‌انداختند). نمایانِ شدنِ تبِ پنهان هم همین‌جا دیده می‌شود.
+    if ( 'ResizeObserver' in window ) { new ResizeObserver(grabbable).observe(rail); }
+    else { grabbable(); window.addEventListener('resize', grabbable, { passive:true }); }
+    rail.addEventListener('pointerenter', grabbable);
     new MutationObserver(grabbable).observe(rail, { childList:true });
     rail.addEventListener('pointerdown', function(e){
       if ( e.pointerType !== 'mouse' || e.button !== 0 || rail.scrollWidth <= rail.clientWidth + 2 ) { return; }
@@ -156,24 +161,6 @@ var ksHome = (function(){
   return { card:card, finite:finite, fetchJSON:fetchJSON, storeUrl:storeUrl, step:step, markMedia:markMedia };
 })();
 
-/* ===================== preloader ===================== */
-(function(){
-  var pl = document.querySelector('[data-ks-pl]');
-  if ( ! pl ) { return; }
-  var root = document.documentElement, done = false;
-  root.classList.add('ks-pl-lock');
-  // حداقل ۱ ثانیه دیده شود تا حرکتِ لوگو کامل شود، حداکثر ۳ ثانیه بماند حتی اگر چیزی دیر برسد
-  function hide(){
-    if ( done ) { return; } done = true;
-    setTimeout(function(){
-      pl.classList.add('is-done'); root.classList.remove('ks-pl-lock');
-      setTimeout(function(){ pl.hidden = true; }, 700);
-    }, Math.max(0, 1000 - performance.now()));
-  }
-  if ( document.readyState === 'complete' ) { hide(); } else { window.addEventListener('load', hide, { once:true }); }
-  setTimeout(hide, Math.max(0, 3000 - performance.now()));
-})();
-
 /* ===================== header on home ===================== */
 (function(){
   var h = document.querySelector('[data-ks-hdr]');
@@ -184,20 +171,25 @@ var ksHome = (function(){
 
 /* ===================== hero ===================== */
 (function(){
-  // ویدیوی هیرو همین که اسکریپت اجرا شد وصل و پخش می‌شود (زیرِ پیش‌لودر بافر می‌شود) و با شروعِ پخش محو می‌شود.
+  // ویدیوی هیرو با شروعِ پخش محو می‌شود. دسکتاپ: همین که اسکریپت اجرا شد وصل می‌شود.
+  // موبایل: بعد از رویدادِ load صفحه، تا دانلودِ ویدیو با عکس‌ها/فونت/CSS رقابت نکند (LCP و TBT)؛
+  // اگر data-src-m (نسخهٔ سبکِ موبایل) باشد همان دانلود می‌شود.
   // با «کاهش حرکت» یا «صرفه‌جویی داده»/اینترنت 2G اصلاً دانلود نمی‌شود و هیرو تیره می‌ماند.
   var v = document.querySelector('[data-ks-hero-video]');
   if ( ! v ) { return; }
   if ( window.matchMedia('(prefers-reduced-motion: reduce)').matches ) { return; }
   var c = navigator.connection;
   if ( c && ( c.saveData || /2g/.test( c.effectiveType || '' ) ) ) { return; }
+  var mobile = window.matchMedia('(max-width: 767px)').matches;
   function start(){
-    v.querySelectorAll('source[data-src]').forEach(function(s){ s.src = s.getAttribute('data-src'); });
+    v.querySelectorAll('source[data-src]').forEach(function(s){ s.src = ( mobile && s.getAttribute('data-src-m') ) || s.getAttribute('data-src'); });
     v.addEventListener('playing', function(){ v.classList.add('is-playing'); }, { once:true });
     v.load();
     var p = v.play(); if ( p && p.catch ) { p.catch(function(){}); }
   }
-  start();
+  if ( ! mobile ) { start(); }
+  else if ( document.readyState === 'complete' ) { setTimeout(start, 300); }
+  else { window.addEventListener('load', function(){ setTimeout(start, 300); }, { once:true }); }
 })();
 
 /* ===================== trust ===================== */
@@ -227,8 +219,8 @@ var ksHome = (function(){
   var rail = sec.querySelector('[data-ks-sale-rail]');
   var base = sec.getAttribute('data-store');
   ksHome.finite(rail, 'ks-sale', function(ids){
-    return ksHome.fetchJSON( ksHome.storeUrl(base, { on_sale:'true', per_page:12, orderby:'date', order:'desc', exclude:ids.join(',') }) );
-  }, function(p){ return !! p.on_sale; });
+    return ksHome.fetchJSON( ksHome.storeUrl(base, { on_sale:'true', stock_status:'instock', per_page:12, orderby:'date', order:'desc', exclude:ids.join(',') }) );
+  }, function(p){ return !! p.on_sale && p.is_in_stock !== false; });
   var n = sec.querySelector('[data-ks-sale-next]'), p = sec.querySelector('[data-ks-sale-prev]');
   n && n.addEventListener('click', function(){ ksHome.step(rail, 1); });
   p && p.addEventListener('click', function(){ ksHome.step(rail, -1); });
@@ -240,15 +232,26 @@ var ksHome = (function(){
   if ( ! sec ) { return; }
   var base  = sec.getAttribute('data-store');
   var rails = {}, loaders = {};
-  sec.querySelectorAll('[data-ks-prod-rail]').forEach(function(rail){
-    var id = rail.getAttribute('data-cat-id'), slug = rail.getAttribute('data-cat-slug');
-    rails[slug] = rail;
+  // کارت‌های تب‌های پنهان در <template> هستند؛ اولین باری که تب باز شود ساخته می‌شوند،
+  // و بارگذاریِ محدودِ همان تب هم بعد از آن راه می‌افتد (تا کارتِ «مشاهده همه» آخرِ ریل بنشیند).
+  function init(slug){
+    var rail = rails[slug];
+    if ( ! rail || loaders[slug] ) { return loaders[slug]; }
+    var tpl = rail.querySelector('template[data-ks-prod-tpl]');
+    if ( tpl ) { rail.insertBefore(tpl.content, tpl); tpl.remove(); }
+    var id = rail.getAttribute('data-cat-id');
     loaders[slug] = ksHome.finite(rail, 'ks-prod', function(ids){
-      return ksHome.fetchJSON( ksHome.storeUrl(base, { category:id, per_page:12, orderby:'date', order:'desc', exclude:ids.join(',') }) );
+      return ksHome.fetchJSON( ksHome.storeUrl(base, { category:id, stock_status:'instock', per_page:12, orderby:'date', order:'desc', exclude:ids.join(',') }) );
     }, function(p){
       // فقط محصولِ همین دسته؛ اگر سرور فیلترِ دسته را نادیده بگیرد، چیزِ اشتباهی وارد نمی‌شود
-      return ( p.categories || [] ).some(function(c){ return String(c.id) === String(id) || c.slug === slug; });
+      return p.is_in_stock !== false && ( p.categories || [] ).some(function(c){ return String(c.id) === String(id) || c.slug === slug; });
     });
+    return loaders[slug];
+  }
+  sec.querySelectorAll('[data-ks-prod-rail]').forEach(function(rail){
+    var slug = rail.getAttribute('data-cat-slug');
+    rails[slug] = rail;
+    if ( ! rail.hidden ) { init(slug); }
   });
   function current(){ return sec.querySelector('[data-ks-prod-rail]:not([hidden])'); }
 
@@ -260,54 +263,13 @@ var ksHome = (function(){
       sec.querySelectorAll('[data-ks-prod-tab]').forEach(function(b){ var on = b === btn; b.classList.toggle('is-active', on); b.setAttribute('aria-selected', on ? 'true' : 'false'); });
       Object.keys(rails).forEach(function(k){ rails[k].hidden = ( k !== slug ); });
       var r = rails[slug];
-      if ( r ) { r.scrollLeft = 0; ksHome.markMedia(r); loaders[slug].check(); }
+      if ( r ) { var l = init(slug); r.scrollLeft = 0; ksHome.markMedia(r); l.check(); }
     });
   });
 
   var n = sec.querySelector('[data-ks-prod-next]'), p = sec.querySelector('[data-ks-prod-prev]');
   n && n.addEventListener('click', function(){ ksHome.step(current(), 1); });
   p && p.addEventListener('click', function(){ ksHome.step(current(), -1); });
-})();
-
-/* ===================== showroom ===================== */
-(function(){
-  var frame = document.querySelector('[data-ks-show]');
-  if ( ! frame ) { return; }
-  var modal = document.querySelector('[data-ks-show-modal]');
-  var mv    = document.querySelector('[data-ks-show-modal-video]');
-
-  // ورودِ باابهت — کارت فقط از همین‌جا پنهان می‌شود (ks-show--anim)، پس بدون JS دیده می‌ماند
-  if ( 'IntersectionObserver' in window && ! window.matchMedia('(prefers-reduced-motion: reduce)').matches ) {
-    frame.closest('.ks-show').classList.add('ks-show--anim');
-    var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if ( e.isIntersecting ) { frame.classList.add('is-in'); io.disconnect(); } }); }, { threshold:.25 });
-    io.observe(frame);
-  } else {
-    frame.classList.add('is-in');
-  }
-
-  function open(){
-    if ( ! modal ) { return; }
-    modal.hidden = false;
-    document.body.style.overflow = 'hidden';
-    // ویدیو تازه اینجا لود می‌شود (preload=none)
-    try { mv.load(); var p = mv.play(); if ( p && p.catch ) { p.catch(function(){}); } } catch(e){}
-  }
-  function close(){
-    if ( ! modal ) { return; }
-    modal.hidden = true;
-    document.body.style.overflow = '';
-    try { mv.pause(); } catch(e){}
-  }
-
-  var playBtn = frame.querySelector('[data-ks-show-play]');
-  if ( playBtn ) { playBtn.addEventListener('click', function(e){ e.stopPropagation(); open(); }); }
-  frame.addEventListener('click', open);
-  frame.addEventListener('keydown', function(e){ if ( e.key === 'Enter' || e.key === ' ' ) { e.preventDefault(); open(); } });
-
-  var closeBtn = document.querySelector('[data-ks-show-close]');
-  if ( closeBtn ) { closeBtn.addEventListener('click', close); }
-  if ( modal ) { modal.addEventListener('click', function(e){ if ( e.target === modal ) { close(); } }); }
-  document.addEventListener('keydown', function(e){ if ( e.key === 'Escape' && modal && ! modal.hidden ) { close(); } });
 })();
 
 /* ===================== blog ===================== */

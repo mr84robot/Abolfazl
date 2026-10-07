@@ -7,28 +7,6 @@
 /* ===== فونتِ برندها: Montserrat 800 فقط حروف بزرگ A–Z، روی خود سایت (۴.۷KB) ===== */
 @font-face{font-family:"Montserrat";font-style:normal;font-weight:800;font-display:swap;src:url("../fonts/montserrat-800-caps.woff2") format("woff2");unicode-range:U+0041-005A}
 
-/* ===================== preloader ===================== */
-/* پیش‌لودر: پس‌زمینهٔ سبز، خانه‌ای که خط‌به‌خط کشیده می‌شود و «خانه سعادت» طلایی با برقِ نرم.
-   home.js بعد از لودِ صفحه (حداقل ۱ و حداکثر ۳ ثانیه، تا حرکتِ لوگو کامل دیده شود) is-done را می‌گذارد؛ بدون JS خودِ CSS بعد از ۴٫۵ ثانیه محوش می‌کند. */
-.ks-pl{position:fixed;inset:0;z-index:100000;display:flex;align-items:center;justify-content:center;background:radial-gradient(120% 90% at 50% 45%,#00684f 0%,#004a3c 55%,#00261f 100%);direction:rtl;font-family:"Yekan Bakh FaNum","Vazirmatn",system-ui,-apple-system,sans-serif;transition:opacity .6s ease,visibility .6s ease;animation:ks-pl-auto .6s ease 4.5s forwards}
-.ks-pl.is-done{opacity:0;visibility:hidden;pointer-events:none}
-.ks-pl[hidden]{display:none}
-.ks-pl__in{display:flex;flex-direction:column;align-items:center;gap:18px;transition:transform .6s cubic-bezier(.22,1,.36,1)}
-.ks-pl.is-done .ks-pl__in{transform:scale(1.06)}
-.ks-pl__mark{width:76px;height:76px;color:#F2A900;overflow:visible}
-.ks-pl__mark path{fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;animation:ks-pl-draw .8s cubic-bezier(.65,0,.35,1) forwards}
-.ks-pl__mark .ks-pl__door{animation-delay:.35s}
-.ks-pl__word{font-size:clamp(32px,6.4vw,50px);font-weight:900;line-height:1.25;background:linear-gradient(100deg,#c98d00 0%,#F2A900 30%,#ffe08a 50%,#F2A900 70%,#c98d00 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;opacity:0;transform:translateY(12px);animation:ks-pl-in .55s cubic-bezier(.22,1,.36,1) .15s forwards,ks-pl-shine 2.2s linear .7s infinite}
-.ks-pl__bar{width:128px;height:2px;background:rgb(242 169 0 / .2);overflow:hidden}
-.ks-pl__bar span{display:block;width:40%;height:100%;background:#F2A900;animation:ks-pl-bar 1.25s cubic-bezier(.65,0,.35,1) infinite}
-@keyframes ks-pl-draw{to{stroke-dashoffset:0}}
-@keyframes ks-pl-in{to{opacity:1;transform:none}}
-@keyframes ks-pl-shine{from{background-position:120% 0}to{background-position:-120% 0}}
-@keyframes ks-pl-bar{from{transform:translateX(170%)}to{transform:translateX(-270%)}}
-@keyframes ks-pl-auto{to{opacity:0;visibility:hidden}}
-.ks-pl-lock,.ks-pl-lock body{overflow:hidden}
-@media (prefers-reduced-motion:reduce){.ks-pl__mark path{animation:none;stroke-dashoffset:0}.ks-pl__word{animation:none;opacity:1;transform:none}.ks-pl__bar span{animation:none;width:100%}}
-
 /* ===================== header on home ===================== */
 /* روی صفحهٔ اصلی هدر از جریانِ صفحه بیرون است و بالای هیرو پنهان؛ با اسکرول (home.js → ks-hdr--shown) پایین می‌آید.
    با فوکوسِ کیبورد هم ظاهر می‌شود تا لینک‌هایش در دسترس بمانند. */
@@ -41,8 +19,8 @@
 /* ===================== base (theme-proofing) ===================== */
 /* تیترها و دکمه‌های سکشن‌ها زیرِ استایلِ قالب/المنتور (مثلاً .elementor-kit-XX h2 یا button/[type=button]) عوض نشوند.
    این بخش عمداً قبل از سکشن‌هاست: هر جا سکشنی مقدارِ خودش را دارد (مثلاً letter-spacingِ تیترِ سعادت‌پی)، همان برنده است. */
-.ks-hero__title,.ks-blog__title,.ks-brands__title,.ks-cats__title,.ks-pay__title,.ks-prod__title,.ks-sale__title,.ks-seo__title,.ks-show__title,.ks-vid__title,.ks-blog__name,.ks-prod__name,.ks-sale__name,.ks-trust__t,.ks-vid__name,.ks-seo__content h3{font-family:inherit!important;text-transform:none!important;font-style:normal!important;letter-spacing:normal!important}
-.ks-sale__arrow,.ks-prod__arrow,.ks-blog__arrow,.ks-vid__arrow,.ks-cats__arrow,.ks-show__play,.ks-show__close,.ks-prod__tab{font:inherit;padding:0}
+.ks-hero__title,.ks-blog__title,.ks-brands__title,.ks-cats__title,.ks-pay__title,.ks-prod__title,.ks-sale__title,.ks-seo__title,.ks-vid__title,.ks-blog__name,.ks-prod__name,.ks-sale__name,.ks-trust__t,.ks-vid__name,.ks-seo__content h3{font-family:inherit!important;text-transform:none!important;font-style:normal!important;letter-spacing:normal!important}
+.ks-sale__arrow,.ks-prod__arrow,.ks-blog__arrow,.ks-vid__arrow,.ks-cats__arrow,.ks-prod__tab{font:inherit;padding:0}
 
 /* ===================== hero ===================== */
 .ks-hero{--brand:#005949;--accent:#F2A900;--hero-font:"Yekan Bakh FaNum","Vazirmatn",system-ui,-apple-system,sans-serif;min-height:100dvh;background:#05080a;box-sizing:border-box;padding:10px;display:flex;font-family:var(--hero-font)}
@@ -69,8 +47,12 @@
 /* هاور نسبت به هر حرف: موس روی هر حرف، همان حرف سفید پر می‌شود */
 @media (hover:hover) and (pointer:fine){.ks-hero__wordmark:hover .ks-hero__ltr{-webkit-text-stroke-color:rgb(255 255 255 / .28)}.ks-hero__ltr:hover{color:#fff;-webkit-text-stroke-color:transparent;transform:translateY(-6px);text-shadow:0 14px 46px rgb(255 255 255 / .3)}}
 /* لمسی: شیمرِ حرف‌به‌حرف چون هاوری نیست */
-@media (hover:none){.ks-hero__ltr{animation:ks-hero-ltr 4.8s cubic-bezier(.16,1,.3,1) infinite;animation-delay:calc(var(--i,0) * .16s)}}
-@keyframes ks-hero-ltr{0%,66%,100%{color:transparent;-webkit-text-stroke-color:rgb(255 255 255 / .5)}10%,26%{color:#fff;-webkit-text-stroke-color:transparent}}
+/* لمسی: شیمرِ حرف‌به‌حرف. یک کپیِ سفیدِ هر حرف (::after) فقط opacity می‌گیرد که روی GPU اجرا می‌شود؛
+   قبلاً color و text-stroke انیمیت می‌شد و هر فریم کلِ هیرو دوباره رسم می‌شد. بعد از لودِ اولیه شروع می‌شود. */
+.ks-hero__ltr{position:relative}
+.ks-hero__ltr::after{content:attr(data-l);position:absolute;inset:0;color:#fff;-webkit-text-stroke:0 transparent;opacity:0;pointer-events:none}
+@media (hover:none){.ks-hero__ltr::after{animation:ks-hero-ltr 4.8s cubic-bezier(.16,1,.3,1) infinite;animation-delay:calc(1.5s + var(--i,0) * .16s);will-change:opacity}}
+@keyframes ks-hero-ltr{0%,66%,100%{opacity:0}10%,26%{opacity:1}}
 .ks-hero__title{text-wrap:balance;margin:18px 0 0!important;font-weight:900!important;color:#fff!important;font-size:clamp(1.3rem,2.6vw,2.15rem)!important;line-height:1.55!important}
 .ks-hero__title-sep{color:rgb(255 255 255 / .35);font-weight:400;margin-inline:.15em}
 /* «| برای خانه‌ای بهتر» یک تکه است و وسطش نمی‌شکند؛ وقتی جا نشد (موبایل/تبلت) خطِ خودش را می‌گیرد و جداکننده پنهان می‌شود */
@@ -81,23 +63,28 @@
 .ks-hero__cta{display:flex;flex-wrap:nowrap;gap:12px;justify-content:center;margin-top:26px}
 .ks-hero__btn{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:.9rem 1.75rem;border-radius:2px;font-weight:600;font-size:15px;text-decoration:none;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
 .ks-hero__btn svg{width:18px;height:18px}
-.ks-hero__btn--primary{background:var(--accent);color:#2a1d00;box-shadow:0 0 45px -8px rgb(242 169 0 / .7);animation:ks-hero-breath 3s ease-in-out infinite}
+.ks-hero__btn--primary{position:relative;background:var(--accent);color:#2a1d00;box-shadow:0 0 40px -10px rgb(242 169 0 / .6)}
+/* تپشِ نور: لایهٔ نور (::after) فقط opacity می‌گیرد؛ قبلاً خودِ box-shadow انیمیت می‌شد که هر فریم رسم می‌شد */
+.ks-hero__btn--primary::after,.ks-pay__cta::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 56px -6px rgb(242 169 0 / 1);opacity:0;pointer-events:none;animation:ks-glow 3s ease-in-out 1.5s infinite;will-change:opacity}
+@keyframes ks-glow{0%,100%{opacity:0}50%{opacity:1}}
 .ks-hero__btn--primary:hover{transform:translateY(-2px);box-shadow:0 0 60px -6px rgb(242 169 0 / .95)}
 .ks-hero__btn--primary:active{transform:translateY(0)}
-@keyframes ks-hero-breath{0%,100%{box-shadow:0 0 40px -10px rgb(242 169 0 / .6)}50%{box-shadow:0 0 54px -6px rgb(242 169 0 / 1)}}
 .ks-hero__btn--ghost{background:rgb(255 255 255 / .06);color:#fff;border:1px solid rgb(255 255 255 / .4)}
 .ks-hero__btn--ghost:hover{background:rgb(255 255 255 / .14);transform:translateY(-2px)}
 .ks-hero__btn:focus-visible{outline:3px solid #fff;outline-offset:3px}
 .ks-hero__scroll{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:5;width:28px;height:46px;border:2px solid rgb(255 255 255 / .35);border-radius:16px;display:flex;justify-content:center;padding-top:8px}
 .ks-hero__scroll-dot{width:4px;height:8px;border-radius:2px;background:rgb(255 255 255 / .8);animation:ks-hero-scroll 1.8s ease-in-out infinite}
 @keyframes ks-hero-scroll{0%{transform:translateY(0);opacity:.2}50%{opacity:1}100%{transform:translateY(12px);opacity:.2}}
-.ks-hero .ks-anim{opacity:0;animation:ks-hero-in .6s cubic-bezier(.22,1,.36,1) both;animation-delay:var(--d,0ms)}
+/* ورود: SAADAT و H1 (المانِ LCP) فقط حرکت می‌کنند و از شفافیتِ صفر شروع نمی‌شوند تا LCP دیر ثبت نشود */
+.ks-hero .ks-anim{animation:ks-hero-in .6s cubic-bezier(.22,1,.36,1) both;animation-delay:var(--d,0ms)}
+.ks-hero__sub.ks-anim,.ks-hero__cta.ks-anim{animation-name:ks-hero-in-fade}
 .ks-hero__wordmark.ks-anim{animation-name:ks-hero-in-wm}
-@keyframes ks-hero-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-@keyframes ks-hero-in-wm{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+@keyframes ks-hero-in{from{transform:translateY(16px)}to{transform:none}}
+@keyframes ks-hero-in-fade{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes ks-hero-in-wm{from{transform:scale(.96)}to{transform:none}}
 @media (max-width:1023px){.ks-hero__side{display:none}}
 @media (max-width:600px){.ks-hero__ltr{-webkit-text-stroke-width:2px}.ks-hero__core{padding-top:52px}.ks-hero__cta{gap:10px}.ks-hero__btn{padding:.75rem 1rem;font-size:13px}.ks-hero__btn svg{width:15px;height:15px}}
-@media (prefers-reduced-motion:reduce){.ks-hero .ks-anim{opacity:1;transform:none;animation:none}.ks-hero__ltr{animation:none;transition:none;transform:none}.ks-hero__btn--primary,.ks-hero__scroll-dot{animation:none}.ks-hero__video{transition:none}.ks-hero__btn--primary{box-shadow:0 0 40px -10px rgb(242 169 0 / .7)}}
+@media (prefers-reduced-motion:reduce){.ks-hero .ks-anim{opacity:1;transform:none;animation:none}.ks-hero__ltr,.ks-hero__ltr::after{animation:none;transition:none;transform:none}.ks-hero__btn--primary,.ks-hero__btn--primary::after,.ks-pay__cta::after,.ks-hero__scroll-dot{animation:none}.ks-hero__video{transition:none}.ks-hero__btn--primary{box-shadow:0 0 40px -10px rgb(242 169 0 / .7)}}
 
 /* صفحهٔ اصلی: اسکرول‌کیوی تزئینیِ هیرو حذف می‌شود؛ نوارِ «مزایا» پلِ هیرو→محتواست.
    باید بعد از قاعدهٔ اصلیِ .ks-hero__scroll بیاید؛ قبلاً جلوترش بود و هیچ‌وقت اثر نمی‌کرد. */
@@ -119,6 +106,8 @@
 .ks-trust--anim .ks-trust__grid>li{opacity:0;transform:translateY(16px);transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1);transition-delay:calc(var(--i,0) * 70ms)}
 .ks-trust__grid>li:nth-child(2){--i:1}.ks-trust__grid>li:nth-child(3){--i:2}.ks-trust__grid>li:nth-child(4){--i:3}.ks-trust__grid>li:nth-child(5){--i:4}.ks-trust__grid>li:nth-child(6){--i:5}.ks-trust__grid>li:nth-child(7){--i:6}.ks-trust__grid>li:nth-child(8){--i:7}
 .ks-trust--anim .ks-trust__grid>li.is-in{opacity:1;transform:none}
+/* تبلت: ۴ ستون جا نمی‌شد (تیتر و توضیح چندخطی و ناهم‌قد)؛ ۲×۲ با خطوطِ جداکنندهٔ داخلی */
+@media (min-width:641px) and (max-width:1099px){.ks-trust__grid{grid-template-columns:repeat(2,1fr)}.ks-trust__grid>li{border-inline-start:0}.ks-trust__grid>li:nth-child(even){border-inline-start:1px solid #ededed}.ks-trust__grid>li:nth-child(n+3){border-top:1px solid #ededed}.ks-trust__card{gap:16px;padding:20px clamp(20px,6vw,64px)}.ks-trust__t{font-size:15px!important}.ks-trust__d{font-size:13px;white-space:nowrap}}
 @media (max-width:640px){.ks-trust__card{flex-direction:column;text-align:center;gap:8px;padding:16px 4px}.ks-trust__ic{width:40px;height:40px}.ks-trust__ic svg{width:26px;height:26px}.ks-trust__t{font-size:clamp(9.5px,2.95vw,12px)!important;line-height:1.35!important;white-space:nowrap!important}.ks-trust__d{display:none}}
 @media (prefers-reduced-motion:reduce){.ks-trust--anim .ks-trust__grid>li{opacity:1;transform:none;transition:none}}
 
@@ -180,7 +169,7 @@
 .ks-sale__link{text-decoration:none;color:inherit;display:block}
 .ks-sale__media{position:relative;aspect-ratio:1/1;background:#f6f7f7}
 .ks-sale__media img{width:100%;height:100%;object-fit:contain;padding:14px;mix-blend-mode:multiply}
-.ks-sale__badge{position:absolute;inset-block-start:10px;inset-inline-start:10px;background:var(--accent);color:#2a1d00;font-size:12.5px;font-weight:800;padding:4px 9px;border-radius:var(--r);line-height:1}
+.ks-sale__badge{position:absolute;inset-block-start:10px;inset-inline-end:10px;background:var(--accent);color:#2a1d00;font-size:12.5px;font-weight:800;padding:4px 9px;border-radius:var(--r);line-height:1}
 .ks-sale__name{margin:0!important;padding:12px 13px 0!important;font-size:14px!important;font-weight:600!important;line-height:1.65!important;color:var(--ink)!important;display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;overflow:hidden!important;min-height:2.95em!important}
 .ks-sale__foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 13px 14px}
 .ks-sale__price{font-size:13px;line-height:1.35;min-width:0}
@@ -255,7 +244,7 @@
 .ks-prod__link{text-decoration:none;color:inherit;display:block}
 .ks-prod__media{position:relative;aspect-ratio:1/1;background:#f6f7f7}
 .ks-prod__media img{width:100%;height:100%;object-fit:contain;padding:14px;mix-blend-mode:multiply}
-.ks-prod__badge{position:absolute;inset-block-start:10px;inset-inline-start:10px;background:var(--accent);color:#2a1d00;font-size:12.5px;font-weight:800;padding:4px 9px;border-radius:var(--r);line-height:1}
+.ks-prod__badge{position:absolute;inset-block-start:10px;inset-inline-end:10px;background:var(--accent);color:#2a1d00;font-size:12.5px;font-weight:800;padding:4px 9px;border-radius:var(--r);line-height:1}
 .ks-prod__name{margin:0!important;padding:12px 13px 0!important;font-size:14px!important;font-weight:600!important;line-height:1.65!important;color:var(--ink)!important;display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;overflow:hidden!important;min-height:2.95em!important}
 .ks-prod__foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 13px 14px}
 .ks-prod__price{font-size:13px;line-height:1.35;min-width:0}
@@ -283,10 +272,9 @@
 .ks-pay__title{margin:12px 0 10px!important;font-size:clamp(28px,5.4vw,50px)!important;font-weight:900!important;line-height:1.1!important;letter-spacing:-.015em!important;color:#fff!important}
 .ks-pay__title .ks-pay__accent{color:var(--accent)}
 .ks-pay__desc{margin:0;max-width:34rem;font-size:clamp(14px,1.1vw,16px);line-height:1.9;color:rgb(255 255 255 / .84)}
-.ks-pay__cta{display:inline-flex;align-items:center;gap:9px;margin-top:20px;min-height:50px;padding:0 26px;border-radius:2px;background:var(--accent);color:#2a1d00;font-size:15px;font-weight:800;text-decoration:none;animation:ks-pay-live 2.4s ease-in-out infinite;will-change:box-shadow,transform}
+.ks-pay__cta{display:inline-flex;align-items:center;gap:9px;margin-top:20px;min-height:50px;padding:0 26px;border-radius:2px;background:var(--accent);color:#2a1d00;font-size:15px;font-weight:800;text-decoration:none;position:relative;box-shadow:0 0 34px -12px rgb(242 169 0 / .5)}
 .ks-pay__cta:hover{animation:none;transform:translateY(-2px);box-shadow:0 0 60px -6px rgb(242 169 0 / .98)}
 .ks-pay__cta svg{width:18px;height:18px}
-@keyframes ks-pay-live{0%,100%{box-shadow:0 0 34px -12px rgb(242 169 0 / .5);transform:translateY(0)}50%{box-shadow:0 0 58px -4px rgb(242 169 0 / .95);transform:translateY(-2px)}}
 .ks-pay__art{position:relative;z-index:2;align-self:center;display:flex;align-items:center;justify-content:center}
 .ks-pay__card{position:relative;overflow:hidden;width:min(116%,348px);min-height:clamp(224px,24vw,250px);margin-block:calc(-1 * clamp(24px,3.2vw,42px));display:flex;flex-direction:column;justify-content:space-between;gap:14px;border-radius:16px;padding:22px;background:linear-gradient(140deg,rgb(255 255 255 / .22) 0%,rgb(255 255 255 / .07) 55%,rgb(255 255 255 / .13) 100%);border:1px solid rgb(255 255 255 / .34);box-shadow:0 40px 72px -30px rgb(0 0 0 / .78),inset 0 1px 0 rgb(255 255 255 / .4);transform:rotate(-4deg) translateX(-3%)}
 .ks-pay__card::before{content:"";position:absolute;inset:0;background:linear-gradient(118deg,transparent 32%,rgb(255 255 255 / .14) 47%,transparent 61%);pointer-events:none}
@@ -308,46 +296,6 @@
   .ks-pay__card{transform:rotate(-3deg);width:min(90%,320px);margin-block:4px -8px}
 }
 @media (prefers-reduced-motion:reduce){.ks-pay__cta{animation:none}}
-
-/* ===================== showroom ===================== */
-.ks-show{position:relative;background:#03140f;direction:rtl;font-family:"Yekan Bakh FaNum","Vazirmatn",system-ui,-apple-system,sans-serif;min-height:80vh;display:flex;align-items:center}
-.ks-show *{box-sizing:border-box}
-/* پس‌زمینهٔ دارک: عکس ← لایهٔ تیرهٔ سبزِ شعاعی (پشتِ کارت تیره‌تر) + محوِ بالا/پایین به رنگِ سکشن.
-   بدون z-index روی سکشن تا مودالِ fixed بالای هدر بماند */
-.ks-show__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 58%;pointer-events:none;user-select:none}
-.ks-show__veil{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,#03140f 0%,rgb(3 20 15 / 0) 22%,rgb(3 20 15 / 0) 78%,#03140f 100%),radial-gradient(ellipse 62% 58% at 50% 54%,rgb(3 24 19 / .8) 0%,rgb(3 24 19 / .6) 100%)}
-.ks-show__bg{filter:saturate(.75)}
-/* درخششِ طلاییِ ملایم پشتِ کارت */
-.ks-show__in::before{content:"";position:absolute;left:50%;top:58%;width:min(820px,92%);height:62%;transform:translate(-50%,-50%);background:radial-gradient(ellipse at center,rgb(242 169 0 / .16),transparent 66%);pointer-events:none}
-.ks-show__in{position:relative;z-index:1;width:100%;max-width:1180px;margin-inline:auto;padding:clamp(80px,12vw,168px) clamp(16px,3vw,32px) clamp(40px,6vw,84px)}
-.ks-show__frame{position:relative;max-width:590px;margin-inline:auto;aspect-ratio:16/9;border-radius:6px;overflow:hidden;cursor:pointer;background:linear-gradient(140deg,#063e33 0%,#032a22 55%,#021713 100%);box-shadow:0 50px 100px -38px rgb(0 0 0 / .85),0 0 0 1px rgb(255 255 255 / .07);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1.15s cubic-bezier(.16,1,.3,1)}
-.ks-show--anim .ks-show__frame{opacity:0;transform:translateY(42px) scale(.96)}
-.ks-show--anim .ks-show__frame.is-in{opacity:1;transform:none}
-.ks-show__frame:focus-visible{outline:3px solid #F2A900;outline-offset:3px}
-.ks-show__poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1)}
-.ks-show__frame:hover .ks-show__poster{transform:scale(1.04)}
-.ks-show__frame.has-poster .ks-show__glow{display:none}
-.ks-show__glow{position:absolute;inset-block-start:-26%;inset-inline:6%;height:72%;background:radial-gradient(ellipse at center,rgb(242 169 0 / .18),transparent 62%);pointer-events:none}
-.ks-show__ov{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgb(0 0 0 / .5) 0%,rgb(0 0 0 / .12) 46%,transparent 100%)}
-.ks-show__play{position:absolute;inset:0;margin:auto;width:clamp(58px,7vw,76px);height:clamp(58px,7vw,76px);border:0;border-radius:50%;background:rgb(255 255 255 / .18);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .3s ease,background .3s ease}
-.ks-show__frame:hover .ks-show__play{transform:scale(1.09);background:rgb(255 255 255 / .3)}
-.ks-show__play svg{width:38%;height:38%;margin-inline-start:6%}
-.ks-show__play::after{content:"";position:absolute;inset:-7px;border-radius:50%;border:1px solid rgb(255 255 255 / .35);animation:ks-show-pulse 2.6s ease-out infinite}
-@keyframes ks-show-pulse{0%{transform:scale(1);opacity:.75}100%{transform:scale(1.32);opacity:0}}
-.ks-show__cap{position:absolute;inset-inline:0;inset-block-end:0;padding:clamp(16px,2.4vw,28px);z-index:2;pointer-events:none}
-.ks-show__title{margin:0!important;color:#fff!important;font-size:clamp(17px,2.2vw,24px)!important;font-weight:800!important;line-height:1.5!important;text-shadow:0 2px 18px rgb(0 0 0 / .4)!important}
-.ks-show__sub{margin:6px 0 0;color:rgb(255 255 255 / .85);font-size:clamp(12px,1.1vw,14px);line-height:1.7}
-/* مودال */
-.ks-show__modal{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,28px);background:rgb(0 0 0 / .86);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);animation:ks-show-fade .25s ease both}
-.ks-show__modal[hidden]{display:none}
-@keyframes ks-show-fade{from{opacity:0}to{opacity:1}}
-.ks-show__modal-in{width:100%;max-width:1000px;aspect-ratio:16/9}
-.ks-show__modal-video{width:100%;height:100%;border-radius:10px;background:#000;display:block}
-.ks-show__close{position:absolute;inset-block-start:18px;inset-inline-end:18px;width:46px;height:46px;border:0;border-radius:50%;background:rgb(255 255 255 / .12);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s ease}
-.ks-show__close:hover{background:rgb(255 255 255 / .24)}
-.ks-show__close svg{width:22px;height:22px}
-@media (max-width:640px){.ks-show{min-height:auto}}
-@media (prefers-reduced-motion:reduce){.ks-show__frame{opacity:1;transform:none;transition:none}.ks-show__frame:hover .ks-show__poster{transform:none}.ks-show__play::after{animation:none}.ks-show__modal{animation:none}}
 
 /* ===================== blog ===================== */
 .ks-blog{--brand:#005949;--accent:#F2A900;--ink:#1f2b28;--muted:#5b6472;--line:#e7eae9;--r:4px;background:#f6f8f7;color:var(--ink);direction:rtl;font-family:"Yekan Bakh FaNum","Vazirmatn",system-ui,-apple-system,sans-serif}
@@ -489,8 +437,9 @@
 
 /* ===================== carousels: skeleton, end card, mouse drag ===================== */
 /* اسکلتون: تا عکسِ هر کارت برسد، جایش برقِ نرم می‌زند (home.js کلاسِ is-loaded را می‌گذارد؛ فقط با JS فعال است). */
-@keyframes ks-skel{from{background-position:150% 0}to{background-position:-50% 0}}
-.ks-skel,.ks-js .ks-sale__media:not(.is-loaded),.ks-js .ks-prod__media:not(.is-loaded),.ks-js .ks-blog__media:not(.is-loaded),.ks-js .ks-vid__media:not(.is-loaded),.ks-js .ks-cat__ic:not(.is-loaded){background:linear-gradient(90deg,#eef1f0 25%,#f8faf9 37%,#eef1f0 63%);background-size:400% 100%;animation:ks-skel 1.4s ease infinite}
+@keyframes ks-skel{from{transform:translateX(100%)}to{transform:translateX(-100%)}}
+.ks-skel,.ks-js .ks-sale__media:not(.is-loaded),.ks-js .ks-prod__media:not(.is-loaded),.ks-js .ks-blog__media:not(.is-loaded),.ks-js .ks-vid__media:not(.is-loaded),.ks-js .ks-cat__ic:not(.is-loaded){position:relative;overflow:hidden;background:#eef1f0}
+.ks-skel::after,.ks-js .ks-sale__media:not(.is-loaded)::after,.ks-js .ks-prod__media:not(.is-loaded)::after,.ks-js .ks-blog__media:not(.is-loaded)::after,.ks-js .ks-vid__media:not(.is-loaded)::after,.ks-js .ks-cat__ic:not(.is-loaded)::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 0%,rgb(255 255 255 / .6) 50%,transparent 100%);transform:translateX(100%);animation:ks-skel 1.4s ease infinite;pointer-events:none}
 .ks-skelcard{pointer-events:none}
 .ks-skelcard__body{display:flex;flex-direction:column;gap:9px;padding:14px 13px 16px}
 .ks-skelcard__line{display:block;height:12px}
@@ -507,4 +456,11 @@
 @media (hover:hover) and (pointer:fine){.ks-rail-grab{cursor:grab}}
 .ks-rail-dragging{cursor:grabbing!important;scroll-snap-type:none!important;scroll-behavior:auto!important;-webkit-user-select:none;user-select:none}
 .ks-rail-dragging a,.ks-rail-dragging img{pointer-events:none}
-@media (prefers-reduced-motion:reduce){.ks-skel,.ks-js .ks-sale__media,.ks-js .ks-prod__media,.ks-js .ks-blog__media,.ks-js .ks-vid__media,.ks-js .ks-cat__ic{animation:none!important}}
+@media (prefers-reduced-motion:reduce){.ks-skel::after,.ks-js .ks-sale__media:not(.is-loaded)::after,.ks-js .ks-prod__media:not(.is-loaded)::after,.ks-js .ks-blog__media:not(.is-loaded)::after,.ks-js .ks-vid__media:not(.is-loaded)::after,.ks-js .ks-cat__ic:not(.is-loaded)::after{animation:none!important;opacity:0}}
+
+/* ===================== lazy rendering ===================== */
+/* سکشن‌های پایینِ صفحه تا نزدیکِ دید نرسیده‌اند چیده و رسم نمی‌شوند (content-visibility)؛ کارِ اولیهٔ CPU روی
+   موبایل خیلی کم می‌شود. contain-intrinsic-size فقط حدسِ ارتفاع برای اسکرول‌بار است و بعد از اولین رندر به خاطر سپرده می‌شود. */
+.ks-cats,.ks-sale,.ks-prod,.ks-blog,.ks-vid{content-visibility:auto;contain-intrinsic-size:auto 620px}
+.ks-brands,.ks-pay,.ks-seo{content-visibility:auto;contain-intrinsic-size:auto 460px}
+.home .ks-footer{content-visibility:auto;contain-intrinsic-size:auto 760px}

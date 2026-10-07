@@ -6,6 +6,7 @@
  *
  * داده: محصولاتِ حراجِ ووکامرس (wc_get_product_ids_on_sale). اگر ووکامرس نبود یا حراجی نبود، هیچ رندر نمی‌شود.
  * کاروسل: اسکرول افقی + scroll-snap + فلش (RTL) + کشیدن با موس، وانیلا JS. گوشهٔ ۴px، فقط رنگ‌های اصلی.
+ * ناموجودها نمایش داده نمی‌شوند؛ درصدِ تخفیفِ محصولاتِ متغیر هم (از بینِ متغیرها) روی بَجِ بالا سمتِ چپ می‌آید.
  * بی‌پایان نیست: ۱۲ محصول سمتِ سرور، در انتهای ریل یک بار ۶تای دیگر با Store API، بعد کارتِ «همه محصولات».
  * قیمت از get_price_html خودِ ووکامرس (ارز/تخفیف درست)؛ درصد تخفیف جدا محاسبه و روی بَج کهربایی.
  */
@@ -25,6 +26,7 @@ $ks_sale_q = new WP_Query( array(
 	'posts_per_page'      => 12,
 	'ignore_sticky_posts' => true,
 	'no_found_rows'       => true,
+	'meta_query'          => array( array( 'key' => '_stock_status', 'value' => 'outofstock', 'compare' => '!=' ) ), // ناموجودها نمایش داده نمی‌شوند
 ) );
 if ( ! $ks_sale_q->have_posts() ) { wp_reset_postdata(); return; }
 
@@ -34,6 +36,30 @@ $ks_store    = esc_url_raw( rest_url( 'wc/store/v1/products' ) );
 if ( ! function_exists( 'ks_fa_digits' ) ) {
 	function ks_fa_digits( $str ) {
 		return str_replace( array('0','1','2','3','4','5','6','7','8','9'), array('۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'), (string) $str );
+	}
+}
+
+if ( ! function_exists( 'ks_discount_pct' ) ) {
+	/**
+	 * بیشترین درصدِ تخفیفِ محصول. برای محصولِ متغیر، والد «قیمتِ عادی» ندارد (خالی برمی‌گرداند)،
+	 * پس درصد از بینِ متغیرها حساب می‌شود؛ قبلاً به همین دلیل روی محصولاتِ متغیر بَج نمی‌آمد.
+	 */
+	function ks_discount_pct( $product ) {
+		if ( ! $product->is_on_sale() ) { return 0; }
+		$pairs = array();
+		if ( $product->is_type( 'variable' ) ) {
+			$vp = $product->get_variation_prices( true );
+			foreach ( (array) $vp['regular_price'] as $vid => $reg ) {
+				$pairs[] = array( (float) $reg, (float) ( isset( $vp['price'][ $vid ] ) ? $vp['price'][ $vid ] : $reg ) );
+			}
+		} else {
+			$pairs[] = array( (float) $product->get_regular_price(), (float) $product->get_price() );
+		}
+		$max = 0;
+		foreach ( $pairs as $pr ) {
+			if ( $pr[0] > 0 && $pr[1] > 0 && $pr[1] < $pr[0] ) { $max = max( $max, (int) round( ( 1 - $pr[1] / $pr[0] ) * 100 ) ); }
+		}
+		return $max;
 	}
 }
 
@@ -64,10 +90,8 @@ $ks_cart_svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strok
       while ( $ks_sale_q->have_posts() ) :
           $ks_sale_q->the_post();
           $product = wc_get_product( get_the_ID() );
-          if ( ! $product ) { continue; }
-          $regular = (float) $product->get_regular_price();
-          $active  = (float) $product->get_price();
-          $pct     = ( $regular > 0 && $active > 0 && $active < $regular ) ? (int) round( ( 1 - $active / $regular ) * 100 ) : 0;
+          if ( ! $product || ! $product->is_in_stock() ) { continue; }
+          $pct     = ks_discount_pct( $product );
           $plink   = get_permalink();
           ?>
           <div class="ks-sale__card">

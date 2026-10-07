@@ -78,7 +78,7 @@ function wp_head() {
 function wp_footer() { foreach ( $GLOBALS['SCRIPTS'] as $h => $src ) { echo '<script defer id="' . $h . '-js" src="' . $src . '"></script>' . "\n"; } }
 function wp_body_open() { do_action( 'wp_body_open' ); }
 function get_header() { require $GLOBALS['THEME'] . '/header.php'; }
-function get_footer() { echo "<footer class=\"pv-footer\">فوترِ سایت (در پیش‌نمایش ساده شده)</footer>\n"; wp_footer(); echo "</body>\n</html>\n"; }
+function get_footer() { require $GLOBALS['THEME'] . '/footer.php'; }
 function get_template_part( $slug ) { require $GLOBALS['THEME'] . '/' . $slug . '.php'; }
 
 /* ---------------- وردپرس ---------------- */
@@ -122,7 +122,10 @@ class WP_Query {
 				$slug = term_slug( $a['tax_query'][0]['terms'] );
 				$ids  = array_values( array_filter( $ids, function ( $id ) use ( $slug ) { return in_array( $slug, $GLOBALS['PRODS'][ $id ]['cats'], true ); } ) );
 			}
-			if ( ! empty( $a['meta_query'] ) ) { $ids = array_keys( $GLOBALS['VIDEOS'] ); }
+			foreach ( (array) ( $a['meta_query'] ?? array() ) as $mq ) {
+				if ( '_codelock_video_url' === ( $mq['key'] ?? '' ) ) { $ids = array_values( array_intersect( $ids, array_keys( $GLOBALS['VIDEOS'] ) ) ); }
+				if ( '_stock_status' === ( $mq['key'] ?? '' ) ) { $ids = array_values( array_filter( $ids, function ( $id ) { return $GLOBALS['PRODS'][ $id ]['stock']; } ) ); }
+			}
 		}
 		$ids = array_slice( $ids, 0, $a['posts_per_page'] ?? 10 );
 		foreach ( $ids as $id ) { $o = new stdClass(); $o->ID = $id; $this->posts[] = $o; }
@@ -165,7 +168,8 @@ class PV_Product {
 	private $id, $d;
 	function __construct( $id ) { $this->id = $id; $this->d = $GLOBALS['PRODS'][ $id ]; }
 	function get_id() { return $this->id; }
-	function get_regular_price() { return $this->d['regular']; }
+	function get_regular_price() { return 'variable' === $this->d['type'] ? '' : $this->d['regular']; } // مثلِ ووکامرس: والدِ متغیر قیمت ندارد
+	function get_variation_prices( $display = false ) { return array( 'regular_price' => array( 1 => $this->d['regular'] ), 'price' => array( 1 => $this->d['price'] ), 'sale_price' => array( 1 => $this->d['price'] ) ); }
 	function get_price() { return $this->d['price']; }
 	function is_on_sale() { return $this->d['regular'] > $this->d['price']; }
 	function is_type( $t ) { return $this->d['type'] === $t; }

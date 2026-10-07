@@ -15,8 +15,8 @@
  * برای خروجِ کاملِ هدر از المنتور، تمپلیت هدر #8843 را Draft/حذف کن.
  *
  * استایل و اسکریپت در فایل‌های جدا هستند (هیچ CSS/JSِ درون‌خطی نمانده):
- *   assets/css/header.css  ← در <head>
- *   assets/js/header.js    ← در فوتر با defer
+ *   assets/css/site.css  ← در <head> (هدر + فوتر)
+ *   assets/js/site.js    ← در فوتر با defer
  * اولویت ۹۹۹: قبلاً CSSِ هدر داخلِ body و بعد از استایلِ قالب/المنتور می‌آمد؛ این ترتیب حفظ می‌شود.
  * روی صفحهٔ اصلی، home.css هدر را بالای هیرو پنهان می‌کند و با اسکرول نشانش می‌دهد.
  */
@@ -43,8 +43,8 @@ if ( ! function_exists( 'hello_elementor_display_header_footer' ) || hello_eleme
 	add_action( 'wp_enqueue_scripts', function () {
 		$dir = get_stylesheet_directory();
 		$uri = get_stylesheet_directory_uri();
-		wp_enqueue_style( 'ks-header', $uri . '/assets/css/header.css', array(), (string) @filemtime( $dir . '/assets/css/header.css' ) );
-		wp_enqueue_script( 'ks-header', $uri . '/assets/js/header.js', array(), (string) @filemtime( $dir . '/assets/js/header.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
+		wp_enqueue_style( 'ks-site', $uri . '/assets/css/site.css', array(), (string) @filemtime( $dir . '/assets/css/site.css' ) );
+		wp_enqueue_script( 'ks-site', $uri . '/assets/js/site.js', array(), (string) @filemtime( $dir . '/assets/js/site.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
 	}, 999 );
 }
 ?><!DOCTYPE html>

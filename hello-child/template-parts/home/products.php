@@ -11,6 +11,8 @@
  *   - کاروسل بی‌پایان نیست: در انتهای هر ریل فقط یک بار ۶ محصولِ دیگر با Store API می‌آید (home.js)،
  *     نتیجه سمتِ مرورگر دوباره بر اساسِ دسته فیلتر و تکراری‌ها حذف می‌شود، بعد کارتِ «مشاهده همه».
  *   - تصاویرِ تب‌های پنهان lazy هستند و تا تب باز نشود دانلود نمی‌شوند.
+ *   - محصولاتِ ناموجود نمایش داده نمی‌شوند (هم در کوئریِ سرور، هم در پاسخِ AJAX).
+ *   - درصدِ تخفیف برای محصولاتِ متغیر هم (از بینِ متغیرها) حساب می‌شود؛ بَج بالا سمتِ چپِ عکس است.
  *   - کارت و استایل عیناً مثل sale؛ گوشهٔ ۴px، فقط رنگ‌های اصلی.
  */
 
@@ -48,15 +50,37 @@ if ( ! function_exists( 'ks_fa_digits' ) ) {
 }
 $ks_cart_svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17.5" cy="20" r="1.4"/><path d="M3 4h2.2l2 11a1.6 1.6 0 0 0 1.6 1.3h7.8a1.6 1.6 0 0 0 1.6-1.2L20.4 8H6"/></svg>';
 
+if ( ! function_exists( 'ks_discount_pct' ) ) {
+	/**
+	 * بیشترین درصدِ تخفیفِ محصول. برای محصولِ متغیر، والد «قیمتِ عادی» ندارد (خالی برمی‌گرداند)،
+	 * پس درصد از بینِ متغیرها حساب می‌شود؛ قبلاً به همین دلیل روی محصولاتِ متغیر بَج نمی‌آمد.
+	 */
+	function ks_discount_pct( $product ) {
+		if ( ! $product->is_on_sale() ) { return 0; }
+		$pairs = array();
+		if ( $product->is_type( 'variable' ) ) {
+			$vp = $product->get_variation_prices( true );
+			foreach ( (array) $vp['regular_price'] as $vid => $reg ) {
+				$pairs[] = array( (float) $reg, (float) ( isset( $vp['price'][ $vid ] ) ? $vp['price'][ $vid ] : $reg ) );
+			}
+		} else {
+			$pairs[] = array( (float) $product->get_regular_price(), (float) $product->get_price() );
+		}
+		$max = 0;
+		foreach ( $pairs as $pr ) {
+			if ( $pr[0] > 0 && $pr[1] > 0 && $pr[1] < $pr[0] ) { $max = max( $max, (int) round( ( 1 - $pr[1] / $pr[0] ) * 100 ) ); }
+		}
+		return $max;
+	}
+}
+
 if ( ! function_exists( 'ks_prod_card' ) ) {
 	/** کارتِ محصول (رندر سمت سرور)؛ مارک‌آپ عیناً با رندرِ JS یکی است. */
 	function ks_prod_card( $product, $cart_svg ) {
 		$pid     = $product->get_id();
 		$plink   = get_permalink( $pid );
 		$name    = get_the_title( $pid );
-		$regular = (float) $product->get_regular_price();
-		$active  = (float) $product->get_price();
-		$pct     = ( $product->is_on_sale() && $regular > 0 && $active > 0 && $active < $regular ) ? (int) round( ( 1 - $active / $regular ) * 100 ) : 0;
+		$pct     = ks_discount_pct( $product );
 		ob_start(); ?>
 		<div class="ks-prod__card">
 			<a class="ks-prod__link" href="<?php echo esc_url( $plink ); ?>">
@@ -120,6 +144,7 @@ if ( ! function_exists( 'ks_prod_card' ) ) {
           'ignore_sticky_posts' => true,
           'no_found_rows'       => true,
           'tax_query'           => array( array( 'taxonomy' => 'product_cat', 'field' => 'term_id', 'terms' => $t['id'] ) ),
+          'meta_query'          => array( array( 'key' => '_stock_status', 'value' => 'outofstock', 'compare' => '!=' ) ), // ناموجودها نمایش داده نمی‌شوند
         ) );
         $ks_ids = wp_list_pluck( $ks_pq->posts, 'ID' );
         ?>
@@ -129,10 +154,14 @@ if ( ! function_exists( 'ks_prod_card' ) ) {
            data-all="<?php echo esc_url( $t['link'] ? $t['link'] : $ks_shop_url ); ?>" data-all-label="<?php echo esc_attr( $t['label'] ); ?>"<?php echo 0 === $i ? '' : ' hidden'; ?>>
         <?php
         if ( $ks_pq->have_posts() ) :
+            // تبِ اول مستقیم رندر می‌شود؛ کارت‌های تب‌های پنهان داخلِ <template> می‌مانند تا با اولین کلیک
+            // ساخته شوند (DOMِ اولیه ~۶۰۰ گره کوچک‌تر و عکس‌هایشان هم تا آن موقع دانلود نمی‌شوند).
+            echo 0 === $i ? '' : '<template data-ks-prod-tpl>';
             while ( $ks_pq->have_posts() ) : $ks_pq->the_post();
                 $p = wc_get_product( get_the_ID() );
-                if ( $p ) { echo ks_prod_card( $p, $ks_cart_svg ); } // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                if ( $p && $p->is_in_stock() ) { echo ks_prod_card( $p, $ks_cart_svg ); } // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
             endwhile;
+            echo 0 === $i ? '' : '</template>';
             wp_reset_postdata();
         else :
             echo '<p class="ks-prod__empty">فعلاً محصولی در این دسته موجود نیست.</p>';

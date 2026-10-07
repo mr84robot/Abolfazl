@@ -1,7 +1,9 @@
 /*!
- * خانه سعادت — استایلِ هدرِ سراسری (همهٔ صفحه‌ها)
- * محل:  wp-content/themes/hello-child/assets/css/header.css  — header.php صفش می‌کند.
+ * خانه سعادت — استایلِ سراسری: هدر و فوتر (همهٔ صفحه‌ها)
+ * محل:  wp-content/themes/hello-child/assets/css/site.css  — header.php صفش می‌کند.
  */
+
+/* ===================== header ===================== */
 .ks-hdr{--ks-green:#005949;--ks-amber:#F2A900;--ks-ink:#1f2b28;--ks-line:#e8ece9;--ks-font:"Yekan Bakh FaNum","Vazirmatn",system-ui,-apple-system,"Segoe UI",sans-serif;--ks-mh-h:60px;position:sticky;top:0;z-index:999;background:#fff;box-shadow:0 1px 0 var(--ks-line);font-family:var(--ks-font);direction:rtl;transition:box-shadow .3s ease}
 .ks-hdr.is-stuck{box-shadow:0 6px 24px rgba(0,0,0,.08)}
 .ks-hdr *{box-sizing:border-box}
@@ -102,3 +104,49 @@
 }
 .ks-hdr__sprite{position:absolute;width:0;height:0;overflow:hidden}
 
+/* ===================== footer ===================== */
+.ks-footer{--ks-amber:#F2A900;--ks-line:rgba(255,255,255,.38);background:linear-gradient(190deg,#02392F 34%,#017A64 100%);color:#fff;font-family:"Yekan Bakh FaNum","Vazirmatn",system-ui,-apple-system,"Segoe UI",sans-serif;border-radius:4px;margin:40px auto 20px;max-width:min(1310px, 100% - 24px);direction:rtl}
+.ks-footer *{box-sizing:border-box}
+.ks-footer a{text-decoration:none}
+.ks-footer__inner{margin-inline:auto;padding:34px 22px 24px}
+.ks-footer__top{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding-bottom:28px;border-bottom:1px solid var(--ks-line)}
+.ks-footer__logo{display:inline-block;line-height:0}
+.ks-footer__logo img{display:block;width:clamp(150px,40vw,200px);height:auto;aspect-ratio:993/354;object-fit:contain}
+.ks-footer__actions{display:inline-flex;align-items:center;gap:12px}
+.ks-social{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:2px;background:rgba(255,255,255,.12);color:#fff;transition:background .25s ease,transform .25s ease}
+.ks-social svg{width:20px;height:20px;fill:currentColor}
+.ks-social:hover{transform:translateY(-3px)}
+.ks-social--ig:hover{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)}
+.ks-backtotop{display:inline-flex;align-items:center;gap:7px;background:#fff;color:#1c1c1c;font-size:14px;font-weight:600;padding:12px 18px;border-radius:2px;line-height:1;transition:transform .2s ease,box-shadow .2s ease}
+.ks-backtotop:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(0,0,0,.18)}
+.ks-backtotop__icon{width:14px;height:14px;fill:currentColor;animation:ks-bob 1.6s ease-in-out infinite}
+@keyframes ks-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.ks-footer__cols{display:grid;grid-template-columns:1fr;gap:30px;padding:34px 0;border-bottom:1px solid var(--ks-line)}
+.ks-col__title{margin:0 0 14px;font-size:17px;font-weight:700;color:#fff}
+.ks-col--about p{margin:0;font-size:15px;line-height:2.1;color:#FAFAFA;text-align:justify}
+.ks-links,.ks-phones{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px}
+.ks-links a{display:inline-flex;align-items:center;gap:9px;color:#fff;font-size:15px;line-height:1.6;min-height:24px;transition:color .25s ease}
+.ks-links a::before{content:"";flex:0 0 auto;width:7px;height:7px;border-radius:50%;background:var(--ks-amber)}
+.ks-links a:hover{color:var(--ks-amber)}
+.ks-links a:hover::before{box-shadow:0 0 0 3px rgba(242,169,0,.25)}
+.ks-acc{padding:0}
+.ks-acc summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.ks-acc summary::-webkit-details-marker{display:none}
+.ks-acc summary .ks-col__title{margin:0}
+.ks-acc__chev{width:14px;height:14px;fill:#fff;flex:0 0 auto;transition:transform .25s ease}
+.ks-acc[open] .ks-acc__chev{transform:rotate(180deg)}
+.ks-acc .ks-links{margin-top:14px}
+.ks-footer__contact{display:grid;grid-template-columns:1fr;gap:30px;padding:34px 0 24px;align-items:start}
+.ks-contact p{margin:8px 0 0;font-size:16px;line-height:1.95;color:#fff}
+.ks-phones a{display:inline-flex;align-items:center;gap:9px;color:#fff;font-size:16px;min-height:28px;transition:color .25s ease}
+.ks-phones a:hover{color:var(--ks-amber)}
+.ks-phones svg{width:16px;height:16px;fill:var(--ks-amber);flex:0 0 auto}
+.ks-phones bdi{direction:ltr;unicode-bidi:isolate}
+.ks-footer__badges{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+.ks-footer__badge{background:#fff;border-radius:2px;padding:10px;display:inline-flex;align-items:center}
+.ks-footer__badge img{display:block;height:92px;width:auto}
+.ks-footer__copy{margin:0;padding-top:22px;text-align:center;font-size:13px;font-weight:300;color:#fff;border-top:1px solid var(--ks-line)}
+@media(min-width:600px){.ks-footer__cols{grid-template-columns:1fr 1fr;gap:30px 28px}.ks-col--about{grid-column:1/-1}.ks-footer__contact{grid-template-columns:1fr 1fr}.ks-footer__contact .ks-footer__badges{grid-column:1/-1}}
+@media(min-width:1025px){.ks-footer__inner{padding:56px 48px 30px}.ks-footer__cols{grid-template-columns:1.7fr 1fr 1fr 1fr;gap:48px;align-items:start;padding:44px 0}.ks-col--about{grid-column:auto}.ks-acc summary{pointer-events:none}.ks-acc__chev{display:none}.ks-footer__contact{grid-template-columns:1.5fr 1fr auto;gap:48px;padding:44px 0 30px}.ks-footer__contact .ks-footer__badges{grid-column:auto;justify-content:flex-start}}
+@media(prefers-reduced-motion:reduce){.ks-backtotop{transition:none}.ks-backtotop__icon{animation:none}.ks-acc__chev{transition:none}.ks-social{transition:none}}
+.ks-footer__sprite{position:absolute;width:0;height:0;overflow:hidden}
