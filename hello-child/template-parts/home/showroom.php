@@ -11,14 +11,14 @@
  * پس‌زمینه: نمای هواییِ همدان، حالتِ لایت — زیرِ لایهٔ سفیدِ پررنگ، پس بیشترِ سطح سفید می‌ماند.
  *   - مرکز (پشتِ کارتِ ویدیو) سفیدتر است و لبه‌ها کمی از شهر را نشان می‌دهند؛
  *     بالا و پایین به سفید محو می‌شود تا کنارِ سکشن‌های همسایه خطِ تیز نیفتد.
- *   - فایل‌ها در assets/img/: نسخهٔ ۱۶۰۰px (۷۹KB) و ۹۶۰px برای موبایل (۴۳KB)، webp.
+ *   - فایل‌ها در رسانه‌های وردپرس (uploads/2026/10): نسخهٔ ۱۶۰۰px (۷۹KB) و ۹۶۰px برای موبایل (۴۳KB)، webp.
  *     کمی تار شده‌اند؛ زیرِ لایهٔ سفید دیده نمی‌شود و حجم را نصف می‌کند.
  *   - ⚡ مثلِ ویدیو، تصویر هم هنگامِ لودِ صفحه گرفته نمی‌شود: <img loading="lazy"> بومیِ مرورگر
  *     است، پس بدون JS هم کار می‌کند. <picture> روی موبایل (≤۷۶۸px) نسخهٔ ۹۶۰ را اجبار می‌کند؛
  *     srcset به‌تنهایی روی گوشی‌های رتینا باز هم نسخهٔ ۱۶۰۰ را می‌گرفت.
  *
- * تامنیلِ ویدیو: اگر assets/img/showroom-poster.webp وجود داشته باشد، روی کارت (lazy) و به‌عنوانِ
- *   poster ویدیوی مودال نشسته می‌شود؛ اگر نباشد، همان پلیسهولدرِ CSS می‌ماند. پس فقط فایل را بگذار.
+ * تامنیلِ ویدیو: روی کارت (lazy) و به‌عنوانِ poster ویدیوی مودال، تا قبل از پخش صفحهٔ سیاه دیده نشود.
+ *   اگر 'poster' خالی بماند، همان پلیسهولدرِ CSS برمی‌گردد.
  *
  * ورودِ کارت: کارت فقط وقتی پنهان می‌شود که JS کلاسِ ks-show--anim را بگذارد (همان الگوی سکشن مزایا)؛
  * بدون JS کارت از اول دیده می‌شود، نه اینکه برای همیشه opacity:0 بماند.
@@ -30,14 +30,10 @@ $ks_show = array(
 	'video' => 'https://khanehsaadat.com/wp-content/uploads/2026/10/showroom-saadat.webm',
 	'title' => 'نمایی از شوروم بزرگ خانه سعادت',
 	'sub'   => 'تنها و قوی‌ترین شوروم غرب کشور - خانه سعادت',
-	'bg'    => get_stylesheet_directory_uri() . '/assets/img/showroom-bg-hamedan.webp',
-	'bg_sm' => get_stylesheet_directory_uri() . '/assets/img/showroom-bg-hamedan-960.webp',
-	'poster'=> '',
+	'bg'     => 'https://khanehsaadat.com/wp-content/uploads/2026/10/showroom-bg-hamedan.webp',
+	'bg_sm'  => 'https://khanehsaadat.com/wp-content/uploads/2026/10/showroom-bg-hamedan-960.webp',
+	'poster' => 'https://khanehsaadat.com/wp-content/uploads/2026/10/تامنیل-ویدیو-.png',
 );
-// تامنیل فقط اگر فایلش در قالب باشد
-if ( file_exists( get_stylesheet_directory() . '/assets/img/showroom-poster.webp' ) ) {
-	$ks_show['poster'] = get_stylesheet_directory_uri() . '/assets/img/showroom-poster.webp';
-}
 ?>
 <style id="ks-show-css">
 .ks-show{position:relative;background:#fff;direction:rtl;font-family:"Yekan Bakh FaNum","Vazirmatn",system-ui,-apple-system,sans-serif;min-height:80vh;display:flex;align-items:center}

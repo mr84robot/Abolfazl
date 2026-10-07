@@ -272,6 +272,9 @@ body{background:#05080a;font-family:var(--hero-font);color:#fff}
 .show__frame{position:relative;max-width:590px;margin-inline:auto;aspect-ratio:16/9;border-radius:6px;overflow:hidden;cursor:pointer;background:linear-gradient(140deg,#063e33 0%,#032a22 55%,#021713 100%);box-shadow:0 44px 84px -42px rgb(0 0 0 / .5);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1.15s cubic-bezier(.16,1,.3,1)}
 .show--anim .show__frame{opacity:0;transform:translateY(42px) scale(.96)}
 .show--anim .show__frame.is-in{opacity:1;transform:none}
+.show__poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.show__frame:hover .show__poster{transform:scale(1.04)}
+.show__frame.has-poster .show__glow{display:none}
 .show__glow{position:absolute;inset-block-start:-26%;inset-inline:6%;height:72%;background:radial-gradient(ellipse at center,rgb(242 169 0 / .18),transparent 62%);pointer-events:none}
 .show__ov{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgb(0 0 0 / .5) 0%,rgb(0 0 0 / .12) 46%,transparent 100%)}
 .show__play{position:absolute;inset:0;margin:auto;width:clamp(58px,7vw,76px);height:clamp(58px,7vw,76px);border:0;border-radius:50%;background:rgb(255 255 255 / .18);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .3s ease,background .3s ease}
@@ -291,7 +294,7 @@ body{background:#05080a;font-family:var(--hero-font);color:#fff}
 .show__close:hover{background:rgb(255 255 255 / .24)}
 .show__close svg{width:22px;height:22px}
 @media (max-width:640px){.show{min-height:auto}}
-@media (prefers-reduced-motion:reduce){.show__frame{opacity:1;transform:none;transition:none}.show__play::after{animation:none}.show__modal{animation:none}}
+@media (prefers-reduced-motion:reduce){.show__frame{opacity:1;transform:none;transition:none}.show__frame:hover .show__poster{transform:none}.show__play::after{animation:none}.show__modal{animation:none}}
 
 /* ===================== BLOG (کاروسل مقاله‌ها) ===================== */
 .blog{background:#f6f8f7;color:var(--ink);direction:rtl}
@@ -606,12 +609,13 @@ body{background:#05080a;font-family:var(--hero-font);color:#fff}
 <!-- ===== SHOWROOM VIDEO (۸۰vh سفید) ===== -->
 <section class="show" id="home-sec-8" aria-label="ویدیوی شوروم خانه سعادت">
   <picture>
-    <source media="(max-width:768px)" srcset="../hello-child/assets/img/showroom-bg-hamedan-960.webp" width="960" height="410">
-    <img class="show__bg" src="../hello-child/assets/img/showroom-bg-hamedan.webp" width="1600" height="682" alt="" loading="lazy" decoding="async">
+    <source media="(max-width:768px)" srcset="https://khanehsaadat.com/wp-content/uploads/2026/10/showroom-bg-hamedan-960.webp" width="960" height="410">
+    <img class="show__bg" src="https://khanehsaadat.com/wp-content/uploads/2026/10/showroom-bg-hamedan.webp" width="1600" height="682" alt="" loading="lazy" decoding="async">
   </picture>
   <span class="show__veil" aria-hidden="true"></span>
   <div class="show__in">
-    <div class="show__frame" data-show role="button" tabindex="0" aria-label="پخش ویدیو: نمایی از شوروم بزرگ خانه سعادت">
+    <div class="show__frame has-poster" data-show role="button" tabindex="0" aria-label="پخش ویدیو: نمایی از شوروم بزرگ خانه سعادت">
+      <img class="show__poster" src="https://khanehsaadat.com/wp-content/uploads/2026/10/تامنیل-ویدیو-.png" width="1280" height="720" alt="" loading="lazy" decoding="async">
       <span class="show__glow" aria-hidden="true"></span>
       <span class="show__ov" aria-hidden="true"></span>
       <button class="show__play" type="button" data-show-play aria-label="پخش ویدیو"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.52.86l10.5-6.86a1 1 0 0 0 0-1.72L9.52 4.28A1 1 0 0 0 8 5.14z"/></svg></button>
@@ -623,7 +627,7 @@ body{background:#05080a;font-family:var(--hero-font);color:#fff}
   </div>
   <div class="show__modal" data-show-modal hidden>
     <button class="show__close" type="button" data-show-close aria-label="بستن ویدیو"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
-    <div class="show__modal-in"><video class="show__modal-video" data-show-modal-video controls playsinline preload="none"><source src="https://khanehsaadat.com/wp-content/uploads/2026/10/showroom-saadat.webm" type="video/webm"></video></div>
+    <div class="show__modal-in"><video class="show__modal-video" data-show-modal-video controls playsinline preload="none" poster="https://khanehsaadat.com/wp-content/uploads/2026/10/تامنیل-ویدیو-.png"><source src="https://khanehsaadat.com/wp-content/uploads/2026/10/showroom-saadat.webm" type="video/webm"></video></div>
   </div>
 </section>
 
