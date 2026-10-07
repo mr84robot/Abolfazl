@@ -47,6 +47,15 @@ if ( ! function_exists( 'hello_elementor_display_header_footer' ) || hello_eleme
 		wp_enqueue_script( 'ks-site', $uri . '/assets/js/site.js', array(), (string) @filemtime( $dir . '/assets/js/site.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
 	}, 999 );
 }
+// صفحهٔ سبد خرید: cart.css / cart.js فقط همین‌جا لود می‌شوند (ظاهرِ قالب‌های woocommerce/cart/)
+if ( function_exists( 'is_cart' ) && is_cart() ) {
+	add_action( 'wp_enqueue_scripts', function () {
+		$dir = get_stylesheet_directory();
+		$uri = get_stylesheet_directory_uri();
+		wp_enqueue_style( 'ks-cart', $uri . '/assets/css/cart.css', array(), (string) @filemtime( $dir . '/assets/css/cart.css' ) );
+		wp_enqueue_script( 'ks-cart', $uri . '/assets/js/cart.js', array(), (string) @filemtime( $dir . '/assets/js/cart.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
+	}, 999 );
+}
 ?><!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>

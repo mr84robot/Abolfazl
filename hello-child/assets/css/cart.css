@@ -1,0 +1,241 @@
+/* =====================================================================
+   سبد خرید — خانه سعادت
+   محل: wp-content/themes/hello-child/assets/css/cart.css
+   فقط روی صفحهٔ سبد خرید لود می‌شود (header.php). ظاهرِ قالب‌های woocommerce/cart/*.php.
+   لبه‌ها تیز (۲–۴px)، رنگ‌ها همان سبز/کهربایی صفحهٔ اصلی، فونت همان Yekan Bakh از المنتور.
+   قوانینِ ووکامرس/Hello/المنتور (جدول، دکمه، input) با specificity یا !important خنثی شده‌اند.
+   ===================================================================== */
+
+.ks-cart{--brand:#005949;--brand-d:#02392F;--accent:#F2A900;--accent-d:#8a6100;--ink:#1f2b28;--muted:#5b6472;--line:#e5e9e7;--soft:#f6f7f7;--save:#b54708;--danger:#c0392b;--r:4px;
+  background:#f4f5f5;color:var(--ink);direction:rtl;font-family:"Yekan Bakh FaNum","Vazirmatn",system-ui,-apple-system,sans-serif;padding:28px 0 56px}
+.ks-cart *,.ks-cart *::before,.ks-cart *::after{box-sizing:border-box}
+.ks-cart__in{max-width:1310px;margin-inline:auto;padding-inline:clamp(16px,3vw,24px)}
+.ks-cart .woocommerce{margin:0;padding:0}
+
+/* پایهٔ ضدِ تداخل: تیترها و دکمه‌ها از استایلِ قالب/کیتِ المنتور ارث نبرند */
+.ks-cart__title,.ks-sum__t,.ks-empty__t,.ks-cart-x__t{font-family:inherit!important;letter-spacing:normal!important;text-transform:none!important;font-style:normal!important}
+.ks-cart button,.ks-cart input,.ks-cart select{font-family:inherit;letter-spacing:normal;text-transform:none}
+.ks-cart .screen-reader-text{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;padding:0;margin:-1px}
+.ks-cart .ks-ic{display:block;flex:0 0 auto;width:20px;height:20px}
+.ks-cart .woocommerce-Price-currencySymbol{font-size:.76em;font-weight:600}
+
+/* ---------- مراحل خرید ---------- */
+.ks-steps{list-style:none;margin:0 0 24px;padding:0;display:flex;align-items:center;justify-content:center}
+.ks-steps__i{display:flex;align-items:center;margin:0}
+.ks-steps__i+.ks-steps__i::before{content:"";width:clamp(24px,8vw,96px);height:2px;background:#d6ddda;margin-inline:12px}
+.ks-steps__i.is-current+.ks-steps__i::before{background:linear-gradient(to left,var(--brand),#d6ddda)}
+.ks-steps__a{display:inline-flex;align-items:center;gap:8px;color:var(--muted);text-decoration:none;font-size:14px;font-weight:600;white-space:nowrap}
+a.ks-steps__a:hover{color:var(--brand)}
+.ks-steps__n{width:28px;height:28px;display:inline-grid;place-items:center;border:1.5px solid #c9d0cd;border-radius:2px;background:#fff;font-size:13px;font-weight:800;line-height:1}
+.ks-steps__i.is-current .ks-steps__a{color:var(--brand);font-weight:800}
+.ks-steps__i.is-current .ks-steps__n{background:var(--brand);border-color:var(--brand);color:#fff}
+
+/* ---------- اعلان‌های ووکامرس ---------- */
+.ks-cart .woocommerce-notices-wrapper:not(:empty){margin-bottom:16px}
+.ks-cart .woocommerce-message,.ks-cart .woocommerce-info,.ks-cart .woocommerce-error{margin:0 0 12px!important;padding:14px 16px!important;padding-inline-start:48px!important;border:1px solid var(--line)!important;border-inline-start:3px solid var(--brand)!important;border-radius:2px!important;background:#fff!important;color:var(--ink)!important;font-size:14px;line-height:1.8;box-shadow:none!important}
+.ks-cart .woocommerce-error{border-inline-start-color:var(--danger)!important}
+.ks-cart .woocommerce-info{border-inline-start-color:var(--accent)!important}
+.ks-cart .woocommerce-message::before{color:var(--brand)}
+.ks-cart .woocommerce-message a,.ks-cart .woocommerce-info a{color:var(--brand);font-weight:700}
+.ks-cart .woocommerce-message .button,.ks-cart .woocommerce-info .button{float:none;margin-inline-start:10px;padding:4px 12px;border:1px solid var(--brand);border-radius:2px;background:#fff;color:var(--brand);font-size:13px}
+
+/* ---------- چیدمان ---------- */
+.ks-cart__grid{display:grid;grid-template-columns:minmax(0,1fr);gap:20px;align-items:start}
+@media (min-width:1025px){
+  .ks-cart__grid{grid-template-columns:minmax(0,1fr) 380px;gap:28px}
+  .ks-cart__aside{position:sticky;top:124px} /* زیرِ هدرِ چسبان (ارتفاعِ هدر در حالتِ چسبیده ≈ ۱۰۱px) */
+}
+/* ووکامرس ستون‌ها را با float/عرضِ ۴۸٪ می‌چیند؛ این‌جا گرید است */
+.ks-cart .cart-collaterals,.ks-cart .cart-collaterals .cart_totals{float:none!important;width:auto!important;margin:0!important}
+.ks-cart .cart-collaterals::before,.ks-cart .cart-collaterals::after{display:none!important}
+
+/* ---------- لیستِ کالاها ---------- */
+.ks-cart__form{margin:0;background:#fff;border:1px solid var(--line);border-radius:var(--r)}
+.ks-cart__head{display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.ks-cart__title{margin:0!important;font-size:20px!important;font-weight:800!important;line-height:1.5!important;color:#101828!important}
+.ks-cart__count{padding:2px 10px;border-radius:2px;background:#eef5f3;color:var(--brand);font-size:13px;font-weight:700;line-height:1.8}
+
+.ks-ci{position:relative;display:grid;grid-template-columns:84px minmax(0,1fr) 32px;grid-template-areas:"media body remove" "ctrl ctrl ctrl";column-gap:12px;row-gap:14px;padding:16px;border-bottom:1px solid var(--line)}
+@media (min-width:768px){
+  .ks-ci{grid-template-columns:112px minmax(0,1fr) auto 40px;grid-template-areas:"media body ctrl remove";column-gap:20px;align-items:center;padding:20px}
+}
+.ks-ci__media{grid-area:media;position:relative;align-self:start;aspect-ratio:1;background:var(--soft);border:1px solid #eef0ef;border-radius:2px;overflow:hidden}
+.ks-ci__media a{display:block;width:100%;height:100%}
+.ks-cart .ks-ci__media img{display:block;width:100%!important;height:100%!important;max-width:none;object-fit:contain;mix-blend-mode:multiply;border-radius:0;box-shadow:none}
+.ks-ci__badge{position:absolute;top:6px;inset-inline-end:6px;padding:1px 6px;border-radius:2px;background:var(--accent);color:#1f1300;font-size:11.5px;font-weight:800;line-height:1.6}
+
+.ks-ci__body{grid-area:body;min-width:0;display:flex;flex-direction:column;gap:6px}
+.ks-ci__name a,.ks-ci__name{color:var(--ink);text-decoration:none;font-size:14.5px;font-weight:700;line-height:1.8}
+.ks-ci__name a{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ks-ci__name a:hover{color:var(--brand)}
+.ks-cart .ks-ci dl.variation{margin:0;display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 6px;font-size:12.5px;line-height:1.8;color:var(--muted)}
+.ks-cart .ks-ci dl.variation dt{margin:0;font-weight:600;float:none}
+.ks-cart .ks-ci dl.variation dd{margin:0;margin-inline-end:12px;float:none}
+.ks-cart .ks-ci dl.variation dd p{margin:0;display:inline}
+.ks-ci .backorder_notification,.ks-ci__low{margin:0;font-size:12.5px;font-weight:600;color:var(--save)}
+.ks-ci__unit{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px;font-size:12.5px;color:var(--muted);line-height:1.8}
+.ks-ci__was{color:#9aa3a0;font-size:12.5px}
+.ks-ci__each .amount{color:var(--ink);font-weight:700}
+.ks-ci__each.is-one{display:none}
+
+.ks-ci__ctrl{grid-area:ctrl;display:flex;align-items:center;justify-content:space-between;gap:16px}
+@media (max-width:767px){.ks-ci__ctrl{padding-top:12px;border-top:1px dashed var(--line)}}
+@media (min-width:768px){.ks-ci__ctrl{gap:28px}}
+.ks-ci__sub{min-width:0;text-align:end;font-size:16px;font-weight:800;line-height:1.5;color:var(--brand)}
+@media (min-width:768px){.ks-ci__sub{min-width:150px}}
+.ks-ci__sub small{display:block;font-size:11px;font-weight:500;color:var(--muted)}
+
+/* دکمه‌های + و − (قبل و بعدِ همان input.qtyِ ووکامرس) */
+.ks-qty{display:inline-flex;align-items:center;height:42px;border:1px solid #d4dbd8;border-radius:2px;background:#fff}
+.ks-cart .ks-qty__btn{display:grid;place-items:center;width:40px;height:40px;min-height:0;margin:0;padding:0!important;font-size:16px!important;line-height:1!important;border:0!important;border-radius:0!important;background:transparent!important;color:var(--brand)!important;box-shadow:none!important;cursor:pointer;touch-action:manipulation;transition:background .15s}
+.ks-cart .ks-qty__btn:hover{background:#f1f7f5!important}
+.ks-cart .ks-qty__btn:focus-visible{outline:2px solid var(--brand);outline-offset:-2px}
+.ks-cart .ks-qty__btn[disabled]{color:#c4cbc8!important;cursor:default;background:transparent!important}
+.ks-qty__btn .ks-ic{width:18px;height:18px}
+.ks-qty .quantity{margin:0!important;display:block}
+.ks-cart .ks-qty .qty{display:block;width:44px!important;min-width:0;height:40px;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:var(--ink);font:inherit;font-size:15px;font-weight:800;text-align:center;-moz-appearance:textfield;appearance:textfield}
+.ks-cart .ks-qty .qty:focus{outline:0;background:#f6f9f8!important}
+.ks-qty .qty::-webkit-outer-spin-button,.ks-qty .qty::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.ks-qty.is-fixed{border-color:transparent;background:transparent}
+.ks-qty.is-fixed .quantity{display:none!important}
+.ks-qty__one{padding:0 4px;font-size:14px;font-weight:700;color:var(--muted)}
+
+/* حذف (لینکِ خودِ ووکامرس؛ با Ajax و پیامِ «بازگردانی») */
+.ks-ci__remove{grid-area:remove;justify-self:end;align-self:start}
+@media (min-width:768px){.ks-ci__remove{align-self:center}}
+.ks-cart .ks-ci__remove a.remove{display:grid!important;place-items:center;width:36px!important;height:36px!important;margin:0;border-radius:2px!important;background:transparent!important;color:#8a948f!important;font-size:0!important;font-weight:400!important;line-height:1!important;text-decoration:none;transition:color .15s,background .15s}
+.ks-cart .ks-ci__remove a.remove:hover,.ks-cart .ks-ci__remove a.remove:focus-visible{background:#fdf0ee!important;color:var(--danger)!important}
+.ks-ci__remove .ks-ic{width:19px;height:19px}
+
+/* کد تخفیف + دکمهٔ به‌روزرسانی (با JS پنهان؛ تغییرِ تعداد خودکار ثبت می‌شود) */
+.ks-cart__actions{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;padding:16px 20px 20px}
+.ks-coupon{flex:1 1 260px;min-width:0;max-width:480px;float:none!important;padding:0!important;border:0!important}
+.ks-coupon__l{display:flex;align-items:center;gap:6px;margin:0 0 8px;font-size:13.5px;font-weight:700;color:var(--ink)}
+.ks-coupon__l .ks-ic{width:17px;height:17px;color:var(--accent-d)}
+.ks-coupon__f{display:flex;gap:8px}
+.ks-cart .ks-coupon__in{flex:1 1 auto;width:auto!important;min-width:0;height:44px;margin:0!important;padding:0 12px!important;border:1px solid #d4dbd8!important;border-radius:2px!important;background:#fff!important;box-shadow:none!important;color:var(--ink);font:inherit;font-size:14px;float:none!important}
+.ks-cart .ks-coupon__in:focus{border-color:var(--brand)!important;outline:0}
+.ks-cart .ks-coupon__btn,.ks-cart .ks-cart__update{height:44px;margin:0!important;padding:0 18px!important;border:1px solid var(--brand)!important;border-radius:2px!important;background:#fff!important;color:var(--brand)!important;box-shadow:none!important;font:inherit!important;font-size:14px!important;font-weight:700!important;line-height:1!important;white-space:nowrap;cursor:pointer;float:none!important;transition:background .15s,color .15s}
+.ks-cart .ks-coupon__btn:hover,.ks-cart .ks-cart__update:hover{background:var(--brand)!important;color:#fff!important}
+.ks-cart .ks-cart__update[disabled]{opacity:.55;cursor:default}
+.ks-cart-js .ks-cart .ks-cart__update{display:none!important}
+
+/* ---------- خلاصهٔ سفارش ---------- */
+.ks-sum{padding:20px;background:#fff;border:1px solid var(--line);border-radius:var(--r)}
+.ks-sum__t{margin:0 0 10px!important;font-size:16px!important;font-weight:800!important;line-height:1.5!important;color:#101828!important}
+/* جدولِ ووکامرس (ردیف‌های ارسال/کوپن را خودش چاپ می‌کند) به‌صورتِ ردیف‌های flex چیده می‌شود */
+.ks-cart .ks-sum__table{display:block;width:100%;margin:0!important;border:0!important;border-radius:0!important;background:transparent!important}
+.ks-cart .ks-sum__table>tbody{display:block}
+.ks-cart .ks-sum__table tr{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.ks-cart .ks-sum__table th{flex:1 1 auto;min-width:0}
+.ks-cart .ks-sum__table td{flex:0 1 auto;min-width:0}
+.ks-cart .ks-sum__table tr,.ks-cart .ks-sum__table tbody>tr:nth-child(odd)>td,.ks-cart .ks-sum__table tbody>tr:nth-child(odd)>th{background:transparent!important}
+.ks-cart .ks-sum__table th,.ks-cart .ks-sum__table td{padding:9px 0!important;border:0!important;background:transparent!important;font-size:14px;line-height:1.7;vertical-align:top;text-align:start}
+.ks-cart .ks-sum__table th{font-weight:500;color:var(--muted)}
+.ks-cart .ks-sum__table td{text-align:end!important;font-weight:700;color:var(--ink)}
+.ks-cart .ks-sum__save td{color:var(--save)}
+.ks-cart .ks-sum__table .cart-discount td,.ks-cart .ks-sum__table .cart-discount th{color:var(--save)}
+.ks-cart .ks-sum__table .cart-discount td{white-space:nowrap}
+.ks-cart .ks-sum__table .cart-discount a{display:inline-block;margin-inline-start:6px;color:var(--danger);font-size:12.5px;font-weight:600}
+.ks-cart .ks-sum__ship-later td{font-size:12.5px;font-weight:500;color:var(--muted)}
+.ks-cart .ks-sum__table tr.order-total{margin-top:4px;border-top:1px dashed #d6ddda}
+.ks-cart .ks-sum__table .order-total th,.ks-cart .ks-sum__table .order-total td{padding-top:14px!important;font-size:15px;color:var(--ink);font-weight:800}
+.ks-cart .ks-sum__table .order-total td{font-size:19px;color:var(--brand)}
+.ks-cart .ks-sum__table .order-total td strong{font-weight:800}
+.ks-cart .ks-sum__table .order-total .includes_tax{display:block;font-size:11.5px;font-weight:500;color:var(--muted)}
+
+/* روش‌های ارسال و ماشین‌حسابِ ارسالِ خودِ ووکامرس (اگر فعال باشد) */
+.ks-cart .ks-sum__table tr.woocommerce-shipping-totals,.ks-cart .ks-sum__table tr.shipping:not(.ks-sum__ship-later){flex-direction:column;align-items:stretch;gap:0}
+.ks-cart .ks-sum__table tr.woocommerce-shipping-totals>*,.ks-cart .ks-sum__table tr.shipping:not(.ks-sum__ship-later)>*{display:block;width:100%;flex:none}
+.ks-cart .ks-sum__table tr.woocommerce-shipping-totals td,.ks-cart .ks-sum__table tr.shipping:not(.ks-sum__ship-later) td{padding-top:0!important;text-align:start!important;font-weight:500}
+.ks-cart #shipping_method,.ks-cart .woocommerce-shipping-methods{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.ks-cart .woocommerce-shipping-methods li{display:flex;align-items:center;gap:8px;margin:0;padding:8px 10px;border:1px solid var(--line);border-radius:2px;font-size:13.5px;text-align:start}
+.ks-cart .woocommerce-shipping-methods li input{margin:0;accent-color:var(--brand)}
+.ks-cart .woocommerce-shipping-methods li label{flex:1;display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 8px;margin:0;cursor:pointer}
+.ks-cart .woocommerce-shipping-destination,.ks-cart .woocommerce-shipping-contents{margin:8px 0 0;font-size:12.5px;color:var(--muted);text-align:start}
+.ks-cart .shipping-calculator-button{display:inline-block;margin-top:6px;color:var(--brand);font-size:13px;font-weight:700}
+.ks-cart .shipping-calculator-form{padding-top:10px}
+.ks-cart .shipping-calculator-form p{margin:0 0 8px}
+.ks-cart .shipping-calculator-form input,.ks-cart .shipping-calculator-form select{width:100%;height:42px;padding:0 10px;border:1px solid #d4dbd8;border-radius:2px;background:#fff;font:inherit;font-size:14px}
+.ks-cart .shipping-calculator-form button{width:100%;height:42px;border:1px solid var(--brand);border-radius:2px;background:#fff;color:var(--brand);font:inherit;font-weight:700}
+
+.ks-sum__profit{display:flex;align-items:center;gap:8px;margin:12px 0 0;padding:10px 12px;border:1px solid #f3dc9c;border-radius:2px;background:#fff8e7;color:#7a5200;font-size:13px;line-height:1.6}
+.ks-sum__profit .ks-ic{width:18px;height:18px}
+.ks-sum__profit strong{margin-inline-start:auto;font-weight:800;white-space:nowrap}
+.ks-sum__profit em{font-style:normal;font-weight:600}
+.ks-cart .wc-proceed-to-checkout{margin:0!important;padding:16px 0 0!important}
+.ks-cart a.ks-sum__go{display:flex!important;align-items:center;justify-content:center;gap:10px;width:100%;height:52px;margin:0!important;padding:0 20px!important;border:0!important;border-radius:2px!important;background:var(--brand)!important;color:#fff!important;box-shadow:none!important;font:inherit!important;font-size:16px!important;font-weight:800!important;line-height:1!important;text-align:center;text-decoration:none!important;transition:background .2s}
+.ks-cart a.ks-sum__go:hover,.ks-cart a.ks-sum__go:focus-visible{background:var(--brand-d)!important;color:#fff!important}
+.ks-sum__go .ks-ic{width:20px;height:20px}
+.ks-sum__note{margin:12px 0 0;font-size:12px;line-height:1.9;color:#7d8784}
+
+/* ---------- اطمینان + تماس ---------- */
+.ks-cart-trust{list-style:none;margin:16px 0 0;padding:4px 16px;background:#fff;border:1px solid var(--line);border-radius:var(--r)}
+.ks-cart-trust__i{display:flex;align-items:center;gap:12px;margin:0;padding:12px 0}
+.ks-cart-trust__i+.ks-cart-trust__i{border-top:1px solid #eff1f0}
+.ks-cart .ks-cart-trust__ic{width:26px;height:26px;color:var(--brand)}
+.ks-cart-trust__i strong{display:block;font-size:13.5px;font-weight:700;line-height:1.6;color:var(--ink)}
+.ks-cart-trust__i small{display:block;margin-top:1px;font-size:12px;line-height:1.6;color:var(--muted)}
+@media (min-width:641px) and (max-width:1024px){
+  .ks-cart-trust{display:grid;grid-template-columns:repeat(2,1fr);column-gap:20px}
+  .ks-cart-trust__i+.ks-cart-trust__i{border-top:0}
+  .ks-cart-trust__i:nth-child(n+3){border-top:1px solid #eff1f0}
+}
+.ks-cart-help{display:flex;align-items:center;gap:10px;margin-top:12px;padding:12px 16px;border:1px dashed #cdd6d2;border-radius:2px;background:#fff;color:var(--ink);font-size:13px;line-height:1.6;text-decoration:none}
+.ks-cart-help:hover{border-color:var(--brand)}
+.ks-cart-help .ks-ic{color:var(--brand)}
+.ks-cart-help strong{color:var(--brand);font-weight:800;unicode-bidi:isolate}
+
+/* ---------- پیشنهادهای مکمل ---------- */
+.ks-cart-x{margin-top:36px}
+.ks-cart-x__t{margin:0 0 16px!important;font-size:18px!important;font-weight:800!important;line-height:1.5!important;color:#101828!important}
+.ks-cart-x__rail{--cols:5;--gap:14px;display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));gap:var(--gap);overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:2px;padding-bottom:8px;scrollbar-width:thin}
+@media (max-width:1180px){.ks-cart-x__rail{--cols:4}}
+@media (max-width:900px){.ks-cart-x__rail{--cols:3}}
+@media (max-width:640px){.ks-cart-x__rail{--cols:2;--gap:12px}}
+.ks-cart-x__card{scroll-snap-align:start;display:flex;flex-direction:column;min-width:0;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.ks-cart-x__link{display:block;color:inherit;text-decoration:none}
+.ks-cart-x__media{display:block;aspect-ratio:1;background:var(--soft)}
+.ks-cart .ks-cart-x__media img{display:block;width:100%!important;height:100%!important;object-fit:contain;mix-blend-mode:multiply}
+.ks-cart-x__name{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:calc(2 * 1.8em);margin:10px 12px 0;font-size:13.5px;font-weight:600;line-height:1.8;color:var(--ink)}
+.ks-cart-x__link:hover .ks-cart-x__name{color:var(--brand)}
+.ks-cart-x__foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 12px 12px}
+.ks-cart-x__price{min-width:0;font-size:13px;line-height:1.4}
+.ks-cart-x__price del{display:block;color:#9aa3a0;font-size:11.5px}
+.ks-cart-x__price>.amount,.ks-cart-x__price ins{display:block;text-decoration:none;color:var(--brand);font-weight:800;font-size:14.5px}
+.ks-cart a.ks-cart-x__add{flex:0 0 auto;display:grid;place-items:center;width:36px;height:36px;padding:0!important;border-radius:2px!important;background:var(--brand)!important;color:#fff!important;text-decoration:none}
+.ks-cart a.ks-cart-x__add:hover{background:var(--brand-d)!important}
+.ks-cart a.ks-cart-x__add.loading{opacity:.55;pointer-events:none}
+.ks-cart a.ks-cart-x__add .ks-ic{width:18px;height:18px}
+.ks-cart-x .added_to_cart{display:none!important}
+@media (max-width:640px){.ks-cart a.ks-cart-x__add{display:none}.ks-cart-x__price{flex:1 1 auto}}
+
+/* ---------- سبد خالی ---------- */
+.ks-empty{display:flex;justify-content:center}
+.ks-empty__box{width:100%;max-width:580px;margin:8px auto 0;padding:44px 24px 36px;background:#fff;border:1px solid var(--line);border-radius:var(--r);text-align:center}
+.ks-empty__ic{display:inline-grid;place-items:center;width:84px;height:84px;border-radius:2px;background:#eef5f3;color:var(--brand)}
+.ks-cart .ks-empty__ic .ks-ic{width:40px;height:40px}
+.ks-empty__t{margin:18px 0 8px!important;font-size:22px!important;font-weight:800!important;line-height:1.5!important;color:#101828!important}
+.ks-empty__d{max-width:420px;margin:0 auto;font-size:14px;line-height:1.9;color:var(--muted)}
+.ks-cart .ks-empty__cta{margin:24px 0 0!important;padding:0!important}
+.ks-cart a.ks-empty__btn{display:inline-flex!important;align-items:center;gap:10px;height:48px;padding:0 26px!important;border:0!important;border-radius:2px!important;background:var(--brand)!important;color:#fff!important;box-shadow:none!important;font:inherit!important;font-size:15px!important;font-weight:800!important;line-height:1!important;text-decoration:none!important}
+.ks-cart a.ks-empty__btn:hover{background:var(--brand-d)!important}
+.ks-empty__cats{list-style:none;margin:22px 0 0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.ks-empty__cats li{margin:0}
+.ks-empty__cats a{display:inline-block;padding:7px 14px;border:1px solid #d4dbd8;border-radius:2px;background:#fff;color:var(--ink);font-size:13px;line-height:1.6;text-decoration:none}
+.ks-empty__cats a:hover{border-color:var(--brand);color:var(--brand)}
+
+/* ---------- موبایل ---------- */
+@media (max-width:640px){
+  .ks-cart{padding:18px 0 40px}
+  .ks-steps{margin-bottom:18px}
+  .ks-steps__a{gap:6px;font-size:12.5px}
+  .ks-steps__n{width:24px;height:24px;font-size:12px}
+  .ks-steps__i+.ks-steps__i::before{margin-inline:8px}
+  .ks-cart__head{padding:14px 16px}
+  .ks-cart__title{font-size:18px!important}
+  .ks-cart__actions{padding:14px 16px 16px}
+  .ks-sum{padding:16px}
+  .ks-empty__box{padding:36px 18px 28px}
+}
+@media (prefers-reduced-motion:reduce){.ks-cart *{transition:none!important}}

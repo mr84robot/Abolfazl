@@ -9,17 +9,15 @@
  *   روی صفحهٔ اصلی، هدر سراسری (.ks-hdr) باید «شفاف روی هیرو» شود و با اسکرول توپُر گردد.
  *   وقتی front-page.php را ساختیم این حالت شفاف را هم اضافه می‌کنیم.
  *
- * ویدیو: WebM برای کروم/اندروید، mp4 (H.264) برای آیفون/آیپد/سافاری. فایل‌های mp4 در assets/video/ خودکار شناخته می‌شوند.
+ * ویدیو: WebM برای کروم/اندروید، mp4 (H.264) برای آیفون/آیپد/سافاری.
  */
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-// نسخهٔ mp4 (H.264) برای آیفون/آیپد/سافاری لازم است؛ اگر فایل‌ها در assets/video/ قالب باشند خودکار استفاده می‌شوند.
-$ks_vdir = get_stylesheet_directory() . '/assets/video/';
-$ks_vuri = get_stylesheet_directory_uri() . '/assets/video/';
 $hero = array(
-	'video_mp4'   => file_exists( $ks_vdir . 'hero.mp4' ) ? $ks_vuri . 'hero.mp4' : '',
-	'video_mp4_m' => file_exists( $ks_vdir . 'hero-m.mp4' ) ? $ks_vuri . 'hero-m.mp4' : '', // نسخهٔ سبکِ موبایل (زیر 768px)
+	// mp4 (H.264) برای آیفون/آیپد/سافاری؛ کروم و اندروید همان WebM را می‌گیرند (home.js انتخاب می‌کند)
+	'video_mp4'   => 'https://khanehsaadat.com/wp-content/uploads/2026/10/hiro-video-saadat.mp4',
+	'video_mp4_m' => '', // اختیاری: نسخهٔ سبکِ mp4 برای صفحه‌های زیر 768px
 	'video_webm'  => 'https://khanehsaadat.com/wp-content/uploads/2026/10/hiro-video-saadat.webm',
 	// اختیاری ولی برای سرعتِ موبایل توصیه می‌شود: نسخهٔ سبکِ عمودی/کم‌حجم (مثلاً 720px، زیر ۱ مگابایت) برای صفحه‌های زیر 768px.
 	'video_webm_m' => '',
