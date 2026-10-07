@@ -115,10 +115,11 @@ if ( ! function_exists( 'ks_prod_card' ) ) {
 .ks-prod__tab:hover{border-color:var(--brand);color:var(--brand)}
 .ks-prod__tab.is-active{background:var(--brand);border-color:var(--brand);color:#fff}
 .ks-prod__railwrap{position:relative}
-.ks-prod__rail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x proximity;padding:4px 2px 12px;scrollbar-width:none;transition:opacity .2s ease}
+/* --cols کارتِ کامل دقیقاً عرض ریل را پر می‌کند؛ هیچ کارتِ نیمه‌ای لبِ قاب پیدا نمی‌شود */
+.ks-prod__rail{--cols:5;--gap:16px;display:flex;gap:var(--gap);overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:2px;padding:4px 2px 12px;scrollbar-width:none;transition:opacity .2s ease}
 .ks-prod__rail::-webkit-scrollbar{display:none}
 .ks-prod.is-loading .ks-prod__rail{opacity:.5}
-.ks-prod__card{flex:0 0 240px;scroll-snap-align:start;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:border-color .2s,transform .2s,box-shadow .2s}
+.ks-prod__card{flex:0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));scroll-snap-align:start;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:border-color .2s,transform .2s,box-shadow .2s}
 .ks-prod__card:hover{border-color:#b9d2cb;transform:translateY(-3px);box-shadow:0 16px 34px -20px rgb(0 89 73 / .4)}
 .ks-prod__link{text-decoration:none;color:inherit;display:block}
 .ks-prod__media{position:relative;aspect-ratio:1/1;background:#f6f7f7}
@@ -133,7 +134,9 @@ if ( ! function_exists( 'ks_prod_card' ) ) {
 .ks-prod__cart:hover{background:#00493b}
 .ks-prod__cart svg{width:19px;height:19px}
 .ks-prod__empty{padding:40px 10px;text-align:center;color:var(--muted);font-size:14px;width:100%}
-@media (max-width:640px){.ks-prod__card{flex-basis:62vw;max-width:270px}.ks-prod__arrows{display:none}.ks-prod__head{flex-direction:column;align-items:flex-start;gap:12px;margin-bottom:14px}.ks-prod__sub{font-size:13px}}
+@media (max-width:1180px){.ks-prod__rail{--cols:4}}
+@media (max-width:900px){.ks-prod__rail{--cols:3}}
+@media (max-width:640px){.ks-prod__rail{--cols:2}.ks-prod__arrows{display:none}.ks-prod__head{flex-direction:column;align-items:flex-start;gap:12px;margin-bottom:14px}.ks-prod__sub{font-size:13px}}
 @media (prefers-reduced-motion:reduce){.ks-prod__card:hover{transform:none}.ks-prod__rail{scroll-behavior:auto}}
 </style>
 

@@ -56,9 +56,10 @@ if ( ! function_exists( 'ks_fa_digits' ) ) {
 .ks-blog__arrow:hover{border-color:var(--brand);background:#f3f8f6}
 .ks-blog__arrow svg{width:19px;height:19px}
 
-.ks-blog__rail{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x proximity;padding:4px 2px 12px;scrollbar-width:none}
+/* --cols کارتِ کامل دقیقاً عرض ریل را پر می‌کند؛ هیچ کارتِ نیمه‌ای لبِ قاب پیدا نمی‌شود */
+.ks-blog__rail{--cols:3;--gap:20px;display:flex;gap:var(--gap);overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:2px;padding:4px 2px 12px;scrollbar-width:none}
 .ks-blog__rail::-webkit-scrollbar{display:none}
-.ks-blog__card{flex:0 0 clamp(300px,31%,406px);scroll-snap-align:start;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:border-color .2s,transform .2s,box-shadow .2s}
+.ks-blog__card{flex:0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));scroll-snap-align:start;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:border-color .2s,transform .2s,box-shadow .2s}
 .ks-blog__card:hover{border-color:#b9d2cb;transform:translateY(-3px);box-shadow:0 16px 34px -20px rgb(0 89 73 / .4)}
 .ks-blog__link{text-decoration:none;color:inherit;display:flex;flex-direction:column;height:100%}
 
@@ -82,8 +83,8 @@ if ( ! function_exists( 'ks_fa_digits' ) ) {
 .ks-blog__card:hover .ks-blog__name{color:var(--brand)}
 .ks-blog__ex{margin:0;font-size:13.5px;line-height:1.95;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
-@media (max-width:860px){.ks-blog__card{flex-basis:78vw;max-width:360px}}
-@media (max-width:640px){.ks-blog__arrows{display:none}}
+@media (max-width:1024px){.ks-blog__rail{--cols:2}}
+@media (max-width:640px){.ks-blog__rail{--cols:1}.ks-blog__arrows{display:none}}
 @media (prefers-reduced-motion:reduce){.ks-blog__card:hover{transform:none}.ks-blog__card:hover .ks-blog__media img{transform:none}.ks-blog__rail{scroll-behavior:auto}.ks-blog__more{transform:none}}
 </style>
 

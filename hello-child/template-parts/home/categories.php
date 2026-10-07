@@ -60,7 +60,8 @@ $ks_all_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink
 .ks-cats__all:hover{border-color:var(--brand);background:#f3f8f6}
 .ks-cats__all svg{width:16px;height:16px}
 .ks-cats__railwrap{position:relative}
-.ks-cats__rail{display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,1fr);grid-auto-columns:150px;gap:20px;overflow-x:auto;scroll-snap-type:x proximity;padding-bottom:6px;scrollbar-width:thin}
+/* --cols ستونِ کامل دقیقاً عرض ریل را پر می‌کند؛ هیچ ستونِ نیمه‌ای لبِ قاب پیدا نمی‌شود */
+.ks-cats__rail{--cols:3;--gap:20px;display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,1fr);grid-auto-columns:calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));gap:var(--gap);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;scrollbar-width:thin}
 .ks-cats__rail::-webkit-scrollbar{height:6px}
 .ks-cats__rail::-webkit-scrollbar-thumb{background:#cfd8d5;border-radius:3px}
 .ks-cat{scroll-snap-align:start;display:block;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:20px 16px 16px;text-align:center;color:var(--ink);text-decoration:none;transition:border-color .2s ease,transform .2s ease,box-shadow .2s ease}
@@ -75,7 +76,7 @@ $ks_all_url = function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink
 .ks-cats__arrow--next{inset-inline-start:-6px}
 .ks-cats__arrow--prev{inset-inline-end:-6px}
 @media (min-width:1024px){.ks-cats__rail{grid-auto-flow:row;grid-template-columns:repeat(10,1fr);grid-template-rows:auto;grid-auto-columns:auto;gap:16px;overflow-x:visible;scroll-snap-type:none;padding-bottom:0}.ks-cat{padding:16px 10px 12px}.ks-cats__arrow{display:none}}
-@media (max-width:600px){.ks-cats__head{flex-direction:column;align-items:flex-start;gap:14px;margin-bottom:28px}}
+@media (max-width:600px){.ks-cats__rail{--cols:2}.ks-cats__head{flex-direction:column;align-items:flex-start;gap:14px;margin-bottom:28px}}
 @media (prefers-reduced-motion:reduce){.ks-cat:hover{transform:none}}
 </style>
 

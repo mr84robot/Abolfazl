@@ -55,9 +55,10 @@ $ks_cart_svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strok
 .ks-sale__arrow{width:42px;height:42px;border-radius:var(--r);border:1px solid #d4dbd8;background:#fff;color:var(--brand);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s,background .2s}
 .ks-sale__arrow:hover{border-color:var(--brand);background:#f3f8f6}
 .ks-sale__arrow svg{width:19px;height:19px}
-.ks-sale__rail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x proximity;padding:4px 2px 12px;scrollbar-width:none}
+/* --cols کارتِ کامل دقیقاً عرض ریل را پر می‌کند؛ هیچ کارتِ نیمه‌ای لبِ قاب پیدا نمی‌شود */
+.ks-sale__rail{--cols:5;--gap:16px;display:flex;gap:var(--gap);overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:2px;padding:4px 2px 12px;scrollbar-width:none}
 .ks-sale__rail::-webkit-scrollbar{display:none}
-.ks-sale__card{flex:0 0 240px;scroll-snap-align:start;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:border-color .2s,transform .2s,box-shadow .2s}
+.ks-sale__card{flex:0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));scroll-snap-align:start;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:border-color .2s,transform .2s,box-shadow .2s}
 .ks-sale__card:hover{border-color:#b9d2cb;transform:translateY(-3px);box-shadow:0 16px 34px -20px rgb(0 89 73 / .4)}
 .ks-sale__link{text-decoration:none;color:inherit;display:block}
 .ks-sale__media{position:relative;aspect-ratio:1/1;background:#f6f7f7}
@@ -71,7 +72,9 @@ $ks_cart_svg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strok
 .ks-sale__cart{flex:0 0 auto;width:40px;height:40px;border-radius:var(--r);background:var(--brand);color:#fff;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;transition:background .2s}
 .ks-sale__cart:hover{background:#00493b}
 .ks-sale__cart svg{width:19px;height:19px}
-@media (max-width:640px){.ks-sale__card{flex-basis:62vw;max-width:270px}.ks-sale__arrows{display:none}}
+@media (max-width:1180px){.ks-sale__rail{--cols:4}}
+@media (max-width:900px){.ks-sale__rail{--cols:3}}
+@media (max-width:640px){.ks-sale__rail{--cols:2}.ks-sale__arrows{display:none}}
 @media (prefers-reduced-motion:reduce){.ks-sale__card:hover{transform:none}.ks-sale__rail{scroll-behavior:auto}}
 </style>
 
