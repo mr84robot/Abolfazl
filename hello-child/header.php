@@ -47,13 +47,23 @@ if ( ! function_exists( 'hello_elementor_display_header_footer' ) || hello_eleme
 		wp_enqueue_script( 'ks-site', $uri . '/assets/js/site.js', array(), (string) @filemtime( $dir . '/assets/js/site.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
 	}, 999 );
 }
-// صفحهٔ سبد خرید: cart.css / cart.js فقط همین‌جا لود می‌شوند (ظاهرِ قالب‌های woocommerce/cart/)
-if ( function_exists( 'is_cart' ) && is_cart() ) {
-	add_action( 'wp_enqueue_scripts', function () {
+// سبد خرید و تسویه حساب (ظاهرِ قالب‌های woocommerce/cart/ و woocommerce/checkout/):
+//   cart.css پایهٔ مشترکِ هر دو صفحه است (رنگ‌ها، مراحل، اعلان‌ها، خلاصهٔ مبالغ) و روی تسویه حساب از کش می‌آید.
+$ks_is_cart     = function_exists( 'is_cart' ) && is_cart();
+$ks_is_checkout = function_exists( 'is_checkout' ) && is_checkout();
+if ( $ks_is_cart || $ks_is_checkout ) {
+	add_action( 'wp_enqueue_scripts', function () use ( $ks_is_cart, $ks_is_checkout ) {
 		$dir = get_stylesheet_directory();
 		$uri = get_stylesheet_directory_uri();
+		$opt = array( 'in_footer' => true, 'strategy' => 'defer' );
 		wp_enqueue_style( 'ks-cart', $uri . '/assets/css/cart.css', array(), (string) @filemtime( $dir . '/assets/css/cart.css' ) );
-		wp_enqueue_script( 'ks-cart', $uri . '/assets/js/cart.js', array(), (string) @filemtime( $dir . '/assets/js/cart.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
+		if ( $ks_is_cart ) {
+			wp_enqueue_script( 'ks-cart', $uri . '/assets/js/cart.js', array(), (string) @filemtime( $dir . '/assets/js/cart.js' ), $opt );
+		}
+		if ( $ks_is_checkout ) {
+			wp_enqueue_style( 'ks-checkout', $uri . '/assets/css/checkout.css', array( 'ks-cart' ), (string) @filemtime( $dir . '/assets/css/checkout.css' ) );
+			wp_enqueue_script( 'ks-checkout', $uri . '/assets/js/checkout.js', array(), (string) @filemtime( $dir . '/assets/js/checkout.js' ), $opt );
+		}
 	}, 999 );
 }
 ?><!DOCTYPE html>

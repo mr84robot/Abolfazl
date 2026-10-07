@@ -24,6 +24,13 @@ if ( ! function_exists( 'ks_cart_icon' ) ) {
 			'plus'    => '<path d="M12 5v14M5 12h14"/>',
 			'minus'   => '<path d="M5 12h14"/>',
 			'arrow'   => '<path d="M19 12H5M11 18l-6-6 6-6"/>',
+			'check'   => '<path d="m5 12.5 4.2 4.2L19 7"/>',
+			'x'       => '<path d="M6 6l12 12M18 6 6 18"/>',
+			'user'    => '<circle cx="12" cy="8" r="3.6"/><path d="M4.8 20a7.2 7.2 0 0 1 14.4 0"/>',
+			'pin'     => '<path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/>',
+			'note'    => '<path d="M5 3.5h10l4 4V20.5H5z"/><path d="M14.5 3.5V8H19"/><path d="M8.5 12h7M8.5 15.5h5"/>',
+			'card'    => '<rect x="3" y="5.5" width="18" height="13" rx="1.5"/><path d="M3 10h18"/><path d="M7 15h3"/>',
+			'edit'    => '<path d="M4 20h4l10.5-10.5-4-4L4 16z"/><path d="m13.5 6.5 4 4"/>',
 			'tag'     => '<path d="M3.5 12.2V4.5a1 1 0 0 1 1-1h7.7l8.3 8.3a1 1 0 0 1 0 1.4l-7.3 7.3a1 1 0 0 1-1.4 0z"/><circle cx="8" cy="8" r="1.4"/>',
 			'percent' => '<path d="M19 5 5 19"/><circle cx="7" cy="7" r="2.2"/><circle cx="17" cy="17" r="2.2"/>',
 			'bag'     => '<path d="M7.5 3.5 4.8 7.2V19a1.8 1.8 0 0 0 1.8 1.8h10.8a1.8 1.8 0 0 0 1.8-1.8V7.2l-2.7-3.7z"/><path d="M4.8 7.2h14.4"/><path d="M15.6 10.6a3.6 3.6 0 0 1-7.2 0"/>',
@@ -40,18 +47,25 @@ if ( ! function_exists( 'ks_cart_icon' ) ) {
 
 if ( ! function_exists( 'ks_cart_steps' ) ) {
 	/** نوارِ مراحلِ خرید: سبد خرید ← اطلاعات ارسال ← پرداخت */
+	/**
+	 * نوارِ مراحلِ خرید (سبد خرید ← ارسال و پرداخت ← تکمیل خرید).
+	 * $current: ۱ سبد، ۲ تسویه حساب، ۳ سفارش ثبت شد (همهٔ مراحل تیک می‌خورند).
+	 * مرحلهٔ ۱ از صفحه‌های بعد به سبد لینک دارد و مرحلهٔ ۲ از سبد به تسویه حساب.
+	 */
 	function ks_cart_steps( $current = 1 ) {
 		$steps = array(
-			1 => array( 'سبد خرید', '' ),
-			2 => array( 'اطلاعات ارسال', function_exists( 'wc_get_checkout_url' ) ? wc_get_checkout_url() : '' ),
-			3 => array( 'پرداخت', '' ),
+			1 => array( 'سبد خرید', function_exists( 'wc_get_cart_url' ) ? wc_get_cart_url() : '' ),
+			2 => array( 'ارسال و پرداخت', function_exists( 'wc_get_checkout_url' ) ? wc_get_checkout_url() : '' ),
+			3 => array( 'تکمیل خرید', '' ),
 		);
 		echo '<ol class="ks-steps" aria-label="مراحل خرید">';
 		foreach ( $steps as $n => $s ) {
-			$cls = $n < $current ? 'is-done' : ( $n === $current ? 'is-current' : '' );
+			$done = $n < $current || 3 === $current;
+			$cls  = $done ? 'is-done' : ( $n === $current ? 'is-current' : '' );
+			$link = $s[1] && ( ( 1 === $n && $current > 1 && $current < 3 ) || ( 2 === $n && 1 === $current ) );
 			echo '<li class="ks-steps__i ' . esc_attr( $cls ) . '"' . ( $n === $current ? ' aria-current="step"' : '' ) . '>';
-			$label = '<span class="ks-steps__n">' . esc_html( ks_fa_digits( $n ) ) . '</span><span class="ks-steps__t">' . esc_html( $s[0] ) . '</span>';
-			echo ( $s[1] && $n > $current ) ? '<a class="ks-steps__a" href="' . esc_url( $s[1] ) . '">' . $label . '</a>' : '<span class="ks-steps__a">' . $label . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			$label = '<span class="ks-steps__n">' . ( $done ? ks_cart_icon( 'check' ) : esc_html( ks_fa_digits( $n ) ) ) . '</span><span class="ks-steps__t">' . esc_html( $s[0] ) . '</span>';
+			echo $link ? '<a class="ks-steps__a" href="' . esc_url( $s[1] ) . '">' . $label . '</a>' : '<span class="ks-steps__a">' . $label . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo '</li>';
 		}
 		echo '</ol>';

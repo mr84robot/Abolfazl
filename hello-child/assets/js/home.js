@@ -65,20 +65,40 @@ var ksHome = (function(){
   markMedia();
 
   /*
-   * بارگذاریِ محدود: وقتی کاربر به انتهای ریل نزدیک شد، فقط یک بار MORE محصولِ دیگر می‌آید؛ بعد کارتِ «مشاهده همه».
+   * بارگذاریِ محدود: فقط یک بار MORE محصولِ دیگر می‌آید؛ بعد کارتِ «مشاهده همه».
    * fetchMore(ids) باید Promise<آرایهٔ محصول> بدهد. نتیجه سمتِ مرورگر با accept() فیلتر و با ids بدون تکرار می‌شود،
    * تا اگر سرور فیلتر را نادیده گرفت، محصولِ اشتباه داخلِ ریل نیاید.
+   *
+   * گیر کردنِ کشیدن در موبایل: قبلاً درخواست وقتی می‌رفت که کاربر وسطِ کشیدن به نزدیکِ انتها می‌رسید و کارت‌ها
+   * (اسکلتون و بعد محصولات) همان لحظه به ریل اضافه می‌شدند؛ تغییرِ عرضِ ریل وسطِ حرکتِ انگشت/اینرسی، اسنپ را
+   * دوباره حساب می‌کرد و حرکت می‌ایستاد. حالا:
+   *   - درخواست همین که ریل نزدیکِ دید رسید فرستاده می‌شود (قبل از این‌که کاربر شروع به کشیدن کند)؛
+   *   - هیچ تغییری در ریل داده نمی‌شود تا وقتی انگشت روی ریل است یا ریل هنوز در حالِ حرکت است.
    */
   function finite(rail, px, fetchMore, accept){
     var ids = (rail.getAttribute('data-ids')||'').split(',').filter(Boolean).map(Number);
     var href = rail.getAttribute('data-all'), label = rail.getAttribute('data-all-label');
     var state = rail.getAttribute('data-more') === '1' ? 'idle' : 'done';
     if ( state === 'done' ) { if ( href ) { rail.insertAdjacentHTML('beforeend', endCard(px, href, label)); } return { check:function(){} }; }
-    function nearEnd(){ return Math.abs(rail.scrollLeft) + rail.clientWidth >= rail.scrollWidth - 360; }
+
+    var touching = false, moving = false, idleT = null, pending = null;
+    function busy(){ return touching || moving; }
+    function settle(){ clearTimeout(idleT); idleT = setTimeout(function(){ moving = false; flush(); }, 220); }
+    rail.addEventListener('touchstart', function(){ touching = true; }, { passive:true });
+    rail.addEventListener('touchend', function(){ touching = false; settle(); }, { passive:true });
+    rail.addEventListener('touchcancel', function(){ touching = false; settle(); }, { passive:true });
+    rail.addEventListener('scroll', function(){ moving = true; settle(); run(); }, { passive:true });
+
+    function flush(){
+      if ( pending === null || busy() ) { return; }
+      var h = pending; pending = null;
+      rail.querySelectorAll('.ks-skelcard').forEach(function(n){ n.remove(); });
+      rail.insertAdjacentHTML('beforeend', h);
+    }
     function run(){
-      if ( state !== 'idle' || rail.hidden || ! nearEnd() ) { return; }
+      if ( state !== 'idle' || rail.hidden ) { return; }
       state = 'loading';
-      rail.insertAdjacentHTML('beforeend', skeleton(px, Math.min(MORE, 3)));
+      if ( ! busy() ) { rail.insertAdjacentHTML('beforeend', skeleton(px, Math.min(MORE, 3))); }
       fetchMore(ids).then(function(list){
         // تکراری با شناسه یا آدرس (مثلاً متغیرِ همان محصول) هم حذف می‌شود
         var seen = {}; ids.forEach(function(i){ seen['i'+i]=1; });
@@ -88,18 +108,16 @@ var ksHome = (function(){
           seen['i'+p.id]=1; seen['u'+p.permalink]=1; return true;
         }).slice(0, MORE);
       }).catch(function(){ return []; }).then(function(list){
-        rail.querySelectorAll('.ks-skelcard').forEach(function(n){ n.remove(); });
         var h=''; list.forEach(function(p){ h += card(px, p); });
         if ( href ) { h += endCard(px, href, label); }
-        rail.insertAdjacentHTML('beforeend', h);
-        state = 'done';
+        pending = h; state = 'done';
+        flush();
       });
     }
-    rail.addEventListener('scroll', run, { passive:true });
     if ( 'IntersectionObserver' in window ) {
-      var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if ( e.isIntersecting ) { run(); } }); }, { rootMargin:'200px 0px' });
+      var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if ( e.isIntersecting ) { io.disconnect(); run(); } }); }, { rootMargin:'300px 0px' });
       io.observe(rail);
-    }
+    } else { run(); }
     return { check: run };
   }
   function fetchJSON(url){
@@ -174,9 +192,9 @@ var ksHome = (function(){
 
 /* ===================== hero ===================== */
 (function(){
-  // ویدیوی هیرو با شروعِ پخش محو می‌شود. دسکتاپ: همین که اسکریپت اجرا شد وصل می‌شود.
-  // موبایل: بعد از رویدادِ load صفحه، تا دانلودِ ویدیو با عکس‌ها/فونت/CSS رقابت نکند (LCP و TBT)؛
-  // اگر data-src-m (نسخهٔ سبکِ موبایل) باشد همان دانلود می‌شود.
+  // ویدیوی هیرو با شروعِ پخش محو می‌شود و همین که اسکریپت اجرا شد (بعد از ساختِ صفحه) وصل می‌شود؛
+  // قبلاً در موبایل تا رویدادِ load (لودِ همهٔ عکس‌ها) صبر می‌کرد و دیر پخش می‌شد.
+  // اگر data-src-m (نسخهٔ سبکِ موبایل) باشد، در صفحه‌های زیر 768px همان دانلود می‌شود.
   // با «کاهش حرکت» یا «صرفه‌جویی داده»/اینترنت 2G اصلاً دانلود نمی‌شود و هیرو تیره می‌ماند.
   var v = document.querySelector('[data-ks-hero-video]');
   if ( ! v ) { return; }
@@ -205,9 +223,7 @@ var ksHome = (function(){
       ev.forEach(function(t){ document.addEventListener(t, retry, { capture:true, passive:true }); });
     });
   }
-  if ( ! mobile ) { start(); }
-  else if ( document.readyState === 'complete' ) { setTimeout(start, 300); }
-  else { window.addEventListener('load', function(){ setTimeout(start, 300); }, { once:true }); }
+  start();
 })();
 
 /* ===================== trust ===================== */

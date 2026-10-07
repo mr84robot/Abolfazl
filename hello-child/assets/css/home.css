@@ -484,3 +484,13 @@
   .ks-sale__foot,.ks-prod__foot{padding:8px 12px 14px}
   .ks-sale__price,.ks-prod__price{flex:1 1 auto}
 }
+
+/* ===================== touch: carousels ===================== */
+/* روی لمسی :hover بعد از لمس می‌چسبد؛ جابه‌جاییِ کارت (translateY) وسطِ کشیدنِ ریل حرکت را می‌لرزاند. */
+@media (hover:none){
+  .ks-cat:hover,.ks-sale__card:hover,.ks-prod__card:hover,.ks-blog__card:hover,.ks-vid__card:hover{transform:none;box-shadow:none}
+  .ks-blog__card:hover .ks-blog__media img,.ks-vid__card:hover .ks-vid__media img,.ks-vid__card:hover .ks-vid__play{transform:none}
+}
+/* کشیدنِ افقی در لبهٔ ریل به صفحه/حرکتِ «بازگشت» مرورگر منتقل نشود */
+.ks-cats__rail,.ks-sale__rail,.ks-prod__rail,.ks-blog__rail,.ks-vid__rail{overscroll-behavior-x:contain;-webkit-tap-highlight-color:transparent}
+
