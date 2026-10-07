@@ -16,7 +16,10 @@ var ksHome = (function(){
 
   function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
   function faNum(n){ return String(n).replace(/[0-9]/g,function(d){return '۰۱۲۳۴۵۶۷۸۹'[+d];}); }
-  function money(pr){ var mu=parseInt(pr.currency_minor_unit||0,10),pre=pr.currency_prefix||'',suf=pr.currency_suffix||''; return function(v){ v=parseInt(v||'0',10)/Math.pow(10,mu); return pre+v.toLocaleString('fa-IR')+suf; }; }
+  // همان مارک‌آپِ قیمتِ ووکامرس (واحد در span جدا تا مثلِ کارت‌های سمتِ سرور کوچک‌تر نمایش داده شود)
+  function money(pr){ var mu=parseInt(pr.currency_minor_unit||0,10),pre=(pr.currency_prefix||'').trim(),suf=(pr.currency_suffix||'').trim(); return function(v){ v=parseInt(v||'0',10)/Math.pow(10,mu);
+    var sym=function(t){ return '<span class="woocommerce-Price-currencySymbol">'+esc(t)+'</span>'; };
+    return '<span class="woocommerce-Price-amount amount"><bdi>'+(pre?sym(pre)+'&nbsp;':'')+v.toLocaleString('fa-IR')+(suf?'&nbsp;'+sym(suf):'')+'</bdi></span>'; }; }
   function priceHtml(p){ var pr=p.prices||{},f=money(pr); if(p.on_sale&&pr.regular_price&&pr.regular_price!==pr.price){return '<del>'+f(pr.regular_price)+'</del><ins>'+f(pr.price)+'</ins>';} return '<ins>'+f(pr.price)+'</ins>'; }
   // برای محصولِ متغیر Store API کمترین قیمت‌ها را می‌دهد؛ همان مبنای درصد است (درصدِ دقیقِ هر متغیر را سرور در کارت‌های سمتِ سرور می‌گذارد)
   function badge(p){ var pr=p.prices||{}, reg=+pr.regular_price, now=+pr.price; if(p.on_sale&&reg>0&&now>0&&now<reg){return Math.round((1-now/reg)*100);} return 0; }
@@ -181,11 +184,26 @@ var ksHome = (function(){
   var c = navigator.connection;
   if ( c && ( c.saveData || /2g/.test( c.effectiveType || '' ) ) ) { return; }
   var mobile = window.matchMedia('(max-width: 767px)').matches;
+  // آیفون/آیپد (همهٔ مرورگرهایش WebKit است) و سافاری: WebM را یا اصلاً پخش نمی‌کنند یا کُدکش (VP9/AV1) را ندارند؛
+  // اگر نسخهٔ mp4 گذاشته شده باشد، WebM اصلاً به آن‌ها داده نمی‌شود تا مستقیم mp4 را بگیرند.
+  var ua = navigator.userAgent;
+  var apple = /iPhone|iPad|iPod/.test(ua) || ( /Macintosh/.test(ua) && navigator.maxTouchPoints > 1 ) || ( /Safari/.test(ua) && ! /Chrome|Chromium|Edg|OPR|Android/.test(ua) );
+  var hasMp4 = !! v.querySelector('source[type="video/mp4"][data-src]');
+  function play(){ var p = v.play(); return ( p && p.catch ) ? p : { catch:function(){} }; }
   function start(){
-    v.querySelectorAll('source[data-src]').forEach(function(s){ s.src = ( mobile && s.getAttribute('data-src-m') ) || s.getAttribute('data-src'); });
+    v.muted = true; v.defaultMuted = true; v.playsInline = true; // iOS فقط ویدیوی بی‌صدا و inline را خودکار پخش می‌کند
+    v.querySelectorAll('source[data-src]').forEach(function(s){
+      if ( apple && hasMp4 && s.type === 'video/webm' ) { s.remove(); return; }
+      s.src = ( mobile && s.getAttribute('data-src-m') ) || s.getAttribute('data-src');
+    });
     v.addEventListener('playing', function(){ v.classList.add('is-playing'); }, { once:true });
     v.load();
-    var p = v.play(); if ( p && p.catch ) { p.catch(function(){}); }
+    // پخشِ خودکار رد شد (مثلاً «حالت کم‌مصرف» آیفون): با اولین لمس/کلیکِ کاربر دوباره امتحان می‌شود
+    play().catch(function(){
+      var ev = ['touchend','click','keydown'];
+      function retry(){ ev.forEach(function(t){ document.removeEventListener(t, retry, true); }); play().catch(function(){}); }
+      ev.forEach(function(t){ document.addEventListener(t, retry, { capture:true, passive:true }); });
+    });
   }
   if ( ! mobile ) { start(); }
   else if ( document.readyState === 'complete' ) { setTimeout(start, 300); }

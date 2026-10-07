@@ -113,6 +113,7 @@
 .ks-footer__logo{display:inline-block;line-height:0}
 .ks-footer__logo img{display:block;width:clamp(150px,40vw,200px);height:auto;aspect-ratio:993/354;object-fit:contain}
 .ks-footer__actions{display:inline-flex;align-items:center;gap:12px}
+@media(max-width:767px){.ks-footer__top{flex-direction:column;justify-content:center;gap:20px;text-align:center}.ks-footer__actions{justify-content:center}} /* موبایل: لوگو، اینستاگرام و «بازگشت به بالا» وسط */
 .ks-social{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:2px;background:rgba(255,255,255,.12);color:#fff;transition:background .25s ease,transform .25s ease}
 .ks-social svg{width:20px;height:20px;fill:currentColor}
 .ks-social:hover{transform:translateY(-3px)}

@@ -464,3 +464,23 @@
 .ks-cats,.ks-sale,.ks-prod,.ks-blog,.ks-vid{content-visibility:auto;contain-intrinsic-size:auto 620px}
 .ks-brands,.ks-pay,.ks-seo{content-visibility:auto;contain-intrinsic-size:auto 460px}
 .home .ks-footer{content-visibility:auto;contain-intrinsic-size:auto 760px}
+
+/* ===================== mobile: section heads + product cards ===================== */
+/* «تومان» کوچک‌تر از عدد؛ ووکامرس بین عدد و واحد &nbsp; می‌گذارد و قیمت نمی‌شکند، پس جای کمتری بگیرد */
+.ks-sale__price .woocommerce-Price-currencySymbol,.ks-prod__price .woocommerce-Price-currencySymbol{font-size:.76em;font-weight:600}
+@media (max-width:640px){
+  /* سرِ سکشن: قبلاً متن و دکمهٔ «همه…» کنارِ هم بودند و تیتر/توضیح در نصفِ عرض می‌شکستند.
+     حالا: ردیفِ اول برچسب + دکمهٔ کوچکِ «همه…»، بعد تیتر و توضیح در تمامِ عرض. */
+  .ks-cats__head,.ks-sale__head,.ks-prod__head,.ks-blog__head,.ks-vid__head{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:12px;row-gap:0;margin-bottom:20px}
+  .ks-cats__head>div:first-child,.ks-sale__head>div:first-child,.ks-prod__head>div:first-child,.ks-blog__head>div:first-child,.ks-vid__head>div:first-child{display:contents}
+  .ks-cats__eyebrow,.ks-sale__eyebrow,.ks-prod__eyebrow,.ks-blog__eyebrow,.ks-vid__eyebrow{grid-column:1;grid-row:1;font-size:12.5px}
+  .ks-sale__nav,.ks-prod__nav,.ks-blog__nav,.ks-vid__nav{grid-column:2;grid-row:1}
+  .ks-cats__title,.ks-sale__title,.ks-prod__title,.ks-blog__title,.ks-vid__title{grid-column:1/-1;margin:12px 0 6px!important;font-size:clamp(19px,5.6vw,23px)!important;line-height:1.5!important;white-space:normal!important;text-wrap:balance}
+  .ks-cats__sub,.ks-sale__sub,.ks-prod__sub,.ks-blog__sub,.ks-vid__sub{grid-column:1/-1;font-size:13.5px;line-height:1.85;text-wrap:pretty}
+  .ks-sale__all,.ks-blog__all,.ks-vid__all{min-height:36px;padding:0 12px;gap:6px;font-size:13px}
+  .ks-sale__all svg,.ks-blog__all svg,.ks-vid__all svg{width:14px;height:14px}
+  /* کارتِ محصول در موبایل دکمهٔ سبد ندارد (با کلیک روی کارت به صفحهٔ محصول می‌رود)؛ قیمت تمامِ عرض را می‌گیرد */
+  .ks-sale__cart,.ks-prod__cart{display:none}
+  .ks-sale__foot,.ks-prod__foot{padding:8px 12px 14px}
+  .ks-sale__price,.ks-prod__price{flex:1 1 auto}
+}
