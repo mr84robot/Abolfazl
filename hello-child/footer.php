@@ -79,6 +79,7 @@ if ( ! function_exists( 'elementor_theme_do_location' ) || ! elementor_theme_do_
           <li><a href="https://khanehsaadat.com/blog/">مقالات</a></li>
           <li><a href="https://khanehsaadat.com/about-us/">درباره ما</a></li>
           <li><a href="https://khanehsaadat.com/contact-us/">تماس با ما</a></li>
+          <?php if ( function_exists( 'ks_track_modal' ) ) : ?><li><a href="#ks-track">پیگیری سفارش</a></li><?php endif; ?>
         </ul>
       </details>
 
@@ -145,6 +146,11 @@ if ( ! function_exists( 'elementor_theme_do_location' ) || ! elementor_theme_do_
 <?php
 	endif;
 endif;
+
+// پاپ‌آپِ پیگیری سفارش (inc/order-track.php — فقط وقتی inc/shop-setup.php از functions.php لود شده) + دکمهٔ ثابت روی صفحهٔ اصلی
+if ( function_exists( 'ks_track_modal' ) ) {
+	ks_track_modal( is_front_page() );
+}
 
 wp_footer();
 ?>

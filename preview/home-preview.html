@@ -1266,7 +1266,7 @@
           <li><a href="https://khanehsaadat.com/blog/">مقالات</a></li>
           <li><a href="https://khanehsaadat.com/about-us/">درباره ما</a></li>
           <li><a href="https://khanehsaadat.com/contact-us/">تماس با ما</a></li>
-        </ul>
+          <li><a href="#ks-track">پیگیری سفارش</a></li>        </ul>
       </details>
 
       <details class="ks-col ks-acc" open>
@@ -1329,7 +1329,39 @@
   </div>
 </footer>
 
-<script defer id="ks-home-js" src="../hello-child/assets/js/home.js"></script>
+		<dialog class="ks-trk" id="ks-track" aria-labelledby="ks-trk-title" data-ks-trk data-url="https://khanehsaadat.com/?wc-ajax=ks_track_order">
+			<div class="ks-trk__panel">
+				<header class="ks-trk__head">
+					<span class="ks-trk__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.6 6.6h10.9v8.2H2.6z"/><path d="M13.5 9.4h3.3l2.6 2.7v2.7h-5.9z"/><circle cx="6.4" cy="17.3" r="1.7"/><circle cx="16" cy="17.3" r="1.7"/></svg></span>
+					<span class="ks-trk__ht">
+						<strong class="ks-trk__t" id="ks-trk-title">پیگیری سفارش</strong>
+						<span class="ks-trk__d">شماره موبایلِ ثبت‌شده در سفارش و شماره سفارش را وارد کنید.</span>
+					</span>
+					<button type="button" class="ks-trk__x" data-ks-trk-close aria-label="بستن"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+				</header>
+
+				<form class="ks-trk__form" data-ks-trk-form novalidate>
+					<label class="ks-trk__f">
+						<span>شماره موبایل</span>
+						<input type="tel" name="phone" inputmode="numeric" autocomplete="tel" placeholder="09xxxxxxxxx" maxlength="16" dir="ltr" required>
+					</label>
+					<label class="ks-trk__f">
+						<span>شماره سفارش</span>
+						<input type="text" name="order" inputmode="numeric" autocomplete="off" placeholder="مثلاً 4521" maxlength="20" dir="ltr" required>
+					</label>
+					<p class="ks-trk__hint">شماره سفارش در پیامک و صفحهٔ «سفارش ثبت شد» آمده است.</p>
+					<p class="ks-trk__err" data-ks-trk-err role="alert" hidden></p>
+					<button type="submit" class="ks-trk__go" data-ks-trk-go><span>پیگیری سفارش</span></button>
+				</form>
+
+				<div class="ks-trk__res" data-ks-trk-res aria-live="polite" hidden></div>
+			</div>
+		</dialog>
+					<button type="button" class="ks-trk-fab" data-ks-trk-open aria-haspopup="dialog" aria-controls="ks-track">
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M2.6 6.6h10.9v8.2H2.6z"/><path d="M13.5 9.4h3.3l2.6 2.7v2.7h-5.9z"/><circle cx="6.4" cy="17.3" r="1.7"/><circle cx="16" cy="17.3" r="1.7"/></svg>				<span>پیگیری سفارش</span>
+			</button>
+				<script defer id="ks-home-js" src="../hello-child/assets/js/home.js"></script>
 <script defer id="ks-site-js" src="../hello-child/assets/js/site.js"></script>
+<script defer id="ks-track-js" src="../hello-child/assets/js/track.js"></script>
 </body>
 </html>

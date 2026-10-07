@@ -53,6 +53,17 @@ if ( ! function_exists( 'ks_cart_icon' ) ) {
 	}
 }
 
+if ( ! function_exists( 'ks_setup_warning' ) ) {
+	/**
+	 * هشدار فقط برای مدیرِ فروشگاه: inc/shop-setup.php از functions.php لود نشده، پس موبایلِ اجباری، ایمیلِ اختیاری،
+	 * حذفِ کشور و پیگیری سفارش کار نمی‌کنند. مشتری‌ها چیزی نمی‌بینند.
+	 */
+	function ks_setup_warning() {
+		if ( defined( 'KS_SHOP_SETUP' ) || ! function_exists( 'current_user_can' ) || ! current_user_can( 'manage_woocommerce' ) ) { return; }
+		echo '<div class="ks-admin-warn" role="note"><strong>فقط مدیر می‌بیند:</strong> فایلِ <code>inc/shop-setup.php</code> لود نشده؛ تا این خط به انتهای <code>functions.php</code>ِ قالبِ فرزند اضافه نشود، موبایل اجباری نمی‌شود، ایمیل و کشور تغییر نمی‌کنند و پیگیری سفارش کار نمی‌کند:<code dir="ltr">require_once get_stylesheet_directory() . \'/inc/shop-setup.php\';</code></div>';
+	}
+}
+
 if ( ! function_exists( 'ks_cart_steps' ) ) {
 	/** نوارِ مراحلِ خرید: سبد خرید ← اطلاعات ارسال ← پرداخت */
 	/**

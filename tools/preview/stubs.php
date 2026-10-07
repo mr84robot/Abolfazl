@@ -94,6 +94,7 @@ function number_format_i18n( $n ) { return strtr( (string) $n, array( '0' => '۰
 $OPTS = array(); // get_option: فقط مقدارهایی که یک پیش‌نمایش لازم دارد
 function get_option( $k, $d = 0 ) { return $GLOBALS['OPTS'][ $k ] ?? $d; }
 function is_wp_error( $x ) { return false; }
+function is_front_page() { return ! empty( $GLOBALS['IS_FRONT'] ); }
 function taxonomy_exists( $t ) { return true; }
 function wp_list_pluck( $list, $f ) { return array_map( function ( $o ) use ( $f ) { return $o->$f; }, $list ); }
 function wp_trim_words( $t, $n, $m ) { $w = preg_split( '/\s+/u', trim( $t ) ); return count( $w ) <= $n ? $t : implode( ' ', array_slice( $w, 0, $n ) ) . $m; }
@@ -201,3 +202,6 @@ function hello_elementor_display_header_footer() { return true; }
 class CodeLock_Settings { static function is_on( $k ) { return true; } static function get( $k ) { return ''; } }
 class CodeLock_Product_Meta { static function get_video( $id ) { $v = $GLOBALS['VIDEOS'][ $id ] ?? null; return $v ? $v + array( 'url' => 'x', 'points' => array() ) : null; } }
 class CodeLock_Videos { static function video_url( $id ) { return get_permalink( $id ) . '#cl-pp-video'; } static function archive_url() { return $GLOBALS['U'] . '/videos/'; } }
+
+/* پیگیری سفارش: مثلِ وقتی inc/shop-setup.php از functions.php لود شده (پاپ‌آپ در footer.php؛ دکمهٔ ثابت فقط صفحهٔ اصلی) */
+require_once $THEME . '/inc/order-track.php';

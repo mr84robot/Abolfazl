@@ -16,4 +16,5 @@
 
 require __DIR__ . '/stubs.php';
 
+$IS_FRONT = true; // دکمهٔ ثابتِ «پیگیری سفارش» فقط روی صفحهٔ اصلی
 require $THEME . '/front-page.php';

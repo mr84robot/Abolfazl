@@ -9,7 +9,8 @@
 - `hello-child/page-cart.php` — صفحهٔ سبد خرید؛ سبدِ کلاسیکِ ووکامرس با قالب‌های `hello-child/woocommerce/cart/` (cart، cart-totals، cart-empty، proceed-to-checkout-button) و توابعِ `hello-child/inc/cart.php`.
 - `hello-child/page-checkout.php` — تسویه حساب و «سفارش ثبت شد»؛ تسویه حسابِ کلاسیکِ ووکامرس با قالب‌های `hello-child/woocommerce/checkout/` (form-checkout، form-billing، form-shipping، review-order، payment، payment-method، form-coupon، thankyou).
 - `hello-child/page-my-account.php` — حساب کاربری (پیشخوان، سفارش‌ها، مشاهدهٔ سفارش، آدرس‌ها، جزئیات حساب، ورود/عضویت)؛ حساب کاربریِ ووکامرس با قالب‌های `hello-child/woocommerce/myaccount/` (my-account، navigation، dashboard، orders، view-order، my-address) و توابعِ `hello-child/inc/account.php`. فرم‌های ورود، ویرایشِ آدرس و جزئیاتِ حساب بازنویسی نشده‌اند (فقط استایل) تا افزونه‌های ورود دست نخورند.
-- `hello-child/inc/shop-setup.php` — تنظیماتِ فروشگاه که باید از functions.php لود شود: فقط ایران (فیلدِ کشور پنهان)، ایمیلِ اختیاری (تسویه حساب و جزئیات حساب)، موبایلِ اجباری.
+- `hello-child/inc/shop-setup.php` — تنظیماتِ فروشگاه که باید از functions.php لود شود: فقط ایران (فیلدِ کشور پنهان)، ایمیلِ اختیاری (تسویه حساب و جزئیات حساب)، موبایلِ اجباری (با اولویتِ ۹۹۹۹ تا افزونه‌ها برنگردانند)، و پیگیری سفارش. اگر لود نشده باشد، روی سبد/تسویه/حساب فقط به مدیر هشدار نشان داده می‌شود.
+- `hello-child/inc/order-track.php` — پیگیری سفارش با شماره موبایل + شماره سفارش: پاپ‌آپ روی همهٔ صفحه‌ها (لینکِ «پیگیری سفارش» در فوتر یا هر لینک به `#ks-track`)، دکمهٔ ثابتِ پایین-چپ فقط روی صفحهٔ اصلی (موبایل: فقط آیکون)؛ درخواست به `/?wc-ajax=ks_track_order`، حداکثر ۱۰ تلاش در ۱۵ دقیقه برای هر IP. اسکریپت: `assets/js/track.js`، استایل: انتهای `site.css`.
 - `hello-child/inc/fa.php` — ارقامِ فارسی و تاریخِ شمسی (`ks_jdate`) برای تاریخِ مقاله‌ها و سفارش‌ها.
 - `hello-child/template-parts/home/` — سکشن‌های صفحهٔ اصلی (hero, trust, categories, sale, brands, products, saadat-pay, blog, seo-guide, videos). فقط HTML/PHP؛ هیچ CSS یا JSِ درون‌خطی ندارند.
 - `hello-child/assets/css/home.css` — استایلِ همهٔ سکشن‌ها در یک فایل.
@@ -47,7 +48,8 @@
 | `inc/cart.php` | توابعِ کمکیِ سبد خرید و تسویه حساب (و آیکون‌ها) |
 | `inc/account.php` | توابعِ کمکیِ حساب کاربری |
 | `inc/fa.php` | ارقامِ فارسی و تاریخِ شمسی |
-| `inc/shop-setup.php` | فقط ایران، ایمیلِ اختیاری، موبایلِ اجباری — **یک خط در functions.php لازم دارد (پایین)** |
+| `inc/shop-setup.php` | فقط ایران، ایمیلِ اختیاری، موبایلِ اجباری، پیگیری سفارش — **یک خط در functions.php لازم دارد (پایین)** |
+| `inc/order-track.php`، `assets/js/track.js` | پیگیری سفارش (پاپ‌آپ + دکمهٔ ثابتِ صفحهٔ اصلی) |
 | `assets/css/cart.css`، `assets/js/cart.js` | سبد خرید (cart.css روی تسویه حساب هم) |
 | `assets/css/checkout.css`، `assets/js/checkout.js` | تسویه حساب |
 | `assets/css/account.css`، `assets/js/account.js` | حساب کاربری |
@@ -63,7 +65,7 @@
 
 **حساب کاربری:** همین‌طور؛ آدرسِ `/my-account/` خودکار، وگرنه قالبِ «حساب کاربری (خانه سعادت)».
 
-**functions.php:** این یک خط را انتهای `functions.php`ِ قالبِ فرزند اضافه کنید (حذفِ کشور، ایمیلِ اختیاری و موبایلِ اجباری باید هنگامِ ثبتِ سفارش هم اعمال شود، که در آن هیچ قالبی اجرا نمی‌شود):
+**functions.php:** این یک خط را انتهای `functions.php`ِ قالبِ فرزند اضافه کنید (حذفِ کشور، ایمیلِ اختیاری و موبایلِ اجباری باید هنگامِ ثبتِ سفارش هم اعمال شود، که در آن هیچ قالبی اجرا نمی‌شود؛ پیگیری سفارش هم از همین فایل لود می‌شود):
 
 ```php
 require_once get_stylesheet_directory() . '/inc/shop-setup.php';

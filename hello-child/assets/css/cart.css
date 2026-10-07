@@ -10,6 +10,13 @@
   background:#f4f5f5;color:var(--ink);direction:rtl;font-family:"Yekan Bakh FaNum","Vazirmatn",system-ui,-apple-system,sans-serif;padding:28px 0 56px}
 /* هیچ چیزِ داخلِ صفحه (افزونه‌ها، درگاه‌ها، جدول‌ها) صفحه را افقی پهن نکند؛ clip برخلافِ hidden چسبانیِ ستونِ خلاصه را خراب نمی‌کند */
 @supports (overflow:clip){.ks-cart{overflow-x:clip}}
+/* کلِ صفحه هم (این فایل فقط روی سبد، تسویه حساب و حساب کاربری لود می‌شود): عنصرهایی بیرون از محتوای ما
+   — پنجره‌های پنهانِ افزونه‌ها، فیلدهای جاگذاری‌شده با position:absolute — در صفحهٔ راست‌به‌چپ به سمتِ چپ بیرون می‌زدند
+   و صفحه اسکرولِ افقی می‌خورد (در موبایل حتی کلِ صفحه کوچک/پهن می‌شد). html روی خودِ پنجره اعمال می‌شود؛ body با
+   position:relative قابِ این عنصرهای absolute می‌شود تا clipِ آن‌ها را هم ببُرد، و با clip ظرفِ اسکرول نمی‌شود، پس ستون‌های چسبان سالم می‌مانند. */
+html{overflow-x:hidden}
+body{position:relative}
+@supports (overflow:clip){html,body{overflow-x:clip}}
 .ks-cart *,.ks-cart *::before,.ks-cart *::after{box-sizing:border-box}
 .ks-cart__in{max-width:1310px;margin-inline:auto;padding-inline:clamp(16px,3vw,24px)}
 .ks-cart .woocommerce{margin:0;padding:0}

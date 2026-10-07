@@ -24,6 +24,8 @@ get_header();
 <main id="content" class="site-main ks-cart ks-co">
 	<div class="ks-cart__in">
 		<?php
+		require_once get_stylesheet_directory() . '/inc/cart.php';
+		ks_setup_warning();
 		if ( function_exists( 'WC' ) && shortcode_exists( 'woocommerce_checkout' ) ) {
 			echo do_shortcode( '[woocommerce_checkout]' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped — خروجیِ خودِ ووکامرس
 		} else {
