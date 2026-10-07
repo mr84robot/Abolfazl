@@ -32,7 +32,7 @@ $ks_show = array(
 	'sub'   => 'تنها و قوی‌ترین شوروم غرب کشور - خانه سعادت',
 	'bg'     => 'https://khanehsaadat.com/wp-content/uploads/2026/10/showroom-bg-hamedan.webp',
 	'bg_sm'  => 'https://khanehsaadat.com/wp-content/uploads/2026/10/showroom-bg-hamedan-960.webp',
-	'poster' => 'https://khanehsaadat.com/wp-content/uploads/2026/10/تامنیل-ویدیو-.png',
+	'poster' => 'https://khanehsaadat.com/wp-content/uploads/2026/10/تامنیل-ویدیو-.webp',
 );
 ?>
 <style id="ks-show-css">
