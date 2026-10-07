@@ -7,6 +7,14 @@
  * ⚡ پرفورمنس: هیچ بایتی از ویدیو هنگام لودِ صفحه گرفته نمی‌شود — کارت یک «پلیسهولدرِ CSS» است؛
  *    ویدیو فقط با کلیک، داخلِ مودال و با `preload="none"` لود و پخش می‌شود (نه autoplay).
  * ورودِ «باابهت» با IntersectionObserver.
+ *
+ * پس‌زمینه: نمای هواییِ همدان، حالتِ لایت — زیرِ لایهٔ سفیدِ پررنگ، پس بیشترِ سطح سفید می‌ماند.
+ *   - مرکز (پشتِ کارتِ ویدیو) سفیدتر است و لبه‌ها کمی از شهر را نشان می‌دهند؛
+ *     بالا و پایین به سفید محو می‌شود تا کنارِ سکشن‌های همسایه خطِ تیز نیفتد.
+ *   - فایل‌ها در assets/img/: نسخهٔ ۱۶۰۰px (۷۹KB) و ۹۶۰px برای موبایل (۴۳KB)، webp.
+ *     کمی تار شده‌اند؛ زیرِ لایهٔ سفید دیده نمی‌شود و حجم را نصف می‌کند.
+ *   - ⚡ مثلِ ویدیو، تصویر هم هنگامِ لودِ صفحه گرفته نمی‌شود: کلاسِ is-bg با IntersectionObserver
+ *     وقتی سکشن به ~۸۰۰px مانده به دید می‌رسد اضافه می‌شود. بدون JS سکشن همان سفیدِ ساده می‌ماند.
  */
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
@@ -15,11 +23,17 @@ $ks_show = array(
 	'video' => 'https://khanehsaadat.com/wp-content/uploads/2026/10/showroom-saadat.webm',
 	'title' => 'نمایی از شوروم بزرگ خانه سعادت',
 	'sub'   => 'تنها و قوی‌ترین شوروم غرب کشور - خانه سعادت',
+	'bg'    => get_stylesheet_directory_uri() . '/assets/img/showroom-bg-hamedan.webp',
+	'bg_sm' => get_stylesheet_directory_uri() . '/assets/img/showroom-bg-hamedan-960.webp',
 );
 ?>
 <style id="ks-show-css">
 .ks-show{background:#fff;direction:rtl;font-family:"Yekan Bakh FaNum","Vazirmatn",system-ui,-apple-system,sans-serif;min-height:80vh;display:flex;align-items:center}
 .ks-show *{box-sizing:border-box}
+/* پس‌زمینهٔ لایت: محوِ بالا/پایین ← لایهٔ سفیدِ شعاعی (مرکز سفیدتر) ← عکس */
+.ks-show{--show-bg:var(--show-bg-lg)}
+.ks-show.is-bg{background:linear-gradient(to bottom,#fff 0%,rgb(255 255 255 / 0) 24%,rgb(255 255 255 / 0) 76%,#fff 100%),radial-gradient(ellipse 62% 58% at 50% 54%,rgb(255 255 255 / .92) 0%,rgb(255 255 255 / .8) 100%),var(--show-bg) center 58% / cover no-repeat,#fff}
+@media (max-width:768px){.ks-show{--show-bg:var(--show-bg-sm)}}
 .ks-show__in{width:100%;max-width:1180px;margin-inline:auto;padding:clamp(80px,12vw,168px) clamp(16px,3vw,32px) clamp(40px,6vw,84px)}
 .ks-show__frame{position:relative;max-width:590px;margin-inline:auto;aspect-ratio:16/9;border-radius:6px;overflow:hidden;cursor:pointer;background:linear-gradient(140deg,#063e33 0%,#032a22 55%,#021713 100%);box-shadow:0 44px 84px -42px rgb(0 0 0 / .5);opacity:0;transform:translateY(42px) scale(.96);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1.15s cubic-bezier(.16,1,.3,1)}
 .ks-show__frame.is-in{opacity:1;transform:none}
@@ -47,7 +61,8 @@ $ks_show = array(
 @media (prefers-reduced-motion:reduce){.ks-show__frame{opacity:1;transform:none;transition:none}.ks-show__play::after{animation:none}.ks-show__modal{animation:none}}
 </style>
 
-<section class="ks-show" id="home-sec-8" aria-label="ویدیوی شوروم خانه سعادت">
+<section class="ks-show" id="home-sec-8" aria-label="ویدیوی شوروم خانه سعادت" data-ks-show-sec
+         style="--show-bg-lg:url('<?php echo esc_url( $ks_show['bg'] ); ?>');--show-bg-sm:url('<?php echo esc_url( $ks_show['bg_sm'] ); ?>')">
   <div class="ks-show__in">
     <div class="ks-show__frame" data-ks-show role="button" tabindex="0" aria-label="پخش ویدیو: <?php echo esc_attr( $ks_show['title'] ); ?>">
       <span class="ks-show__glow" aria-hidden="true"></span>
@@ -80,6 +95,17 @@ $ks_show = array(
   if ( ! frame ) { return; }
   var modal = document.querySelector('[data-ks-show-modal]');
   var mv    = document.querySelector('[data-ks-show-modal-video]');
+
+  // پس‌زمینه: تصویر فقط نزدیکِ دید لود می‌شود (کلاس is-bg)
+  var sec = document.querySelector('[data-ks-show-sec]');
+  if ( sec ) {
+    if ( 'IntersectionObserver' in window ) {
+      var bio = new IntersectionObserver(function(es){ es.forEach(function(e){ if ( e.isIntersecting ) { sec.classList.add('is-bg'); bio.disconnect(); } }); }, { rootMargin:'800px 0px' });
+      bio.observe(sec);
+    } else {
+      sec.classList.add('is-bg');
+    }
+  }
 
   // ورودِ باابهت
   if ( 'IntersectionObserver' in window && ! window.matchMedia('(prefers-reduced-motion: reduce)').matches ) {
