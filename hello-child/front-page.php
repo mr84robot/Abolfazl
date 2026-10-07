@@ -31,6 +31,7 @@ get_header();
 	get_template_part( 'template-parts/home/showroom' );
 	get_template_part( 'template-parts/home/blog' );
 	get_template_part( 'template-parts/home/seo-guide' );
+	get_template_part( 'template-parts/home/videos' );
 	// سکشن‌های بعدی صفحهٔ اصلی اینجا اضافه می‌شوند…
 	?>
 </main>

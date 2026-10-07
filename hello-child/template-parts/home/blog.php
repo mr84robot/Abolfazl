@@ -134,11 +134,11 @@ if ( ! function_exists( 'ks_fa_digits' ) ) {
               </span>
             </span>
 
-            <span class="ks-blog__body">
+            <div class="ks-blog__body">
               <h3 class="ks-blog__name"><?php the_title(); ?></h3>
               <?php $ks_ex = wp_trim_words( get_the_excerpt(), 18, '…' ); ?>
               <?php if ( $ks_ex ) : ?><p class="ks-blog__ex"><?php echo esc_html( $ks_ex ); ?></p><?php endif; ?>
-            </span>
+            </div>
 
           </a>
         </article>
