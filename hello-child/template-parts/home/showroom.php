@@ -17,6 +17,9 @@
  *     است، پس بدون JS هم کار می‌کند. <picture> روی موبایل (≤۷۶۸px) نسخهٔ ۹۶۰ را اجبار می‌کند؛
  *     srcset به‌تنهایی روی گوشی‌های رتینا باز هم نسخهٔ ۱۶۰۰ را می‌گرفت.
  *
+ * تامنیلِ ویدیو: اگر assets/img/showroom-poster.webp وجود داشته باشد، روی کارت (lazy) و به‌عنوانِ
+ *   poster ویدیوی مودال نشسته می‌شود؛ اگر نباشد، همان پلیسهولدرِ CSS می‌ماند. پس فقط فایل را بگذار.
+ *
  * ورودِ کارت: کارت فقط وقتی پنهان می‌شود که JS کلاسِ ks-show--anim را بگذارد (همان الگوی سکشن مزایا)؛
  * بدون JS کارت از اول دیده می‌شود، نه اینکه برای همیشه opacity:0 بماند.
  */
@@ -29,7 +32,12 @@ $ks_show = array(
 	'sub'   => 'تنها و قوی‌ترین شوروم غرب کشور - خانه سعادت',
 	'bg'    => get_stylesheet_directory_uri() . '/assets/img/showroom-bg-hamedan.webp',
 	'bg_sm' => get_stylesheet_directory_uri() . '/assets/img/showroom-bg-hamedan-960.webp',
+	'poster'=> '',
 );
+// تامنیل فقط اگر فایلش در قالب باشد
+if ( file_exists( get_stylesheet_directory() . '/assets/img/showroom-poster.webp' ) ) {
+	$ks_show['poster'] = get_stylesheet_directory_uri() . '/assets/img/showroom-poster.webp';
+}
 ?>
 <style id="ks-show-css">
 .ks-show{position:relative;background:#fff;direction:rtl;font-family:"Yekan Bakh FaNum","Vazirmatn",system-ui,-apple-system,sans-serif;min-height:80vh;display:flex;align-items:center}
@@ -42,6 +50,9 @@ $ks_show = array(
 .ks-show--anim .ks-show__frame{opacity:0;transform:translateY(42px) scale(.96)}
 .ks-show--anim .ks-show__frame.is-in{opacity:1;transform:none}
 .ks-show__frame:focus-visible{outline:3px solid #F2A900;outline-offset:3px}
+.ks-show__poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.ks-show__frame:hover .ks-show__poster{transform:scale(1.04)}
+.ks-show__frame.has-poster .ks-show__glow{display:none}
 .ks-show__glow{position:absolute;inset-block-start:-26%;inset-inline:6%;height:72%;background:radial-gradient(ellipse at center,rgb(242 169 0 / .18),transparent 62%);pointer-events:none}
 .ks-show__ov{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgb(0 0 0 / .5) 0%,rgb(0 0 0 / .12) 46%,transparent 100%)}
 .ks-show__play{position:absolute;inset:0;margin:auto;width:clamp(58px,7vw,76px);height:clamp(58px,7vw,76px);border:0;border-radius:50%;background:rgb(255 255 255 / .18);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .3s ease,background .3s ease}
@@ -62,7 +73,7 @@ $ks_show = array(
 .ks-show__close:hover{background:rgb(255 255 255 / .24)}
 .ks-show__close svg{width:22px;height:22px}
 @media (max-width:640px){.ks-show{min-height:auto}}
-@media (prefers-reduced-motion:reduce){.ks-show__frame{opacity:1;transform:none;transition:none}.ks-show__play::after{animation:none}.ks-show__modal{animation:none}}
+@media (prefers-reduced-motion:reduce){.ks-show__frame{opacity:1;transform:none;transition:none}.ks-show__frame:hover .ks-show__poster{transform:none}.ks-show__play::after{animation:none}.ks-show__modal{animation:none}}
 </style>
 
 <section class="ks-show" id="home-sec-8" aria-label="ویدیوی شوروم خانه سعادت">
@@ -72,7 +83,10 @@ $ks_show = array(
   </picture>
   <span class="ks-show__veil" aria-hidden="true"></span>
   <div class="ks-show__in">
-    <div class="ks-show__frame" data-ks-show role="button" tabindex="0" aria-label="پخش ویدیو: <?php echo esc_attr( $ks_show['title'] ); ?>">
+    <div class="ks-show__frame<?php echo $ks_show['poster'] ? ' has-poster' : ''; ?>" data-ks-show role="button" tabindex="0" aria-label="پخش ویدیو: <?php echo esc_attr( $ks_show['title'] ); ?>">
+      <?php if ( $ks_show['poster'] ) : ?>
+        <img class="ks-show__poster" src="<?php echo esc_url( $ks_show['poster'] ); ?>" width="1280" height="720" alt="" loading="lazy" decoding="async">
+      <?php endif; ?>
       <span class="ks-show__glow" aria-hidden="true"></span>
       <span class="ks-show__ov" aria-hidden="true"></span>
       <button class="ks-show__play" type="button" data-ks-show-play aria-label="پخش ویدیو">
@@ -90,7 +104,7 @@ $ks_show = array(
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
     </button>
     <div class="ks-show__modal-in">
-      <video class="ks-show__modal-video" data-ks-show-modal-video controls playsinline preload="none">
+      <video class="ks-show__modal-video" data-ks-show-modal-video controls playsinline preload="none"<?php if ( $ks_show['poster'] ) : ?> poster="<?php echo esc_url( $ks_show['poster'] ); ?>"<?php endif; ?>>
         <source src="<?php echo esc_url( $ks_show['video'] ); ?>" type="video/webm">
       </video>
     </div>
