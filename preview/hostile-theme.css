@@ -16,3 +16,34 @@ input[type=text],input[type=number],select{width:100%;border:1px solid #666;bord
 .woocommerce .cart-collaterals .cart_totals{float:right;width:48%}
 .woocommerce-cart .wc-proceed-to-checkout{padding:1em 0}
 dl,dd{margin:0 0 1em}
+/* woocommerce.css: فرم‌های تسویه حساب (همان specificity که روی سایت ورودی‌ها را کوتاه می‌کرد) */
+.woocommerce form .form-row{padding:3px;margin:0 0 6px}
+.woocommerce form .form-row label{line-height:2}
+.woocommerce form .form-row .input-text,.woocommerce form .form-row select{font-family:inherit;font-weight:400;letter-spacing:normal;padding:.5em;display:block;background-color:#fff;border:1px solid #cfc8d8;border-radius:4px;color:#000;box-sizing:border-box;width:100%;margin:0;line-height:normal;height:auto}
+.woocommerce form .form-row input.input-text,.woocommerce form .form-row textarea{box-sizing:border-box;width:100%;margin:0;outline:0;line-height:normal}
+.woocommerce form .form-row-first,.woocommerce form .form-row-last{width:47%;overflow:visible;float:right}
+.woocommerce-checkout #payment{background:#ebe9eb;border-radius:5px}
+.woocommerce-checkout #payment ul.payment_methods{padding:1em;border-bottom:1px solid #d3ced2}
+.woocommerce-checkout #payment div.payment_box{padding:1em;margin:1em 0;background-color:#dcd7e3;color:#515151}
+
+/* woocommerce.css + woocommerce-smallscreen.css: حساب کاربری */
+.woocommerce-account .woocommerce-MyAccount-navigation{float:right;width:30%}
+.woocommerce-account .woocommerce-MyAccount-content{float:left;width:68%}
+.woocommerce .col2-set .col-1,.woocommerce-page .col2-set .col-1{float:right;width:48%}
+.woocommerce .col2-set .col-2,.woocommerce-page .col2-set .col-2{float:left;width:48%}
+.woocommerce-account .addresses .title .edit{float:left}
+.woocommerce table.my_account_orders{font-size:.85em}
+.woocommerce table.my_account_orders td,.woocommerce table.my_account_orders th{padding:4px 8px;vertical-align:middle}
+.woocommerce button.button{font-size:100%;margin:0;line-height:1;padding:.618em 1em;font-weight:700;border-radius:3px;color:#515151;background-color:#e9e6ed;border:0}
+.woocommerce form.login,.woocommerce form.register{border:1px solid #cfc8d8;padding:20px;margin:2em 0;text-align:left;border-radius:5px}
+.woocommerce-customer-details address{border:1px solid rgba(0,0,0,.1);border-bottom-width:2px;border-right-width:2px;padding:6px 12px;border-radius:5px;font-style:italic}
+fieldset{border:1px solid #c0c0c0;margin:0 2px;padding:.35em .625em .75em}
+mark{background:#ff0;color:#000}
+@media (max-width:768px){
+  .woocommerce table.shop_table_responsive thead{display:none}
+  .woocommerce table.shop_table_responsive tbody th{display:none}
+  .woocommerce table.shop_table_responsive tr td{display:block;text-align:right!important}
+  .woocommerce table.shop_table_responsive tr td::before{content:attr(data-title) ": ";font-weight:700;float:left}
+  .woocommerce-account .woocommerce-MyAccount-navigation,.woocommerce-account .woocommerce-MyAccount-content{float:none;width:100%}
+  .woocommerce .col2-set .col-1,.woocommerce .col2-set .col-2{float:none;width:100%}
+}

@@ -30,7 +30,7 @@
 .ks-co .ks-co__h small,.ks-co__toggle small{font-size:12.5px;font-weight:500;color:var(--muted)}
 
 /* ---------- فیلدها (همان خروجیِ woocommerce_form_field) ---------- */
-.ks-co__fields{display:grid;grid-template-columns:1fr 1fr;gap:16px 16px}
+.ks-co__fields{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px 16px}
 .ks-co__fields>*{grid-column:1/-1}
 .ks-co__fields>.form-row-first{grid-column:1}
 .ks-co__fields>.form-row-last{grid-column:2}
@@ -39,39 +39,8 @@
   .ks-co__fields{grid-template-columns:minmax(0,1fr)}
   .ks-co__fields>.form-row-first,.ks-co__fields>.form-row-last{grid-column:1/-1}
 }
-/* کشورِ ثابت (فقط ایران): ردیفِ «کشور: ایران» جای خالی نگیرد؛ مقدارش مخفی ارسال می‌شود */
-.ks-co #billing_country_field:has(input[type="hidden"]),.ks-co #shipping_country_field:has(input[type="hidden"]){display:none}
 
-.ks-co .form-row{float:none!important;width:auto!important;margin:0!important;padding:0!important}
-.ks-co .form-row label{display:block;margin:0 0 6px;font-size:13.5px;font-weight:600;line-height:1.7;color:var(--ink)}
-.ks-co .form-row label .required{color:var(--danger);font-weight:700;text-decoration:none;border:0;cursor:default}
-.ks-co .form-row label .optional{font-size:12px;font-weight:400;color:var(--muted)}
-.ks-co .woocommerce-input-wrapper{display:block}
-.ks-co .form-row .input-text,.ks-co .form-row select,.ks-co .form-row textarea{display:block;width:100%!important;height:46px;margin:0!important;padding:0 12px!important;border:1px solid #d4dbd8!important;border-radius:2px!important;background:#fff!important;box-shadow:none!important;color:var(--ink);font:inherit;font-size:14.5px;line-height:1.6;transition:border-color .15s,box-shadow .15s}
-.ks-co .form-row textarea{height:auto;min-height:100px;padding:10px 12px!important;resize:vertical}
-.ks-co .form-row .input-text::placeholder,.ks-co .form-row textarea::placeholder{color:#9aa3a0}
-.ks-co .form-row .input-text:focus,.ks-co .form-row select:focus,.ks-co .form-row textarea:focus{border-color:var(--brand)!important;outline:0;box-shadow:0 0 0 3px rgb(0 89 73 / .12)!important}
-.ks-co .form-row.woocommerce-invalid label{color:var(--danger)}
-.ks-co .form-row.woocommerce-invalid .input-text,.ks-co .form-row.woocommerce-invalid select,.ks-co .form-row.woocommerce-invalid .select2-selection{border-color:var(--danger)!important}
-.ks-co .form-row.woocommerce-validated .input-text,.ks-co .form-row.woocommerce-validated select{border-color:#9cc5bb!important}
-.ks-co .checkout-inline-error-message{margin:6px 0 0;font-size:12.5px;color:var(--danger)}
-.ks-co .form-row .description{margin-top:6px;font-size:12px;line-height:1.8;color:var(--muted)}
-/* شماره تلفن، کد پستی و ایمیل چپ‌به‌راست تایپ می‌شوند ولی از سمتِ راستِ کادر */
-.ks-co input[type="tel"],.ks-co input[type="email"],.ks-co input[name$="_postcode"],.ks-co input[name$="_phone"]{direction:ltr;text-align:right}
-
-/* انتخاب استان/شهر (selectWoo/select2 ووکامرس) */
-.ks-co .select2-container{width:100%!important}
-.ks-co .select2-container .select2-selection--single{height:46px;margin:0;border:1px solid #d4dbd8;border-radius:2px;background:#fff}
-.ks-co .select2-container .select2-selection--single .select2-selection__rendered{padding-inline:12px 34px;line-height:44px;color:var(--ink);font-size:14.5px}
-.ks-co .select2-container .select2-selection--single .select2-selection__arrow{height:44px;inset-inline:auto 6px}
-.ks-co .select2-container--focus .select2-selection--single,.ks-co .select2-container--open .select2-selection--single{border-color:var(--brand)}
-.woocommerce-checkout .select2-dropdown{border-color:#d4dbd8;border-radius:2px;font-family:"Yekan Bakh FaNum","Vazirmatn",system-ui,sans-serif;font-size:14px}
-.woocommerce-checkout .select2-search--dropdown .select2-search__field{height:38px;border:1px solid #d4dbd8;border-radius:2px;padding:0 10px;font:inherit}
-.woocommerce-checkout .select2-container--default .select2-results__option--highlighted[aria-selected],.woocommerce-checkout .select2-container--default .select2-results__option--highlighted[data-selected]{background:#005949;color:#fff}
-
-/* چک‌باکس‌ها: ارسال به آدرسِ دیگر، ساخت حساب، قوانین */
-.ks-co .woocommerce-form__label-for-checkbox{display:flex!important;align-items:center;gap:10px;margin:0!important;cursor:pointer;font-size:14px;font-weight:600;line-height:1.7;color:var(--ink)}
-.ks-co input[type="checkbox"],.ks-co input[type="radio"]{flex:0 0 auto;width:18px;height:18px;margin:0;accent-color:var(--brand)}
+/* (فیلدها، select2 و چک‌باکس‌ها در cart.css هستند؛ مشترک با حساب کاربری) */
 .ks-co .ks-co__toggle{margin:0!important;padding:0!important;font-family:inherit!important;font-size:15px!important;font-weight:700!important;line-height:1.6!important;letter-spacing:normal!important;text-transform:none!important;color:var(--ink)!important;border:0!important}
 .ks-co .ks-co__toggle .ks-ic{width:20px;height:20px;color:var(--brand)}
 .ks-co .shipping_address{padding-top:18px}
@@ -202,3 +171,33 @@
   .ks-cart a.ks-ty__btn{flex:1 1 auto}
 }
 @media (prefers-reduced-motion:reduce){.ks-co *{transition:none!important}}
+
+/* ---------- فیلدهای مخفی (inc/shop-setup.php کلاسِ ks-field-hidden می‌گذارد؛ مثلاً کشور = ایران) ---------- */
+/* .ks-field-hidden در cart.css */
+
+/* ---------- جلوگیری از اسکرولِ افقی در موبایل ----------
+   هر چیزی که عرضِ ثابت دارد (لوگو/توضیحِ درگاه‌ها، جدول یا متنِ بلندِ افزونه‌ها) دیگر صفحه را پهن نمی‌کند. */
+.ks-co img{max-width:100%;height:auto}
+.ks-co #payment div.payment_box,.ks-co .woocommerce-terms-and-conditions-wrapper,.ks-co .ks-co__iname,.ks-co address{overflow-wrap:anywhere}
+.ks-co #payment div.payment_box{max-width:100%;overflow-x:auto}
+.ks-co #payment div.payment_box table{width:100%;max-width:100%}
+.ks-co .select2-container,.ks-co .iti{max-width:100%}
+
+/* ---------- موبایل: نوارِ چسبانِ «ثبت سفارش» پایینِ صفحه ---------- */
+.ks-co-bar{display:none}
+@media (max-width:767px){
+  .ks-co-js .ks-co-bar{position:fixed;inset-inline:0;bottom:0;z-index:998;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:#fff;border-top:1px solid var(--line,#e5e9e7);box-shadow:0 -10px 28px rgb(0 0 0 / .08);direction:rtl;font-family:"Yekan Bakh FaNum","Vazirmatn",system-ui,sans-serif;transition:transform .25s ease}
+  .ks-co-js .ks-co-bar.is-off{transform:translateY(115%)}
+  .ks-co-bar__sum{display:flex;flex-direction:column;min-width:0;line-height:1.5}
+  .ks-co-bar__sum span{font-size:12px;color:#5b6472}
+  .ks-co-bar__sum strong{font-size:16.5px;font-weight:800;color:#005949;white-space:nowrap}
+  .ks-co-bar__sum .woocommerce-Price-currencySymbol{font-size:.72em;font-weight:600}
+  .ks-co-bar .ks-co-bar__btn{flex:0 0 auto;height:50px;margin:0;padding:0 26px!important;border:0!important;border-radius:2px!important;background:#005949!important;color:#fff!important;box-shadow:none!important;font:inherit!important;font-size:15.5px!important;font-weight:800!important;line-height:1!important;cursor:pointer}
+  .ks-co-bar .ks-co-bar__btn:active{background:#02392F!important}
+  /* منوی پایینِ افزونه روی تسویه حساب پنهان می‌شود تا نوارِ پرداخت جایش بنشیند (روی «سفارش ثبت شد» می‌ماند) */
+  body.woocommerce-checkout:not(.woocommerce-order-received) .cl-mnav{display:none!important}
+  html.ks-co-js body.woocommerce-checkout:not(.woocommerce-order-received){padding-bottom:calc(78px + env(safe-area-inset-bottom,0px))!important}
+}
+/* وقتی کاربر را به «شرایط و قوانین» می‌بریم */
+.ks-co .woocommerce-terms-and-conditions-wrapper .form-row.ks-attn{outline:2px solid #F2A900;outline-offset:6px;transition:outline-color .6s}
+

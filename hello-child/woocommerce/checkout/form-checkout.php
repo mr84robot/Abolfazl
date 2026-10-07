@@ -77,4 +77,10 @@ if ( ! $checkout->is_registration_enabled() && $checkout->is_registration_requir
 
 </form>
 
+<?php // موبایل: نوارِ چسبانِ پایینِ صفحه؛ مبلغ و متنِ دکمه با هر به‌روزرسانیِ ووکامرس از خلاصهٔ سفارش و #place_order خوانده می‌شود (checkout.js) ?>
+<div class="ks-co-bar" data-ks-co-bar>
+	<div class="ks-co-bar__sum"><span>مبلغ قابل پرداخت</span><strong data-ks-co-bar-total><?php echo wp_kses_post( WC()->cart->get_total() ); ?></strong></div>
+	<button type="button" class="ks-co-bar__btn" data-ks-co-bar-go>ثبت سفارش</button>
+</div>
+
 <?php do_action( 'woocommerce_after_checkout_form', $checkout ); ?>

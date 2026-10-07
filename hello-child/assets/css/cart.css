@@ -8,6 +8,8 @@
 
 .ks-cart{--brand:#005949;--brand-d:#02392F;--accent:#F2A900;--accent-d:#8a6100;--ink:#1f2b28;--muted:#5b6472;--line:#e5e9e7;--soft:#f6f7f7;--save:#b54708;--danger:#c0392b;--r:4px;
   background:#f4f5f5;color:var(--ink);direction:rtl;font-family:"Yekan Bakh FaNum","Vazirmatn",system-ui,-apple-system,sans-serif;padding:28px 0 56px}
+/* هیچ چیزِ داخلِ صفحه (افزونه‌ها، درگاه‌ها، جدول‌ها) صفحه را افقی پهن نکند؛ clip برخلافِ hidden چسبانیِ ستونِ خلاصه را خراب نمی‌کند */
+@supports (overflow:clip){.ks-cart{overflow-x:clip}}
 .ks-cart *,.ks-cart *::before,.ks-cart *::after{box-sizing:border-box}
 .ks-cart__in{max-width:1310px;margin-inline:auto;padding-inline:clamp(16px,3vw,24px)}
 .ks-cart .woocommerce{margin:0;padding:0}
@@ -18,6 +20,44 @@
 .ks-cart .screen-reader-text{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;padding:0;margin:-1px}
 .ks-cart .ks-ic{display:block;flex:0 0 auto;width:20px;height:20px}
 .ks-cart .woocommerce-Price-currencySymbol{font-size:.76em;font-weight:600}
+
+/* ---------- فرم‌ها (تسویه حساب و حساب کاربری؛ همان خروجیِ woocommerce_form_field) ----------
+   woocommerce.css با «.woocommerce form .form-row .input-text{height:auto;padding:.5em}» ورودی‌ها را کوتاه می‌کرد؛
+   برای همین ارتفاع و فاصله‌ها !important دارند. */
+.ks-cart .ks-field-hidden{display:none!important}
+/* کشورِ ثابت (فقط ایران): ردیفِ «کشور: ایران» جای خالی نگیرد؛ مقدارش مخفی ارسال می‌شود */
+.ks-cart #billing_country_field:has(input[type="hidden"]),.ks-cart #shipping_country_field:has(input[type="hidden"]){display:none}
+
+.ks-cart .form-row{float:none!important;width:auto!important;margin:0!important;padding:0!important}
+.ks-cart .form-row label{display:block;margin:0 0 8px!important;font-size:14px;font-weight:600;line-height:1.7!important;color:var(--ink)}
+.ks-cart .form-row label .required{color:var(--danger);font-weight:700;text-decoration:none;border:0;cursor:default}
+.ks-cart .form-row label .optional{font-size:12px;font-weight:400;color:var(--muted)}
+.ks-cart .woocommerce-input-wrapper{display:block}
+.ks-cart .form-row .input-text,.ks-cart .form-row select,.ks-cart .form-row textarea{display:block;width:100%!important;max-width:100%;height:52px!important;min-height:52px;margin:0!important;padding:0 14px!important;border:1px solid #cfd8d4!important;border-radius:2px!important;background:#fff!important;box-shadow:none!important;color:var(--ink)!important;font:inherit!important;font-size:15px!important;line-height:1.5!important;transition:border-color .15s,box-shadow .15s}
+.ks-cart .form-row textarea,.ks-cart .form-row textarea.input-text{height:auto!important;min-height:112px;padding:12px 14px!important;line-height:1.9!important;resize:vertical}
+.ks-cart .form-row .input-text::placeholder,.ks-cart .form-row textarea::placeholder{color:#9aa3a0}
+.ks-cart .form-row .input-text:focus,.ks-cart .form-row select:focus,.ks-cart .form-row textarea:focus{border-color:var(--brand)!important;outline:0;box-shadow:0 0 0 3px rgb(0 89 73 / .12)!important}
+.ks-cart .form-row.woocommerce-invalid label{color:var(--danger)}
+.ks-cart .form-row.woocommerce-invalid .input-text,.ks-cart .form-row.woocommerce-invalid select,.ks-cart .form-row.woocommerce-invalid .select2-selection{border-color:var(--danger)!important}
+.ks-cart .form-row.woocommerce-validated .input-text,.ks-cart .form-row.woocommerce-validated select{border-color:#9cc5bb!important}
+.ks-cart .checkout-inline-error-message{margin:6px 0 0;font-size:12.5px;color:var(--danger)}
+.ks-cart .form-row .description{margin-top:6px;font-size:12px;line-height:1.8;color:var(--muted)}
+/* شماره تلفن، کد پستی و ایمیل چپ‌به‌راست تایپ می‌شوند ولی از سمتِ راستِ کادر */
+.ks-cart input[type="tel"],.ks-cart input[type="email"],.ks-cart input[name$="_postcode"],.ks-cart input[name$="_phone"]{direction:ltr;text-align:right}
+
+/* انتخاب استان/شهر (selectWoo/select2 ووکامرس) */
+.ks-cart .select2-container{width:100%!important}
+.ks-cart .select2-container .select2-selection--single{height:52px!important;margin:0;border:1px solid #cfd8d4!important;border-radius:2px!important;background:#fff!important}
+.ks-cart .select2-container .select2-selection--single .select2-selection__rendered{padding-inline:14px 36px!important;line-height:50px!important;font-size:15px;color:var(--ink);font-size:14.5px}
+.ks-cart .select2-container .select2-selection--single .select2-selection__arrow{height:50px!important;inset-inline:auto 8px}
+.ks-cart .select2-container--focus .select2-selection--single,.ks-cart .select2-container--open .select2-selection--single{border-color:var(--brand)}
+.woocommerce-checkout .select2-dropdown,.woocommerce-account .select2-dropdown{border-color:#d4dbd8;border-radius:2px;font-family:"Yekan Bakh FaNum","Vazirmatn",system-ui,sans-serif;font-size:14px}
+.woocommerce-checkout .select2-search--dropdown .select2-search__field,.woocommerce-account .select2-search--dropdown .select2-search__field{height:38px;border:1px solid #d4dbd8;border-radius:2px;padding:0 10px;font:inherit}
+.woocommerce-checkout .select2-container--default .select2-results__option--highlighted[aria-selected],.woocommerce-account .select2-container--default .select2-results__option--highlighted[aria-selected],.woocommerce-checkout .select2-container--default .select2-results__option--highlighted[data-selected]{background:#005949;color:#fff}
+
+/* چک‌باکس‌ها: ارسال به آدرسِ دیگر، ساخت حساب، قوانین */
+.ks-cart .woocommerce-form__label-for-checkbox{display:flex!important;align-items:center;gap:10px;margin:0!important;cursor:pointer;font-size:14px;font-weight:600;line-height:1.7;color:var(--ink)}
+.ks-cart input[type="checkbox"],.ks-cart input[type="radio"]{flex:0 0 auto;width:18px;height:18px;margin:0;accent-color:var(--brand)}
 
 /* ---------- مراحل خرید ---------- */
 .ks-steps{list-style:none;margin:0 0 24px;padding:0;display:flex;align-items:center;justify-content:center}
@@ -117,9 +157,9 @@ a.ks-steps__a:hover{color:var(--brand)}
 .ks-coupon__l{display:flex;align-items:center;gap:6px;margin:0 0 8px;font-size:13.5px;font-weight:700;color:var(--ink)}
 .ks-coupon__l .ks-ic{width:17px;height:17px;color:var(--accent-d)}
 .ks-coupon__f{display:flex;gap:8px}
-.ks-cart .ks-coupon__in{flex:1 1 auto;width:auto!important;min-width:0;height:44px;margin:0!important;padding:0 12px!important;border:1px solid #d4dbd8!important;border-radius:2px!important;background:#fff!important;box-shadow:none!important;color:var(--ink);font:inherit;font-size:14px;float:none!important}
+.ks-cart .ks-coupon__in{flex:1 1 auto;width:auto!important;min-width:0;height:48px!important;line-height:1.5!important;font-size:15px!important;margin:0!important;padding:0 12px!important;border:1px solid #d4dbd8!important;border-radius:2px!important;background:#fff!important;box-shadow:none!important;color:var(--ink);font:inherit;font-size:14px;float:none!important}
 .ks-cart .ks-coupon__in:focus{border-color:var(--brand)!important;outline:0}
-.ks-cart .ks-coupon__btn,.ks-cart .ks-cart__update{height:44px;margin:0!important;padding:0 18px!important;border:1px solid var(--brand)!important;border-radius:2px!important;background:#fff!important;color:var(--brand)!important;box-shadow:none!important;font:inherit!important;font-size:14px!important;font-weight:700!important;line-height:1!important;white-space:nowrap;cursor:pointer;float:none!important;transition:background .15s,color .15s}
+.ks-cart .ks-coupon__btn,.ks-cart .ks-cart__update{height:48px;margin:0!important;padding:0 18px!important;border:1px solid var(--brand)!important;border-radius:2px!important;background:#fff!important;color:var(--brand)!important;box-shadow:none!important;font:inherit!important;font-size:14px!important;font-weight:700!important;line-height:1!important;white-space:nowrap;cursor:pointer;float:none!important;transition:background .15s,color .15s}
 .ks-cart .ks-coupon__btn:hover,.ks-cart .ks-cart__update:hover{background:var(--brand)!important;color:#fff!important}
 .ks-cart .ks-cart__update[disabled]{opacity:.55;cursor:default}
 .ks-cart-js .ks-cart .ks-cart__update{display:none!important}
@@ -246,5 +286,10 @@ a.ks-steps__a:hover{color:var(--brand)}
   .ks-steps__a{gap:5px;font-size:12px}
   .ks-steps__n{width:22px;height:22px;font-size:11.5px}
   .ks-steps__i+.ks-steps__i::before{width:14px;margin-inline:6px}
+}
+/* گوشی‌های خیلی باریک (۳۶۰px و کمتر): فقط عنوانِ مرحلهٔ فعلی؛ بقیه برای صفحه‌خوان می‌مانند */
+@media (max-width:360px){
+  .ks-steps__i:not(.is-current) .ks-steps__t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+  .ks-steps__i+.ks-steps__i::before{width:24px}
 }
 @media (prefers-reduced-motion:reduce){.ks-cart *{transition:none!important}}

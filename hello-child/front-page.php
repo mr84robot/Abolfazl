@@ -35,6 +35,37 @@ add_action( 'wp_enqueue_scripts', function () {
 	wp_enqueue_script( 'ks-home', $uri . '/assets/js/home.js', array(), (string) @filemtime( $dir . '/assets/js/home.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
 }, 999 );
 
+/*
+ * فایل‌هایی که روی صفحهٔ اصلی لود می‌شدند ولی این صفحه هیچ استفاده‌ای از آن‌ها نمی‌کند.
+ *
+ * علتِ اصلی: محتوای قدیمیِ المنتورِ برگهٔ ۶۱ هنوز در دیتابیس ذخیره است. این فایل جای آن را گرفته و آن را
+ * نمایش نمی‌دهد، ولی المنتور (CSSِ برگه + ویجت‌ها + Swiper + اسکریپت‌های فرانت) و افزونهٔ کدلاک
+ * (اسلایدر، کاروسل‌ها، بلاگ، فهرست مطالب) با دیدنِ شورت‌کدهای همان محتوای قدیمی، فایل‌هایشان را صف می‌کنند.
+ * فیلترِ فروشگاه فقط برای صفحه‌های محصولات است و اسکریپت‌های ورود با موبایل فقط برای صفحهٔ ورود/حساب.
+ *
+ * اگر بعداً چیزی روی صفحهٔ اصلی به یکی از این‌ها نیاز داشت، فقط همان خط را از فهرست حذف کنید.
+ * (CSSِ پایهٔ المنتور و کیتِ سایت — elementor-frontend و elementor-post-6 — عمداً می‌مانند چون فونت از آن‌جا می‌آید.)
+ */
+$ks_trim = function () {
+	$styles = array(
+		'elementor-post-61', 'widget-image', 'widget-heading', 'widget-nested-carousel', 'widget-divider', 'widget-icon-list', 'widget-image-box', 'swiper', 'e-swiper', 'base-desktop', 'base-mobile', // محتوای قدیمیِ المنتور
+		'codelock-hero-slider', 'codelock-home-carousel', 'codelock-carousel', 'codelock-post-carousel', 'codelock-blog', 'codelock-toc', 'codelock-featured', // ماژول‌های کدلاک که این صفحه ندارد
+		'ks-filters', 'codelock-notices', // فیلترِ صفحه‌های فروشگاه (notices به ks-filters وابسته است)
+	);
+	$scripts = array(
+		'elementor-frontend', 'elementor-frontend-modules', 'elementor-webpack-runtime', 'elementor-pro-frontend', 'elementor-pro-webpack-runtime', 'pro-elements-handlers', 'swiper',
+		'codelock-hero-slider', 'codelock-home-carousel', 'codelock-carousel', 'codelock-blog', 'codelock-toc', 'ks-filters',
+		'woodmart-libphonenumber-child', 'woodmart-api-script-child', 'woodmart-login-script-child', // ورود با موبایل (کتابخانهٔ libphonenumber به‌تنهایی صدها کیلوبایت است)
+	);
+	foreach ( $styles as $h ) { wp_dequeue_style( $h ); }
+	foreach ( $scripts as $h ) { wp_dequeue_script( $h ); }
+};
+// چند نوبت، چون المنتور اسکریپت‌هایش را دیرتر (در wp_footer) صف می‌کند؛ هر نوبت درست قبل از چاپ اجرا می‌شود
+add_action( 'wp_enqueue_scripts', $ks_trim, 1000 );
+add_action( 'wp_print_styles', $ks_trim, 1 );
+add_action( 'wp_print_scripts', $ks_trim, 1 );
+add_action( 'wp_print_footer_scripts', $ks_trim, 1 );
+
 get_header();
 ?>
 <main id="content" class="site-main">

@@ -66,6 +66,16 @@ if ( $ks_is_cart || $ks_is_checkout ) {
 		}
 	}, 999 );
 }
+// حساب کاربری (قالب‌های woocommerce/myaccount/): پایهٔ cart.css (فرم‌ها، اعلان‌ها، رنگ‌ها) + account.css
+if ( function_exists( 'is_account_page' ) && is_account_page() ) {
+	add_action( 'wp_enqueue_scripts', function () {
+		$dir = get_stylesheet_directory();
+		$uri = get_stylesheet_directory_uri();
+		wp_enqueue_style( 'ks-cart', $uri . '/assets/css/cart.css', array(), (string) @filemtime( $dir . '/assets/css/cart.css' ) );
+		wp_enqueue_style( 'ks-account', $uri . '/assets/css/account.css', array( 'ks-cart' ), (string) @filemtime( $dir . '/assets/css/account.css' ) );
+		wp_enqueue_script( 'ks-account', $uri . '/assets/js/account.js', array(), (string) @filemtime( $dir . '/assets/js/account.js' ), array( 'in_footer' => true, 'strategy' => 'defer' ) );
+	}, 999 );
+}
 ?><!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>

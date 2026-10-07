@@ -42,6 +42,7 @@ class PV_Cart {
 	function display_prices_including_tax() { return false; }
 	function get_cross_sells() { return $GLOBALS['CROSS']; }
 	function total() { return $this->get_subtotal() - $this->get_discount_total() + $GLOBALS['SHIP']; }
+	function get_total() { return wc_price( $this->total() ); }
 }
 class PV_Customer { function has_calculated_shipping() { return false; } }
 $WCOBJ = (object) array( 'cart' => new PV_Cart(), 'customer' => new PV_Customer() );

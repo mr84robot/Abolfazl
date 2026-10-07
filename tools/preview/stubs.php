@@ -62,6 +62,8 @@ function has_action( $h, $cb = false ) { foreach ( (array) ( $GLOBALS['HOOKS'][ 
 function apply_filters( $h, $v, ...$a ) { return $v; }
 function wp_enqueue_style( $h, $src, $deps = array(), $ver = '' ) { $GLOBALS['STYLES'][ $h ] = $src; }
 function wp_enqueue_script( $h, $src, $deps = array(), $ver = '', $args = array() ) { $GLOBALS['SCRIPTS'][ $h ] = $src; }
+function wp_dequeue_style( $h ) { unset( $GLOBALS['STYLES'][ $h ] ); }
+function wp_dequeue_script( $h ) { unset( $GLOBALS['SCRIPTS'][ $h ] ); }
 function wp_head() {
 	echo '<link rel="stylesheet" href="preview.css">' . "\n";
 	if ( $GLOBALS['HOSTILE'] ) { echo '<link rel="stylesheet" href="hostile-theme.css">' . "\n"; } // استایلِ قالب قبل از ماست، مثلِ سایت
@@ -89,7 +91,8 @@ function esc_url_raw( $u ) { return (string) $u; }
 function esc_attr( $u ) { return htmlspecialchars( (string) $u, ENT_QUOTES ); }
 function esc_html( $u ) { return htmlspecialchars( (string) $u, ENT_QUOTES ); }
 function number_format_i18n( $n ) { return strtr( (string) $n, array( '0' => '۰', '1' => '۱', '2' => '۲', '3' => '۳', '4' => '۴', '5' => '۵', '6' => '۶', '7' => '۷', '8' => '۸', '9' => '۹' ) ); }
-function get_option( $k ) { return 0; }
+$OPTS = array(); // get_option: فقط مقدارهایی که یک پیش‌نمایش لازم دارد
+function get_option( $k, $d = 0 ) { return $GLOBALS['OPTS'][ $k ] ?? $d; }
 function is_wp_error( $x ) { return false; }
 function taxonomy_exists( $t ) { return true; }
 function wp_list_pluck( $list, $f ) { return array_map( function ( $o ) use ( $f ) { return $o->$f; }, $list ); }
@@ -137,6 +140,7 @@ function the_title() { echo esc_html( get_the_title() ); }
 function the_title_attribute( $a ) { return get_the_title(); }
 function get_permalink( $id = null ) { $r = rec( $id ); return isset( $r['slug'] ) ? $GLOBALS['U'] . '/blog/' . $r['slug'] . '/' : ( $r['link'] ?? $GLOBALS['U'] . '/blog/' ); }
 function the_permalink() { echo esc_url( get_permalink() ); }
+function get_post_time( $f = 'U' ) { $t = strtotime( rec()['date'] ); return date( $f, $t ); }
 function get_the_date( $f = '' ) { $r = rec(); return 'c' === $f ? $r['date'] . 'T12:00:00+03:30' : $r['date']; }
 function get_the_excerpt() { return rec()['excerpt']; }
 function has_post_thumbnail() { return ! empty( rec()['thumb'] ); }

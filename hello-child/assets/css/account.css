@@ -1,0 +1,335 @@
+/* =====================================================================
+   حساب کاربری — خانه سعادت
+   محل: wp-content/themes/hello-child/assets/css/account.css
+   فقط روی صفحه‌های حساب کاربری لود می‌شود (header.php)، بعد از cart.css که پایهٔ مشترک است
+   (رنگ‌ها، فرم‌ها و ورودی‌های ۵۲px، اعلان‌ها، کادرِ تماس). ظاهرِ قالب‌های woocommerce/myaccount/
+   و فرم‌هایی که بازنویسی نشده‌اند (ورود/عضویت، ویرایشِ آدرس و حساب، فراموشیِ رمز).
+   قوانینِ ووکامرس (float و عرضِ ۳۰٪/۶۸٪ منو و محتوا، جدولِ واکنش‌گرا، دکمه‌ها) با specificity یا !important خنثی شده‌اند.
+   ===================================================================== */
+
+/* ---------- چیدمان ---------- */
+.ks-acc__grid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;align-items:start}
+@media (min-width:768px){.ks-acc__grid{grid-template-columns:240px minmax(0,1fr);gap:20px}}
+@media (min-width:1025px){
+  .ks-acc__grid{grid-template-columns:290px minmax(0,1fr);gap:28px}
+  .ks-acc__side{position:sticky;top:124px} /* زیرِ هدرِ چسبان */
+}
+.ks-acc .woocommerce-MyAccount-navigation,.ks-acc .woocommerce-MyAccount-content{float:none!important;width:auto!important;margin:0!important}
+.ks-acc .woocommerce::before,.ks-acc .woocommerce::after{display:none}
+.ks-acc img{max-width:100%;height:auto}
+
+.ks-acc__side{background:#fff;border:1px solid var(--line);border-radius:var(--r)}
+.ks-acc__main{min-width:0;padding:24px;background:#fff;border:1px solid var(--line);border-radius:var(--r)}
+.ks-acc .ks-acc__title{margin:0 0 20px!important;padding:0 0 16px!important;border:0!important;border-bottom:1px solid var(--line)!important;font-family:inherit!important;font-size:20px!important;font-weight:800!important;font-style:normal!important;line-height:1.5!important;letter-spacing:normal!important;text-transform:none!important;color:#101828!important}
+.ks-acc__main h2,.ks-acc__main h3,.ks-acc--guest h2{margin:0 0 14px!important;padding:0!important;font-family:inherit!important;font-size:16px!important;font-weight:800!important;font-style:normal!important;line-height:1.5!important;letter-spacing:normal!important;text-transform:none!important;color:#101828!important}
+.ks-acc__lead{margin:0 0 16px;font-size:14px;line-height:1.9;color:var(--muted)}
+.ks-acc__main p{line-height:1.9}
+
+/* ---------- کارتِ کاربر ---------- */
+.ks-acc-user{display:flex;align-items:center;gap:12px;padding:18px;border-bottom:1px solid var(--line)}
+.ks-acc-user__av{flex:0 0 auto;width:48px;height:48px;display:grid;place-items:center;border-radius:2px;background:var(--brand);color:var(--accent);font-size:21px;font-weight:800;line-height:1}
+.ks-cart .ks-acc-user__av .ks-ic{width:24px;height:24px}
+.ks-acc-user__txt{min-width:0;display:flex;flex-direction:column;gap:1px}
+.ks-acc-user__name{overflow:hidden;font-size:15px;font-weight:800;line-height:1.6;color:var(--ink);text-overflow:ellipsis;white-space:nowrap}
+.ks-acc-user__sub{overflow:hidden;font-size:13px;line-height:1.6;color:var(--muted);text-align:right;text-overflow:ellipsis;white-space:nowrap}
+
+/* ---------- منو ---------- */
+.ks-acc-nav ul{list-style:none;margin:0;padding:8px}
+.ks-acc-nav li{margin:0;padding:0}
+.ks-acc-nav li::before{display:none}
+.ks-acc-nav a{display:flex;align-items:center;gap:12px;min-height:46px;padding:0 12px;border-radius:2px;color:var(--ink);font-size:14.5px;font-weight:600;line-height:1.5;text-decoration:none;transition:background .15s,color .15s}
+.ks-cart .ks-acc-nav a .ks-ic{width:20px;height:20px;color:#7b8693;transition:color .15s}
+.ks-acc-nav a:hover{background:var(--soft);color:var(--brand)}
+.ks-acc-nav a:hover .ks-ic{color:var(--brand)}
+.ks-acc-nav .is-active a{background:#eef5f3;color:var(--brand);font-weight:800;box-shadow:inset -3px 0 0 var(--brand)}
+.ks-cart .ks-acc-nav .is-active a .ks-ic{color:var(--brand)}
+.ks-acc-nav .woocommerce-MyAccount-navigation-link--customer-logout{margin-top:6px;padding-top:6px;border-top:1px solid var(--line)}
+.ks-acc-nav .woocommerce-MyAccount-navigation-link--customer-logout a{color:var(--danger)}
+.ks-cart .ks-acc-nav .woocommerce-MyAccount-navigation-link--customer-logout a .ks-ic{color:var(--danger)}
+.ks-acc-nav .woocommerce-MyAccount-navigation-link--customer-logout a:hover{background:#fdf0ee;color:var(--danger)}
+
+/* ---------- دکمه‌ها ---------- */
+.ks-cart a.ks-acc-btn,.ks-acc .woocommerce-MyAccount-content .button,.ks-acc .woocommerce-form .button,.ks-acc .woocommerce-ResetPassword .button{display:inline-flex!important;align-items:center;justify-content:center;gap:8px;float:none!important;height:48px;margin:0!important;padding:0 24px!important;border:1px solid var(--brand)!important;border-radius:2px!important;background:var(--brand)!important;color:#fff!important;box-shadow:none!important;font:inherit!important;font-size:15px!important;font-weight:800!important;line-height:1!important;letter-spacing:normal!important;text-transform:none!important;text-decoration:none!important;white-space:nowrap;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
+.ks-cart a.ks-acc-btn:hover,.ks-acc .woocommerce-MyAccount-content .button:hover,.ks-acc .woocommerce-form .button:hover,.ks-acc .woocommerce-ResetPassword .button:hover{background:var(--brand-d)!important;border-color:var(--brand-d)!important;color:#fff!important}
+/* دکمه‌های هر سفارش: «نمایش» توخالی، «پرداخت» کهربایی، «لغو» قرمزِ توخالی */
+.ks-acc .woocommerce-MyAccount-content .button.view{background:#fff!important;color:var(--brand)!important}
+.ks-acc .woocommerce-MyAccount-content .button.view:hover{background:#f3f8f6!important;color:var(--brand)!important}
+.ks-acc .woocommerce-MyAccount-content .button.pay{background:var(--accent)!important;border-color:var(--accent)!important;color:#1f1300!important}
+.ks-acc .woocommerce-MyAccount-content .button.pay:hover{background:#d99800!important;border-color:#d99800!important;color:#1f1300!important}
+.ks-acc .woocommerce-MyAccount-content .button.cancel{background:#fff!important;border-color:#e8bdb7!important;color:var(--danger)!important}
+.ks-acc .woocommerce-MyAccount-content .button.cancel:hover{background:#fdf0ee!important;color:var(--danger)!important}
+
+/* ---------- برچسبِ وضعیت و عکسِ کالاها ---------- */
+.ks-st{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:2px;font-size:12.5px;font-weight:700;line-height:1.7;white-space:nowrap}
+.ks-st::before{content:"";flex:0 0 auto;width:6px;height:6px;background:currentColor}
+.ks-st--wait{background:#fff6e0;color:#8a6100}
+.ks-st--run{background:#e8f1fb;color:#1d5fa8}
+.ks-st--done{background:#e6f1ee;color:var(--brand)}
+.ks-st--off,.ks-st--other{background:#f0f1f2;color:#5b6472}
+.ks-st--bad{background:#fdf0ee;color:var(--danger)}
+
+.ks-thumbs{display:flex;flex:0 0 auto}
+.ks-thumbs__i{position:relative;width:46px;height:46px;display:grid;place-items:center;overflow:hidden;background:var(--soft);border:1px solid #e9ecea;border-radius:2px;color:var(--muted);font-size:12.5px;font-weight:800}
+.ks-thumbs__i+.ks-thumbs__i{margin-inline-start:-14px;box-shadow:0 0 0 2px #fff}
+.ks-cart .ks-thumbs__i img{display:block;width:100%!important;height:100%!important;max-width:none;object-fit:contain;mix-blend-mode:multiply;border-radius:0;box-shadow:none}
+.ks-thumbs__more{background:#eef1f0}
+
+/* ---------- پیشخوان ---------- */
+.ks-dash{display:flex;flex-direction:column;gap:20px}
+.ks-dash__hi{padding:18px 20px;background:#f3f8f6;border:1px solid #d9e9e4;border-radius:2px}
+.ks-dash .ks-dash__t{margin:0 0 4px;font-size:17px;font-weight:800;line-height:1.6;color:var(--brand)}
+.ks-dash .ks-dash__d{margin:0;font-size:14px;line-height:1.9;color:var(--muted)}
+.ks-dash .ks-dash__out{margin:8px 0 0;font-size:12.5px;line-height:1.8;color:var(--muted)}
+.ks-dash__out strong{font-weight:700;color:var(--ink)}
+.ks-dash__out a{color:var(--danger);font-weight:700;text-decoration:none}
+
+.ks-dash__stats{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.ks-dash__stats li{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-areas:"ic lbl" "ic val";column-gap:12px;align-items:center;margin:0;padding:14px 16px;background:#fff;border:1px solid var(--line);border-radius:2px}
+.ks-cart .ks-dash__stats .ks-ic{grid-area:ic;width:40px;height:40px;padding:9px;background:#eef5f3;border-radius:2px;color:var(--brand)}
+.ks-dash__stats span{grid-area:lbl;font-size:12.5px;line-height:1.6;color:var(--muted)}
+.ks-dash__stats strong{grid-area:val;overflow:hidden;font-size:18px;font-weight:800;line-height:1.5;color:var(--ink);text-overflow:ellipsis;white-space:nowrap}
+
+.ks-dash__head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.ks-acc .ks-dash__h{margin:0!important}
+.ks-dash__all{display:inline-flex;align-items:center;gap:6px;color:var(--brand);font-size:13.5px;font-weight:700;text-decoration:none}
+.ks-cart .ks-dash__all .ks-ic{width:16px;height:16px}
+
+.ks-dash__orders{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:2px}
+.ks-dash__orders li{margin:0}
+.ks-dash__orders li+li{border-top:1px solid var(--line)}
+.ks-dash__o{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto 18px;grid-template-areas:"th main st sum go";align-items:center;gap:16px;padding:14px 16px;color:var(--ink);text-decoration:none;transition:background .15s}
+.ks-dash__o:hover{background:#f9fbfa}
+.ks-dash__o .ks-thumbs{grid-area:th}
+.ks-dash__o-main{grid-area:main;min-width:0;display:flex;flex-direction:column}
+.ks-dash__o-main strong{font-size:14.5px;font-weight:800;line-height:1.6}
+.ks-dash__o-main small{font-size:12.5px;line-height:1.6;color:var(--muted)}
+.ks-dash__o .ks-st{grid-area:st}
+.ks-dash__o-sum{grid-area:sum;font-size:14px;font-weight:800;white-space:nowrap}
+.ks-cart .ks-dash__o-go{grid-area:go;width:18px;height:18px;color:#9aa3a0}
+.ks-dash__o:hover .ks-dash__o-go{color:var(--brand)}
+.ks-dash__none{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:16px;border:1px dashed #cdd6d2;border-radius:2px}
+.ks-dash__none p{margin:0;font-size:14px;color:var(--muted)}
+
+.ks-dash__links{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.ks-dash__links li{margin:0}
+.ks-dash__links a{display:flex;align-items:center;gap:12px;height:100%;padding:14px 16px;border:1px solid var(--line);border-radius:2px;color:var(--ink);text-decoration:none;transition:border-color .15s,background .15s}
+.ks-dash__links a:hover{border-color:var(--brand);background:#f9fbfa}
+.ks-cart .ks-dash__links a>.ks-ic:first-child{width:24px;height:24px;color:var(--brand)}
+.ks-dash__links span{flex:1 1 auto;min-width:0;display:flex;flex-direction:column}
+.ks-dash__links strong{font-size:14px;font-weight:800;line-height:1.6}
+.ks-dash__links small{font-size:12px;line-height:1.7;color:var(--muted)}
+.ks-cart .ks-dash__go{width:16px;height:16px;color:#9aa3a0}
+.ks-dash__links a:hover .ks-dash__go{color:var(--brand)}
+.ks-acc .ks-acc-help{margin-top:0}
+
+/* ---------- سفارش‌ها (جدولِ ووکامرس؛ در موبایل هر سفارش یک کارت) ---------- */
+.ks-acc table.ks-orders{width:100%;margin:0!important;border:0!important;border-collapse:collapse;border-radius:0!important;background:transparent;font-size:14px!important}
+.ks-acc table.ks-orders th,.ks-acc table.ks-orders td{padding:14px 10px!important;border:0!important;border-bottom:1px solid var(--line)!important;background:transparent!important;font-size:14px;font-weight:400;line-height:1.6;text-align:start;vertical-align:middle!important;color:var(--ink)}
+.ks-acc table.ks-orders thead th{padding-top:0!important;padding-bottom:10px!important;font-size:12.5px;font-weight:600;color:var(--muted);white-space:nowrap}
+.ks-acc table.ks-orders tbody tr:last-child>*{border-bottom:0!important}
+.ks-acc table.ks-orders tr>:first-child{padding-inline-start:0!important}
+.ks-acc table.ks-orders tr>:last-child{padding-inline-end:0!important}
+.ks-orders__no{display:inline-flex;align-items:center;gap:12px;color:var(--ink);font-weight:800;text-decoration:none;white-space:nowrap}
+.ks-orders__no:hover span{color:var(--brand)}
+.ks-orders time{white-space:nowrap}
+.ks-orders__sum{display:block;font-weight:800;white-space:nowrap}
+.ks-orders__n{display:block;font-size:12px;color:var(--muted)}
+.ks-acc table.ks-orders .woocommerce-orders-table__cell-order-actions,.ks-acc table.ks-orders .woocommerce-orders-table__header-order-actions{text-align:end!important;white-space:nowrap}
+.ks-acc table.ks-orders .button{height:36px;padding:0 14px!important;font-size:13px!important;font-weight:700!important}
+.ks-acc table.ks-orders .button+.button{margin-inline-start:6px!important}
+
+.ks-acc-pages{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
+.ks-acc-pages__n{font-size:13px;color:var(--muted)}
+.ks-acc .ks-acc-pages .button{height:40px;padding:0 18px!important;background:#fff!important;color:var(--brand)!important;font-size:14px!important}
+.ks-acc .ks-acc-pages .button:hover{background:#f3f8f6!important;color:var(--brand)!important}
+
+.ks-acc-empty{padding:28px 12px 12px;text-align:center}
+.ks-acc-empty__ic{display:inline-grid;place-items:center;width:76px;height:76px;border-radius:2px;background:#eef5f3;color:var(--brand)}
+.ks-cart .ks-acc-empty__ic .ks-ic{width:36px;height:36px}
+.ks-acc .ks-acc-empty__t{margin:16px 0 6px;font-size:18px;font-weight:800;line-height:1.6;color:#101828}
+.ks-acc .ks-acc-empty__d{max-width:400px;margin:0 auto 20px;font-size:14px;line-height:1.9;color:var(--muted)}
+
+/* ---------- مشاهدهٔ سفارش ---------- */
+.ks-vo{display:flex;flex-direction:column;gap:16px}
+.ks-vo__back{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;margin-top:-8px;color:var(--muted);font-size:13px;font-weight:700;text-decoration:none}
+.ks-vo__back:hover{color:var(--brand)}
+.ks-cart .ks-vo__back .ks-ic{width:16px;height:16px;transform:scaleX(-1)}
+.ks-vo__facts{display:flex;flex-wrap:wrap;gap:1px;margin:0;padding:0;list-style:none;background:var(--line);border:1px solid var(--line);border-radius:2px;overflow:hidden}
+.ks-vo__facts li{flex:1 1 150px;margin:0;padding:12px 16px;background:#fff;font-size:12.5px;line-height:1.6;color:var(--muted)}
+.ks-vo__facts li>span{display:block}
+.ks-vo__facts li>strong{display:block;margin-top:4px;font-size:14.5px;font-weight:800;line-height:1.6;color:var(--ink)}
+.ks-vo__facts .ks-st{font-size:12.5px}
+
+.ks-track{list-style:none;margin:0;padding:18px 0 4px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.ks-track__i{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;margin:0;padding:0 4px;font-size:13px;font-weight:600;line-height:1.6;text-align:center;color:var(--muted)}
+.ks-track__i::before{content:"";position:absolute;top:15px;inset-inline-start:calc(-50% + 20px);inset-inline-end:calc(50% + 20px);height:2px;background:#d6ddda}
+.ks-track__i:first-child::before{display:none}
+.ks-track__n{position:relative;z-index:1;width:32px;height:32px;display:grid;place-items:center;border:1.5px solid #c9d0cd;border-radius:2px;background:#fff;font-size:13px;font-weight:800;line-height:1;color:var(--muted)}
+.ks-cart .ks-track__n .ks-ic{width:16px;height:16px;stroke-width:2.2}
+.ks-track__i.is-done{color:var(--brand)}
+.ks-track__i.is-done::before,.ks-track__i.is-current::before{background:var(--brand)}
+.ks-track__i.is-done .ks-track__n{background:var(--brand);border-color:var(--brand);color:#fff}
+.ks-track__i.is-current{color:var(--ink);font-weight:800}
+.ks-track__i.is-current .ks-track__n{border-color:var(--brand);color:var(--brand);box-shadow:0 0 0 4px rgb(0 89 73 / .12)}
+.ks-vo__bad{display:flex;align-items:center;gap:10px;margin:0;padding:12px 16px;background:#fdf0ee;border:1px solid #f3c9c3;border-radius:2px;font-size:14px;line-height:1.8;color:var(--ink)}
+.ks-cart .ks-vo__bad .ks-ic{color:var(--danger)}
+
+.ks-vo__notes{padding:16px 18px;background:#fffbf0;border:1px solid #f1e3bb;border-radius:2px}
+.ks-acc .ks-vo__notes h2{margin-bottom:10px!important;font-size:15px!important}
+.ks-acc .ks-vo__notes ol{list-style:none;margin:0;padding:0}
+.ks-acc .ks-vo__notes li{margin:0;padding:0}
+.ks-acc .ks-vo__notes li+li{margin-top:12px;padding-top:12px;border-top:1px dashed #e8d9ad}
+.ks-acc .ks-vo__notes .meta{margin:0 0 4px;font-size:12.5px;color:var(--accent-d);font-weight:700}
+.ks-acc .ks-vo__notes .description p{margin:0;font-size:14px;line-height:1.9;color:var(--ink);overflow-wrap:anywhere}
+
+/* جزئیاتِ سفارش و آدرس‌ها (قالب‌های خودِ ووکامرس: order-details.php ، order-details-customer.php ، دانلودها) */
+.ks-acc .woocommerce-order-details,.ks-acc .woocommerce-customer-details,.ks-acc .woocommerce-order-downloads{margin:0!important;padding:16px 18px;background:#fff;border:1px solid var(--line);border-radius:2px}
+.ks-acc .woocommerce-customer-details .woocommerce-customer-details{padding:0;border:0}
+.ks-acc table.shop_table:not(.ks-orders){width:100%;margin:0!important;border:0!important;border-collapse:collapse;border-radius:0!important;background:transparent;font-size:14px!important}
+.ks-acc table.shop_table:not(.ks-orders) th,.ks-acc table.shop_table:not(.ks-orders) td{padding:10px 0!important;border:0!important;border-top:1px solid #eff1f0!important;background:transparent!important;font-size:14px;line-height:1.7;text-align:start;vertical-align:top;color:var(--ink)}
+.ks-acc table.shop_table:not(.ks-orders) thead th{border-top:0!important;font-size:13px;font-weight:600;color:var(--muted)}
+.ks-acc table.shop_table:not(.ks-orders) .product-total,.ks-acc table.shop_table:not(.ks-orders) tfoot td{text-align:end!important}
+.ks-acc table.shop_table:not(.ks-orders) tfoot th{font-weight:500;color:var(--muted)}
+.ks-acc table.shop_table:not(.ks-orders) tfoot tr:last-child th,.ks-acc table.shop_table:not(.ks-orders) tfoot tr:last-child td{font-weight:800;color:var(--ink)}
+.ks-acc table.shop_table:not(.ks-orders) td.product-name a{color:var(--ink);font-weight:600;text-decoration:none}
+.ks-acc table.shop_table:not(.ks-orders) .product-quantity{color:var(--muted);font-weight:700}
+.ks-acc table.shop_table:not(.ks-orders) .button{height:38px;padding:0 14px!important;font-size:13px!important}
+.ks-acc table.shop_table:not(.ks-orders) td .button+.button{margin-inline-start:6px!important}
+.ks-acc .wc-item-meta{list-style:none;margin:4px 0 0!important;padding:0!important;font-size:12.5px;color:var(--muted)}
+.ks-acc .wc-item-meta li{margin:0}
+.ks-acc .wc-item-meta p{display:inline;margin:0}
+.ks-acc .col2-set.addresses:not(.ks-addr){display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ks-acc .col2-set::before,.ks-acc .col2-set::after{display:none!important}
+.ks-acc .col2-set .col-1,.ks-acc .col2-set .col-2{float:none!important;width:auto!important;margin:0!important}
+.ks-acc address{margin:0;padding:0!important;border:0!important;border-radius:0!important;font-style:normal!important;font-size:14px;line-height:2;text-align:start;color:var(--ink);overflow-wrap:anywhere}
+.ks-acc address p{margin:0;padding:0!important}
+.ks-acc address p::before{display:none}
+.ks-acc .woocommerce-customer-details--phone,.ks-acc .woocommerce-customer-details--email{direction:ltr;text-align:right}
+.ks-acc mark{padding:0;background:transparent;color:inherit;font-weight:800}
+
+/* ---------- آدرس‌ها ---------- */
+.ks-acc .ks-addr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:0}
+.ks-acc .ks-addr__card{float:none!important;width:auto!important;margin:0!important;display:flex;flex-direction:column;padding:18px;background:#fff;border:1px solid var(--line);border-radius:2px}
+.ks-acc .ks-addr__head{display:flex!important;align-items:center;gap:10px;margin:0 0 12px;padding:0 0 12px;border-bottom:1px solid var(--line)}
+.ks-acc .ks-addr__head::before,.ks-acc .ks-addr__head::after{display:none!important}
+.ks-cart .ks-addr__head .ks-ic{width:22px;height:22px;color:var(--brand)}
+.ks-acc .ks-addr__head h2{float:none!important;margin:0!important;font-size:15px!important}
+.ks-acc .ks-addr__card address{flex:1 1 auto;margin:0 0 16px}
+.ks-acc .ks-addr__card.is-empty address{color:var(--muted)}
+.ks-acc a.ks-addr__edit{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;float:none!important;height:40px;padding:0 16px;border:1px solid var(--brand);border-radius:2px;color:var(--brand);font-size:13.5px;font-weight:800;text-decoration:none;transition:background .15s}
+.ks-acc a.ks-addr__edit:hover{background:#f3f8f6}
+.ks-cart .ks-addr__edit .ks-ic{width:18px;height:18px}
+
+/* ---------- فرم‌های ویرایشِ آدرس و جزئیاتِ حساب (form-edit-address.php ، form-edit-account.php) ---------- */
+.ks-acc .woocommerce-address-fields__field-wrapper,.ks-acc form.woocommerce-EditAccountForm{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px 16px}
+.ks-acc .woocommerce-address-fields__field-wrapper>*,.ks-acc form.woocommerce-EditAccountForm>*{grid-column:1/-1;margin:0}
+.ks-acc .woocommerce-address-fields__field-wrapper>.form-row-first,.ks-acc form.woocommerce-EditAccountForm>.form-row-first{grid-column:1}
+.ks-acc .woocommerce-address-fields__field-wrapper>.form-row-last,.ks-acc form.woocommerce-EditAccountForm>.form-row-last{grid-column:2}
+.ks-acc .woocommerce-address-fields__field-wrapper>.clear,.ks-acc form.woocommerce-EditAccountForm>.clear,.ks-acc .woocommerce-address-fields__field-wrapper>.ks-field-hidden{display:none!important}
+.ks-acc .woocommerce-address-fields>p{margin:22px 0 0}
+.ks-acc form.woocommerce-EditAccountForm>p:last-of-type{margin-top:4px}
+.ks-acc form.woocommerce-EditAccountForm fieldset{display:grid;gap:18px;min-width:0;margin:6px 0 0;padding:16px 16px 18px;border:1px solid var(--line);border-radius:2px}
+.ks-acc form.woocommerce-EditAccountForm legend{padding:0 8px;font-size:14.5px;font-weight:800;color:var(--ink)}
+.ks-acc #account_display_name_description{display:block;margin-top:6px;font-size:12px;line-height:1.8;color:var(--muted)}
+.ks-acc #account_display_name_description em{font-style:normal}
+.ks-acc input[type="password"]{direction:ltr;text-align:right}
+/* ایمیل اختیاری (inc/shop-setup.php کلاسِ ks-email-optional را روی body می‌گذارد) */
+.ks-email-optional .ks-acc label[for="account_email"] .required{display:none}
+.ks-email-optional .ks-acc label[for="account_email"]::after{content:"(اختیاری)";margin-inline-start:2px;font-size:12px;font-weight:400;color:var(--muted)}
+/* نمایش/پنهان کردنِ رمز (دکمه‌ای که woocommerce.js کنارِ فیلدِ رمز می‌گذارد) */
+.ks-cart .password-input{position:relative;display:block}
+.ks-cart .password-input .input-text{padding-left:48px!important}
+.ks-cart .show-password-input{position:absolute!important;top:50%!important;left:6px!important;right:auto!important;width:40px;height:40px;margin:0!important;padding:0!important;border:0!important;border-radius:2px!important;background:transparent!important;box-shadow:none!important;color:var(--muted)!important;transform:translateY(-50%);cursor:pointer}
+.ks-cart .show-password-input:hover{color:var(--brand)!important}
+
+/* ---------- مهمان: ورود و عضویت (form-login.php ووکامرس یا افزونهٔ ورود) و فراموشیِ رمز ---------- */
+.ks-acc--guest .woocommerce{max-width:980px;margin-inline:auto}
+.ks-acc #customer_login{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.ks-acc #customer_login::before,.ks-acc #customer_login::after{display:none!important}
+.ks-acc #customer_login>.u-column1,.ks-acc #customer_login>.u-column2{float:none!important;width:auto!important;margin:0!important;padding:24px;background:#fff;border:1px solid var(--line);border-radius:var(--r)}
+.ks-acc--guest .woocommerce>h2{max-width:460px;margin-inline:auto!important}
+.ks-acc--guest .woocommerce>form.woocommerce-form-login,.ks-acc form.woocommerce-ResetPassword{max-width:460px;margin:0 auto!important;padding:24px!important;background:#fff;border:1px solid var(--line)!important;border-radius:var(--r)!important;text-align:start!important}
+.ks-acc #customer_login form.login,.ks-acc #customer_login form.register{margin:0!important;padding:0!important;border:0!important;border-radius:0!important;text-align:start!important}
+.ks-acc form.login .form-row,.ks-acc form.register .form-row,.ks-acc form.woocommerce-ResetPassword .form-row{margin:0 0 16px!important}
+.ks-acc form.login>p:not(.form-row),.ks-acc form.register>p:not(.form-row),.ks-acc form.woocommerce-ResetPassword>p:not(.form-row){margin:0 0 16px;font-size:13.5px;line-height:1.9;color:var(--muted)}
+.ks-acc .woocommerce-form-login__rememberme{margin:0 0 14px!important;font-weight:500!important}
+.ks-acc .woocommerce-form-login .button,.ks-acc .woocommerce-form-register .button,.ks-acc .woocommerce-ResetPassword .button{width:100%}
+.ks-acc .lost_password{margin:0!important}
+.ks-acc .lost_password a{color:var(--brand);font-size:13px;font-weight:700;text-decoration:none}
+
+/* ---------- تبلت و موبایل ---------- */
+@media (min-width:768px) and (max-width:1024px){
+  .ks-dash__stats li{grid-template-columns:minmax(0,1fr);grid-template-areas:"lbl" "val";padding:12px 14px}
+  .ks-cart .ks-dash__stats .ks-ic{display:none}
+  .ks-dash__links{grid-template-columns:minmax(0,1fr)}
+  .ks-dash__o{grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"th main st" "th main sum";row-gap:4px;column-gap:14px}
+  .ks-dash__o .ks-st,.ks-dash__o-sum{justify-self:end}
+  .ks-cart .ks-dash__o-go{display:none}
+}
+/* جدولِ سفارش‌ها ← کارت (موبایل و تبلت؛ ستونِ محتوا آن‌قدر پهن نیست که پنج ستون و دکمه‌ها جا شوند) */
+@media (max-width:1024px){
+  .ks-acc table.ks-orders thead{display:none!important}
+  .ks-acc table.ks-orders,.ks-acc table.ks-orders tbody{display:block!important;width:100%}
+  .ks-acc table.ks-orders tbody tr{display:grid!important;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px 12px;margin:0 0 12px;padding:14px;border:1px solid var(--line);border-radius:2px}
+  .ks-acc table.ks-orders tbody tr:last-child{margin-bottom:0}
+  .ks-acc table.ks-orders tbody tr>*{display:block!important;order:5;grid-column:1/-1;padding:0!important;border:0!important;text-align:start!important}
+  .ks-acc table.ks-orders tbody tr>*::before{float:none!important;margin-inline-end:6px;font-weight:600;color:var(--muted)}
+  .ks-acc table.ks-orders .woocommerce-orders-table__cell-order-number{order:1;grid-column:1}
+  .ks-acc table.ks-orders .woocommerce-orders-table__cell-order-status{order:2;grid-column:2}
+  .ks-acc table.ks-orders .woocommerce-orders-table__cell-order-date{order:3;grid-column:1;font-size:13px;color:var(--muted)}
+  .ks-acc table.ks-orders .woocommerce-orders-table__cell-order-total{order:4;grid-column:2;text-align:end!important}
+  .ks-acc table.ks-orders .woocommerce-orders-table__cell-order-actions{order:6;display:flex!important;gap:8px;padding-top:12px!important;border-top:1px dashed var(--line)!important}
+  .ks-acc table.ks-orders .woocommerce-orders-table__cell-order-number::before,.ks-acc table.ks-orders .woocommerce-orders-table__cell-order-status::before,.ks-acc table.ks-orders .woocommerce-orders-table__cell-order-date::before,.ks-acc table.ks-orders .woocommerce-orders-table__cell-order-total::before,.ks-acc table.ks-orders .woocommerce-orders-table__cell-order-actions::before{display:none!important}
+  .ks-acc table.ks-orders .ks-orders__n{display:inline;margin-inline-start:4px}
+  .ks-acc table.ks-orders .button{flex:1 1 0;height:40px}
+  .ks-acc table.ks-orders .button+.button{margin:0!important}
+}
+@media (min-width:1025px) and (max-width:1279px){.ks-acc table.ks-orders .ks-thumbs{display:none}}
+@media (max-width:900px){.ks-acc #customer_login{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:767px){
+  .ks-acc{padding-top:16px}
+  .ks-acc__main{padding:16px}
+  .ks-acc .ks-acc__title{margin-bottom:16px!important;padding-bottom:12px!important;font-size:18px!important}
+  /* کارتِ کاربر فقط روی پیشخوان؛ در بقیهٔ بخش‌ها منو کافی است */
+  .ks-acc__grid:not(.ks-acc--dashboard) .ks-acc-user{display:none}
+  .ks-acc-user{padding:14px 16px}
+  /* منو: کاشی‌ها (معمولاً چهارتایی در یک ردیف)، همه گزینه‌ها بدونِ اسکرولِ افقی دیده می‌شوند؛ «خروج» یک نوارِ کوتاه زیرشان */
+  .ks-acc-nav ul{display:grid;grid-template-columns:repeat(auto-fit,minmax(76px,1fr));gap:6px;padding:10px}
+  .ks-acc-nav a{flex-direction:column;justify-content:flex-start;gap:6px;min-height:66px;height:100%;padding:12px 4px 10px;border:1px solid var(--line);font-size:12.5px;line-height:1.5;text-align:center}
+  .ks-acc-nav .is-active a{border-color:var(--brand);box-shadow:none}
+  .ks-acc-nav .woocommerce-MyAccount-navigation-link--customer-logout{grid-column:1/-1;margin:0;padding:0;border:0}
+  .ks-acc-nav .woocommerce-MyAccount-navigation-link--customer-logout a{flex-direction:row;gap:8px;min-height:40px;border-color:#f3d3ce}
+  .ks-cart .ks-acc-nav .woocommerce-MyAccount-navigation-link--customer-logout a .ks-ic{width:18px;height:18px}
+
+  .ks-dash{gap:16px}
+  .ks-dash__hi{padding:14px 16px}
+  .ks-dash__stats{gap:8px}
+  .ks-dash__stats li{grid-template-columns:minmax(0,1fr);grid-template-areas:"lbl" "val";padding:10px 12px}
+  .ks-cart .ks-dash__stats .ks-ic{display:none}
+  .ks-dash__stats span{font-size:12px}
+  .ks-dash__stats strong{font-size:15px}
+  .ks-dash__o{grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"th main st" "th main sum";row-gap:2px;column-gap:12px;padding:12px}
+  .ks-dash__o .ks-st,.ks-dash__o-sum{justify-self:end}
+  .ks-dash__o-sum{font-size:13px}
+  .ks-cart .ks-dash__o-go{display:none}
+  .ks-dash__o .ks-thumbs__i{width:42px;height:42px}
+  .ks-dash__o .ks-thumbs__i:nth-child(n+2){display:none}
+  .ks-dash__o-main strong{white-space:nowrap}
+  /* میان‌برها همان منوی بالای صفحه‌اند؛ در موبایل تکرار نمی‌شوند */
+  .ks-dash__links{display:none}
+
+  .ks-vo__facts li{flex-basis:40%;padding:10px 12px}
+  .ks-track__i{font-size:11.5px;gap:6px}
+  .ks-track__n{width:28px;height:28px;font-size:12px}
+  .ks-track__i::before{top:13px;inset-inline-start:calc(-50% + 16px);inset-inline-end:calc(50% + 16px)}
+  .ks-acc .woocommerce-order-details,.ks-acc .woocommerce-customer-details,.ks-acc .ks-vo__notes{padding:14px}
+  .ks-acc .col2-set.addresses:not(.ks-addr){grid-template-columns:minmax(0,1fr)}
+
+  .ks-acc .ks-addr{grid-template-columns:minmax(0,1fr);gap:12px}
+  .ks-acc .woocommerce-address-fields__field-wrapper,.ks-acc form.woocommerce-EditAccountForm{grid-template-columns:minmax(0,1fr)}
+  .ks-acc .woocommerce-address-fields__field-wrapper>.form-row-first,.ks-acc .woocommerce-address-fields__field-wrapper>.form-row-last,.ks-acc form.woocommerce-EditAccountForm>.form-row-first,.ks-acc form.woocommerce-EditAccountForm>.form-row-last{grid-column:1/-1}
+  .ks-acc .woocommerce-address-fields .button,.ks-acc form.woocommerce-EditAccountForm .button{width:100%}
+
+  .ks-acc #customer_login>.u-column1,.ks-acc #customer_login>.u-column2,.ks-acc--guest .woocommerce>form.woocommerce-form-login,.ks-acc form.woocommerce-ResetPassword{padding:18px!important}
+}
+@media (prefers-reduced-motion:reduce){.ks-acc *{transition:none!important}}

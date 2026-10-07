@@ -39,6 +39,14 @@ if ( ! function_exists( 'ks_cart_icon' ) ) {
 			'install' => '<rect x="3" y="5" width="18" height="13" rx="2"/><path d="M3 9.2h18"/><path d="M6.4 14.3h3.4"/><path d="m13.6 14.8 1.7 1.7 3.1-3.3"/>',
 			'shield'  => '<path d="M12 3 5 5.8v4.9c0 4.2 2.9 7.4 7 8.6 4.1-1.2 7-4.4 7-8.6V5.8z"/><path d="m9.1 11.6 2 2 3.9-4.1"/>',
 			'truck'   => '<path d="M2.6 6.6h10.9v8.2H2.6z"/><path d="M13.5 9.4h3.3l2.6 2.7v2.7h-5.9z"/><circle cx="6.4" cy="17.3" r="1.7"/><circle cx="16" cy="17.3" r="1.7"/>',
+			// حساب کاربری
+			'grid'     => '<rect x="3.5" y="3.5" width="7" height="7" rx="1"/><rect x="13.5" y="3.5" width="7" height="7" rx="1"/><rect x="3.5" y="13.5" width="7" height="7" rx="1"/><rect x="13.5" y="13.5" width="7" height="7" rx="1"/>',
+			'box'      => '<path d="M3.5 7.5 12 3.5l8.5 4v9L12 20.5l-8.5-4z"/><path d="M3.5 7.5 12 11.5l8.5-4"/><path d="M12 11.5v9"/>',
+			'download' => '<path d="M12 4v11"/><path d="m7.5 10.5 4.5 4.5 4.5-4.5"/><path d="M4.5 19.5h15"/>',
+			'logout'   => '<path d="M10 4.5h7.5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H10"/><path d="M14 12H4"/><path d="M7.5 8.5 4 12l3.5 3.5"/>',
+			'heart'    => '<path d="M12 20s-7.5-4.6-7.5-10.1A4.4 4.4 0 0 1 12 7.1a4.4 4.4 0 0 1 7.5 2.8C19.5 15.4 12 20 12 20z"/>',
+			'clock'    => '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/>',
+			'calendar' => '<rect x="3.5" y="5" width="17" height="15.5" rx="1.5"/><path d="M3.5 9.5h17M8 3.5v3M16 3.5v3"/>',
 		);
 		if ( empty( $p[ $name ] ) ) { return ''; }
 		return '<svg class="' . esc_attr( trim( 'ks-ic ' . $class ) ) . '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' . $p[ $name ] . '</svg>';

@@ -51,8 +51,10 @@
    قبلاً color و text-stroke انیمیت می‌شد و هر فریم کلِ هیرو دوباره رسم می‌شد. بعد از لودِ اولیه شروع می‌شود. */
 .ks-hero__ltr{position:relative}
 .ks-hero__ltr::after{content:attr(data-l);position:absolute;inset:0;color:#fff;-webkit-text-stroke:0 transparent;opacity:0;pointer-events:none}
-@media (hover:none){.ks-hero__ltr::after{animation:ks-hero-ltr 4.8s cubic-bezier(.16,1,.3,1) infinite;animation-delay:calc(1.5s + var(--i,0) * .16s);will-change:opacity}}
-@keyframes ks-hero-ltr{0%,66%,100%{opacity:0}10%,26%{opacity:1}}
+/* SAADAT خودبه‌خود پر می‌شود (همهٔ دستگاه‌ها): حروف یکی‌یکی از چپ سفید می‌شوند، کمی پر می‌مانند و دوباره
+   خالی می‌شوند. فقط opacityِ لایهٔ ::after انیمیت می‌شود تا روی GPU بماند و CPUِ موبایل درگیر نشود. */
+.ks-hero__ltr::after{animation:ks-hero-fill 6.4s cubic-bezier(.4,0,.2,1) infinite;animation-delay:calc(1.2s + var(--i,0) * .22s);will-change:opacity}
+@keyframes ks-hero-fill{0%,6%{opacity:0}18%,64%{opacity:1}78%,100%{opacity:0}}
 .ks-hero__title{text-wrap:balance;margin:18px 0 0!important;font-weight:900!important;color:#fff!important;font-size:clamp(1.3rem,2.6vw,2.15rem)!important;line-height:1.55!important}
 .ks-hero__title-sep{color:rgb(255 255 255 / .35);font-weight:400;margin-inline:.15em}
 /* «| برای خانه‌ای بهتر» یک تکه است و وسطش نمی‌شکند؛ وقتی جا نشد (موبایل/تبلت) خطِ خودش را می‌گیرد و جداکننده پنهان می‌شود */
@@ -493,4 +495,11 @@
 }
 /* کشیدنِ افقی در لبهٔ ریل به صفحه/حرکتِ «بازگشت» مرورگر منتقل نشود */
 .ks-cats__rail,.ks-sale__rail,.ks-prod__rail,.ks-blog__rail,.ks-vid__rail{overscroll-behavior-x:contain;-webkit-tap-highlight-color:transparent}
+
+/* ===================== add to cart (Ajaxِ ووکامرس) ===================== */
+/* ووکامرس بعد از افزودن، لینکِ «مشاهده سبد خرید» را کنارِ دکمه می‌چسباند و پایینِ کارت را به‌هم می‌ریزد؛
+   به‌جایش خودِ دکمه حالتِ «در حال افزودن» و «اضافه شد» می‌گیرد. */
+.ks-sale__foot .added_to_cart,.ks-prod__foot .added_to_cart{display:none!important}
+.ks-sale__cart.loading,.ks-prod__cart.loading{opacity:.55;pointer-events:none}
+.ks-sale__cart.added,.ks-prod__cart.added{background:#F2A900!important;color:#1f1300!important}
 

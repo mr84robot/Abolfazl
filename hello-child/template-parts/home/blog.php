@@ -12,11 +12,13 @@
  *   و یک بار زیر عکس. اینجا متن فقط در بدنهٔ کارت است؛ روی عکس فقط
  *   تاریخ و لایهٔ هاورِ «مطالعه مقاله» می‌نشیند.
  *
- * تاریخ با get_the_date() می‌آید تا قالبِ تاریخِ خودِ سایت (شمسی، اگر افزونهٔ
- * تاریخ شمسی فعال باشد) رعایت شود؛ فقط ارقامش فارسی می‌شود.
+ * تاریخ شمسی نمایش داده می‌شود («۳۰ شهریور ۱۴۰۵»)؛ سایت افزونهٔ شمسی ندارد و قبلاً «۲۰۲۶-۰۹-۲۱» دیده می‌شد.
+ * (inc/fa.php — اگر افزونهٔ شمسی نصب شود و سال را شمسی بدهد، همان استفاده می‌شود)
  */
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
+
+require_once get_stylesheet_directory() . '/inc/fa.php';
 
 $ks_blog_q = new WP_Query( array(
 	'post_type'           => 'post',
@@ -75,7 +77,7 @@ if ( ! function_exists( 'ks_fa_digits' ) ) {
 
               <span class="ks-blog__date">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17"/><path d="M8 3.5v3"/><path d="M16 3.5v3"/></svg>
-                <time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php echo esc_html( ks_fa_digits( get_the_date() ) ); ?></time>
+                <time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php echo esc_html( ks_jdate( get_post_time( 'Y-n-j' ) ) ); ?></time>
               </span>
 
               <span class="ks-blog__ov" aria-hidden="true">
