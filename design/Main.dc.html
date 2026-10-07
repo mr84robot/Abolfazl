@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="fa">
+<head>
+<meta charset="utf-8">
+<title>صفحه اصلی خانه سعادت — بازطراحی</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+body { margin: 0; background: #f4f4f4; font-family: "Yekan Bakh FaNum", Vazirmatn, system-ui, sans-serif; }
+a { color: #005949; text-decoration: none; }
+a:hover { color: #004438; }
+a.tile:hover { border-color: #b9d2cb; }
+a.chip:hover { background: #e6f0ee; border-color: #c6ddd6; }
+a.navlink:hover { color: #005949; }
+</style>
+</helmet>
+
+<div dir="rtl" style="--r: {{radius}}px; width: 100%; box-sizing: border-box; background: #f4f4f4; color: #1f2937; font-size: 14px; line-height: 1.9;">
+
+  <!-- ===== HEADER (unchanged from the live site) ===== -->
+  <header style="background: #ffffff; box-shadow: 0 1px 0 #e8ece9;">
+    <div style="padding: 14px 0;">
+      <div style="max-width: 1310px; margin-inline: auto; padding-inline: 32px; display: flex; align-items: center; gap: 20px;">
+        <a href="#top" style="flex: 0 0 auto; display: block; line-height: 1.1; color: #005949;">
+          <span style="display: block; font-size: 20px; font-weight: 800;">خانه سعادت</span>
+          <span style="display: block; font-size: 10px; font-weight: 600; color: #6b7a75; margin-top: 3px;">لوازم خانگی همدان</span>
+        </a>
+        <form role="search" action="#" style="flex: 1 1 auto; min-width: 0; display: flex; align-items: center; gap: 10px; background: #f1f2f4; border: 1px solid transparent; border-radius: var(--r); padding: 7px 12px;">
+          <span style="display: flex; color: #9aa1ab;" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg></span>
+          <label for="q" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0);">جست‌وجوی محصولات</label>
+          <input id="q" type="search" placeholder="چای‌ساز، سرخ‌کن، فلاسک…" style="flex: 1 1 auto; min-width: 0; border: 0; background: transparent; font: inherit; font-size: 15px; color: #1f2937; padding: 6px 0;">
+        </form>
+        <div style="flex: 0 0 auto; display: flex; align-items: center; gap: 6px;">
+          <a href="#account" style="display: inline-flex; align-items: center; gap: 8px; padding: 9px 12px; border-radius: var(--r); font-size: 14px; font-weight: 600; color: #1f2b28;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#005949" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="8" r="3.6"></circle><path d="M4.5 20c1.2-3.6 4-5.2 7.5-5.2s6.3 1.6 7.5 5.2"></path></svg>
+            <span>ورود</span>
+          </a>
+          <a href="#cart" style="position: relative; display: inline-flex; align-items: center; gap: 8px; padding: 9px 12px; border-radius: var(--r); font-size: 14px; font-weight: 600; color: #1f2b28;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#005949" stroke-width="1.7" aria-hidden="true"><path d="M4 5h2l2.2 10.4a2 2 0 002 1.6h7.2a2 2 0 002-1.6L21 8H7"></path><circle cx="10" cy="20" r="1.4"></circle><circle cx="18" cy="20" r="1.4"></circle></svg>
+            <span>سبد خرید</span>
+            <span style="position: absolute; top: 3px; inset-inline-start: 6px; min-width: 18px; height: 18px; padding: 0 4px; box-sizing: border-box; display: flex; align-items: center; justify-content: center; border-radius: 9px; background: #f2a900; color: #3a2a00; font-size: 11px; font-weight: 800; line-height: 1;">۳</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div style="border-top: 1px solid #e8ece9;">
+      <div style="max-width: 1310px; margin-inline: auto; padding-inline: 32px; display: flex; align-items: center; gap: 14px;">
+        <span style="display: inline-flex; align-items: center; gap: 10px; padding: 14px 0; font-size: 15px; font-weight: 700; color: #1f2b28;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+          دسته‌بندی محصولات
+        </span>
+        <nav style="flex: 1 1 auto; min-width: 0;">
+          <ul style="list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: 4px;">
+            <li><a class="navlink" href="#shop" style="display: inline-block; padding: 14px 12px; font-size: 15px; color: #1f2b28;">فروشگاه</a></li>
+            <li><a class="navlink" href="#blog" style="display: inline-block; padding: 14px 12px; font-size: 15px; color: #1f2b28;">وبلاگ سعادت</a></li>
+            <li><a class="navlink" href="#aghsat" style="display: inline-block; padding: 14px 12px; font-size: 15px; color: #1f2b28;">خرید اقساطی</a></li>
+            <li><a class="navlink" href="#video" style="display: inline-block; padding: 14px 12px; font-size: 15px; color: #1f2b28;">ویدیوها</a></li>
+            <li><a class="navlink" href="#about" style="display: inline-block; padding: 14px 12px; font-size: 15px; color: #1f2b28;">درباره ما</a></li>
+            <li><a class="navlink" href="#contact" style="display: inline-block; padding: 14px 12px; font-size: 15px; color: #1f2b28;">تماس با ما</a></li>
+          </ul>
+        </nav>
+        <a href="tel:09001110562" style="flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 700; color: #005949;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 3h3l1.5 4-2 1.5a11 11 0 006 6L16 12.5 20 14v3a2 2 0 01-2.2 2A15 15 0 014 5.2A2 2 0 016 3z"></path></svg>
+          پشتیبانی: <bdi style="direction: ltr;">۰۹۰۰۱۱۱۰۵۶۲</bdi>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== HERO — یک هیرو ثابت، متن در وسط ===== -->
+  <section id="top" style="position: relative; background: #02392f; overflow: hidden;">
+    <svg width="100%" height="100%" viewBox="0 0 1440 560" preserveAspectRatio="xMidYMid slice" aria-hidden="true" style="position: absolute; inset: 0; opacity: 0.09;">
+      <g fill="#f1a900">
+        <rect x="60" y="80" width="180" height="16" rx="8"></rect>
+        <rect x="60" y="128" width="96" height="16" rx="8"></rect>
+        <rect x="1180" y="420" width="200" height="16" rx="8"></rect>
+        <rect x="1256" y="468" width="124" height="16" rx="8"></rect>
+        <rect x="120" y="440" width="120" height="16" rx="8"></rect>
+      </g>
+      <g fill="#e6f0ee">
+        <rect x="1240" y="96" width="140" height="16" rx="8"></rect>
+        <rect x="1300" y="144" width="80" height="16" rx="8"></rect>
+        <rect x="60" y="392" width="60" height="16" rx="8"></rect>
+      </g>
+    </svg>
+    <div style="position: relative; max-width: 880px; margin-inline: auto; padding: 112px 32px 120px; text-align: center;">
+      <span style="display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: var(--r); background: rgba(241,169,0,0.16); color: #f1a900; font-size: 13px; font-weight: 700;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.9 21l1.2-6.8-5-4.9 6.9-1z"></path></svg>
+        از سال ۱۳۵۷ در همدان
+      </span>
+      <h1 style="margin: 24px 0 0; font-size: 52px; line-height: 1.45; font-weight: 800; color: #ffffff;">لوازم خانگی اصل، با قیمت شفاف<br>و امکان خرید اقساطی بدون ضامن</h1>
+      <p style="margin: 24px auto 0; max-width: 620px; font-size: 17px; line-height: 2; color: #cfe0db;">بیش از ۲٬۰۰۰ کالا از دلمونتی، اسنوا، ژانومه، بیم و ساپر — با گارانتی رسمی، خدمات پس از فروش خودِ فروشگاه و تحویل در همدان.</p>
+      <div style="margin-top: 40px; display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap;">
+        <a href="#categories" style="display: inline-flex; align-items: center; gap: 8px; min-height: 52px; padding: 0 32px; border-radius: var(--r); background: #f1a900; color: #1a1a1a; font-size: 15px; font-weight: 700;">
+          مشاهده دسته‌بندی‌ها
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>
+        </a>
+        <a href="#aghsat" style="display: inline-flex; align-items: center; min-height: 52px; padding: 0 32px; border-radius: var(--r); border: 1px solid rgba(255,255,255,0.45); color: #ffffff; font-size: 15px; font-weight: 700;">شرایط خرید اقساطی</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== نوار اعتماد ===== -->
+  <section style="background: #ffffff; border-bottom: 1px solid #e5e7eb;">
+    <div style="max-width: 1310px; margin-inline: auto; padding: 36px 32px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px;">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <span style="flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: var(--r); background: #e6f0ee; color: #005949;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3l7 3v5.5c0 4.2-2.9 7.6-7 9.5-4.1-1.9-7-5.3-7-9.5V6z"></path><path d="M9 12.2l2.1 2.1L15.5 10"></path></svg></span>
+        <span><span style="display: block; font-size: 15px; font-weight: 700; color: #1f2b28;">اقساط بدون ضامن</span><span style="display: block; font-size: 13px; color: #5b6472;">۴ قسط بدون سود با چک صیادی</span></span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <span style="flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: var(--r); background: #e6f0ee; color: #005949;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="7" width="17" height="12" rx="2"></rect><path d="M8 7V5.5A2.5 2.5 0 0110.5 3h3A2.5 2.5 0 0116 5.5V7"></path></svg></span>
+        <span><span style="display: block; font-size: 15px; font-weight: 700; color: #1f2b28;">گارانتی رسمی</span><span style="display: block; font-size: 13px; color: #5b6472;">۱۸ تا ۲۴ ماه، مستقیم از برند</span></span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <span style="flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: var(--r); background: #e6f0ee; color: #005949;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 7h10v9H3z"></path><path d="M13 10h4l3 3v3h-7z"></path><circle cx="7" cy="18" r="1.6"></circle><circle cx="17" cy="18" r="1.6"></circle></svg></span>
+        <span><span style="display: block; font-size: 15px; font-weight: 700; color: #1f2b28;">ارسال سریع</span><span style="display: block; font-size: 13px; color: #5b6472;">همدان همان‌روز، سراسر ایران</span></span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <span style="flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: var(--r); background: #e6f0ee; color: #005949;"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 6h16v10H9l-5 4z"></path></svg></span>
+        <span><span style="display: block; font-size: 15px; font-weight: 700; color: #1f2b28;">مشاوره تخصصی</span><span style="display: block; font-size: 13px; color: #5b6472;">دو شعبه حضوری + پشتیبانی تلفنی</span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== دسته‌بندی‌ها — بازطراحی‌شده ===== -->
+  <section id="categories" style="background: #f4f4f4;">
+    <div style="max-width: 1310px; margin-inline: auto; padding: 96px 32px;">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 40px;">
+        <div>
+          <span style="display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; color: #8a6100;">
+            <span style="display: inline-block; width: 24px; height: 2px; background: #f1a900;"></span>
+            خرید بر اساس دسته
+          </span>
+          <h2 style="margin: 14px 0 8px; font-size: 32px; line-height: 1.5; font-weight: 800; color: #101828;">دسته‌بندی محصولات</h2>
+          <p style="margin: 0; font-size: 15px; color: #5b6472;">۲۴ دسته‌ی کالایی، از لوازم آشپزخانه تا نظافت و سرمایشی.</p>
+        </div>
+        <a href="#shop" style="flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 20px; border: 1px solid #d4dbd8; border-radius: var(--r); background: #ffffff; font-size: 14px; font-weight: 700; color: #005949;">
+          همه دسته‌ها
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>
+        </a>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 20px;">
+
+        <a class="tile" href="#c1" style="display: block; background: #ffffff; border: 1px solid #e5e7eb; border-radius: var(--r); padding: 24px 20px 20px; text-align: center; color: #1f2937;">
+          <span style="display: block; aspect-ratio: 1 / 1; border-radius: var(--r); background: #eef4f2; display: grid; place-items: center;">
+            <svg width="56" height="56" viewBox="0 0 48 48" fill="none" stroke="#005949" stroke-width="1.5" aria-hidden="true"><rect x="9" y="12" width="30" height="26" rx="3"></rect><rect x="15" y="19" width="18" height="13" rx="2"></rect><path d="M17 12V9h14v3"></path><circle cx="24" cy="25.5" r="3"></circle></svg>
+          </span>
+          <span style="display: block; margin-top: 18px; font-size: 15px; font-weight: 600; color: #1f2b28;">سرخ کن</span>
+          <span style="display: block; margin-top: 4px; font-size: 12px; color: #9ca3af;">۶۴ کالا</span>
+        </a>
+
+        <a class="tile" href="#c2" style="display: block; background: #ffffff; border: 1px solid #e5e7eb; border-radius: var(--r); padding: 24px 20px 20px; text-align: center; color: #1f2937;">
+          <span style="display: block; aspect-ratio: 1 / 1; border-radius: var(--r); background: #fdf6e6; display: grid; place-items: center;">
+            <svg width="56" height="56" viewBox="0 0 48 48" fill="none" stroke="#005949" stroke-width="1.5" aria-hidden="true"><path d="M14 18h16v16a4 4 0 01-4 4h-8a4 4 0 01-4-4z"></path><path d="M30 22h4a3 3 0 010 6h-4"></path><path d="M18 14c0-2 2-2.5 2-4.5"></path><path d="M24 14c0-2 2-2.5 2-4.5"></path></svg>
+          </span>
+          <span style="display: block; margin-top: 18px; font-size: 15px; font-weight: 600; color: #1f2b28;">چای ساز</span>
+          <span style="display: block; margin-top: 4px; font-size: 12px; color: #9ca3af;">۵۱ کالا</span>
+        </a>
+
+        <a class="tile" href="#c3" style="display: block; background: #ffffff; border: 1px solid #e5e7eb; border-radius: var(--r); padding: 24px 20px 20px; text-align: center; color: #1f2937;">
+          <span style="display: block; aspect-ratio: 1 / 1; border-radius: var(--r); background: #eef4f2; display: grid; place-items: center;">
+            <svg width="56" height="56" viewBox="0 0 48 48" fill="none" stroke="#005949" stroke-width="1.5" aria-hidden="true"><circle cx="18" cy="30" r="9"></circle><circle cx="18" cy="30" r="3.5"></circle><path d="M26 26l10-12 5 3-9 13"></path></svg>
+          </span>
+          <span style="display: block; margin-top: 18px; font-size: 15px; font-weight: 600; color: #1f2b28;">جاروبرقی</span>
+          <span style="display: block; margin-top: 4px; font-size: 12px; color: #9ca3af;">۴۲ کالا</span>
+        </a>
+
+        <a class="tile" href="#c4" style="display: block; background: #ffffff; border: 1px solid #e5e7eb; border-radius: var(--r); padding: 24px 20px 20px; text-align: center; color: #1f2937;">
+          <span style="display: block; aspect-ratio: 1 / 1; border-radius: var(--r); background: #f2f5f4; display: grid; place-items: center;">
+            <svg width="56" height="56" viewBox="0 0 48 48" fill="none" stroke="#005949" stroke-width="1.5" aria-hidden="true"><path d="M11 9h26v14a6 6 0 01-6 6H17a6 6 0 01-6-6z"></path><path d="M17 29v6h14v-6"></path><path d="M18 35h12"></path><path d="M22 15h10"></path></svg>
+          </span>
+          <span style="display: block; margin-top: 18px; font-size: 15px; font-weight: 600; color: #1f2b28;">اسپرسوساز</span>
+          <span style="display: block; margin-top: 4px; font-size: 12px; color: #9ca3af;">۲۸ کالا</span>
+        </a>
+
+        <a class="tile" href="#c5" style="display: block; background: #ffffff; border: 1px solid #e5e7eb; border-radius: var(--r); padding: 24px 20px 20px; text-align: center; color: #1f2937;">
+          <span style="display: block; aspect-ratio: 1 / 1; border-radius: var(--r); background: #fdf6e6; display: grid; place-items: center;">
+            <svg width="56" height="56" viewBox="0 0 48 48" fill="none" stroke="#005949" stroke-width="1.5" aria-hidden="true"><path d="M14 20h20l-2 16a3 3 0 01-3 2.6H19a3 3 0 01-3-2.6z"></path><path d="M16 20v-4a8 8 0 0116 0v4"></path><path d="M24 26v7"></path></svg>
+          </span>
+          <span style="display: block; margin-top: 18px; font-size: 15px; font-weight: 600; color: #1f2b28;">غذاساز</span>
+          <span style="display: block; margin-top: 4px; font-size: 12px; color: #9ca3af;">۳۷ کالا</span>
+        </a>
+
+        <a class="tile" href="#c6" style="display: block; background: #ffffff; border: 1px solid #e5e7eb; border-radius: var(--r); padding: 24px 20px 20px; text-align: center; color: #1f2937;">
+          <span style="display: block; aspect-ratio: 1 / 1; border-radius: var(--r); background: #eef4f2; display: grid; place-items: center;">
+            <svg width="56" height="56" viewBox="0 0 48 48" fill="none" stroke="#005949" stroke-width="1.5" aria-hidden="true"><rect x="10" y="14" width="28" height="22" rx="4"></rect><rect x="16" y="20" width="16" height="7" rx="1.5"></rect><circle cx="18" cy="32" r="1.6"></circle><circle cx="24" cy="32" r="1.6"></circle><circle cx="30" cy="32" r="1.6"></circle></svg>
+          </span>
+          <span style="display: block; margin-top: 18px; font-size: 15px; font-weight: 600; color: #1f2b28;">پلوپز</span>
+          <span style="display: block; margin-top: 4px; font-size: 12px; color: #9ca3af;">۳۳ کالا</span>
+        </a>
+
+        <a class="tile" href="#c7" style="display: block; background: #ffffff; border: 1px solid #e5e7eb; border-radius: var(--r); padding: 24px 20px 20px; text-align: center; color: #1f2937;">
+          <span style="display: block; aspect-ratio: 1 / 1; border-radius: var(--r); background: #f2f5f4; display: grid; place-items: center;">
+            <svg width="56" height="56" viewBox="0 0 48 48" fill="none" stroke="#005949" stroke-width="1.5" aria-hidden="true"><path d="M19 8h10l1.5 7h-13z"></path><path d="M17.5 15h13l2 21a4 4 0 01-4 4.3h-9a4 4 0 01-4-4.3z"></path><path d="M19 23h10"></path></svg>
+          </span>
+          <span style="display: block; margin-top: 18px; font-size: 15px; font-weight: 600; color: #1f2b28;">فلاسک</span>
+          <span style="display: block; margin-top: 4px; font-size: 12px; color: #9ca3af;">۸۹ کالا</span>
+        </a>
+
+        <a class="tile" href="#c8" style="display: block; background: #ffffff; border: 1px solid #e5e7eb; border-radius: var(--r); padding: 24px 20px 20px; text-align: center; color: #1f2937;">
+          <span style="display: block; aspect-ratio: 1 / 1; border-radius: var(--r); background: #fdf6e6; display: grid; place-items: center;">
+            <svg width="56" height="56" viewBox="0 0 48 48" fill="none" stroke="#005949" stroke-width="1.5" aria-hidden="true"><path d="M8 34l6-14h20a6 6 0 016 6v8z"></path><path d="M14 20l3-6h12"></path><path d="M12 34h24"></path></svg>
+          </span>
+          <span style="display: block; margin-top: 18px; font-size: 15px; font-weight: 600; color: #1f2b28;">اتو</span>
+          <span style="display: block; margin-top: 4px; font-size: 12px; color: #9ca3af;">۴۶ کالا</span>
+        </a>
+
+        <a class="tile" href="#c9" style="display: block; background: #ffffff; border: 1px solid #e5e7eb; border-radius: var(--r); padding: 24px 20px 20px; text-align: center; color: #1f2937;">
+          <span style="display: block; aspect-ratio: 1 / 1; border-radius: var(--r); background: #eef4f2; display: grid; place-items: center;">
+            <svg width="56" height="56" viewBox="0 0 48 48" fill="none" stroke="#005949" stroke-width="1.5" aria-hidden="true"><rect x="7" y="14" width="34" height="20" rx="3"></rect><rect x="12" y="19" width="18" height="10" rx="1.5"></rect><path d="M35 19v2M35 25v2"></path></svg>
+          </span>
+          <span style="display: block; margin-top: 18px; font-size: 15px; font-weight: 600; color: #1f2b28;">ماکروویو</span>
+          <span style="display: block; margin-top: 4px; font-size: 12px; color: #9ca3af;">۱۹ کالا</span>
+        </a>
+
+        <a class="tile" href="#c10" style="display: block; background: #ffffff; border: 1px solid #e5e7eb; border-radius: var(--r); padding: 24px 20px 20px; text-align: center; color: #1f2937;">
+          <span style="display: block; aspect-ratio: 1 / 1; border-radius: var(--r); background: #f2f5f4; display: grid; place-items: center;">
+            <svg width="56" height="56" viewBox="0 0 48 48" fill="none" stroke="#005949" stroke-width="1.5" aria-hidden="true"><path d="M15 16h15l-1.5 20a3 3 0 01-3 2.8h-6a3 3 0 01-3-2.8z"></path><path d="M30 20h5v6h-5"></path><path d="M15 12h15"></path></svg>
+          </span>
+          <span style="display: block; margin-top: 18px; font-size: 15px; font-weight: 600; color: #1f2b28;">کتری برقی</span>
+          <span style="display: block; margin-top: 4px; font-size: 12px; color: #9ca3af;">۲۵ کالا</span>
+        </a>
+
+        <a class="tile" href="#c11" style="display: block; background: #ffffff; border: 1px solid #e5e7eb; border-radius: var(--r); padding: 24px 20px 20px; text-align: center; color: #1f2937;">
+          <span style="display: block; aspect-ratio: 1 / 1; border-radius: var(--r); background: #fdf6e6; display: grid; place-items: center;">
+            <svg width="56" height="56" viewBox="0 0 48 48" fill="none" stroke="#005949" stroke-width="1.5" aria-hidden="true"><path d="M18 10h12l-2 18H20z"></path><path d="M20 28h8l1 8a3 3 0 01-3 3.2h-4A3 3 0 0119 36z"></path><path d="M19 17h10"></path></svg>
+          </span>
+          <span style="display: block; margin-top: 18px; font-size: 15px; font-weight: 600; color: #1f2b28;">بلندر</span>
+          <span style="display: block; margin-top: 4px; font-size: 12px; color: #9ca3af;">۳۱ کالا</span>
+        </a>
+
+        <a class="tile" href="#c12" style="display: block; background: #ffffff; border: 1px solid #e5e7eb; border-radius: var(--r); padding: 24px 20px 20px; text-align: center; color: #1f2937;">
+          <span style="display: block; aspect-ratio: 1 / 1; border-radius: var(--r); background: #eef4f2; display: grid; place-items: center;">
+            <svg width="56" height="56" viewBox="0 0 48 48" fill="none" stroke="#005949" stroke-width="1.5" aria-hidden="true"><rect x="11" y="16" width="26" height="22" rx="4"></rect><path d="M15 16v-3a3 3 0 013-3h12a3 3 0 013 3v3"></path><rect x="17" y="22" width="14" height="6" rx="1.5"></rect></svg>
+          </span>
+          <span style="display: block; margin-top: 18px; font-size: 15px; font-weight: 600; color: #1f2b28;">زودپز برقی</span>
+          <span style="display: block; margin-top: 4px; font-size: 12px; color: #9ca3af;">۲۲ کالا</span>
+        </a>
+
+      </div>
+
+      <div style="margin-top: 32px; padding-top: 32px; border-top: 1px solid #e0e4e2; display: flex; flex-wrap: wrap; align-items: center; gap: 10px;">
+        <span style="font-size: 13px; font-weight: 700; color: #5b6472; margin-inline-end: 8px;">دسته‌های دیگر:</span>
+        <a class="chip" href="#c13" style="padding: 9px 16px; border: 1px solid #e0e4e2; border-radius: var(--r); background: #ffffff; font-size: 14px; color: #1f2b28;">توستر</a>
+        <a class="chip" href="#c14" style="padding: 9px 16px; border: 1px solid #e0e4e2; border-radius: var(--r); background: #ffffff; font-size: 14px; color: #1f2b28;">آبمیوه‌گیری</a>
+        <a class="chip" href="#c15" style="padding: 9px 16px; border: 1px solid #e0e4e2; border-radius: var(--r); background: #ffffff; font-size: 14px; color: #1f2b28;">قابلمه</a>
+        <a class="chip" href="#c16" style="padding: 9px 16px; border: 1px solid #e0e4e2; border-radius: var(--r); background: #ffffff; font-size: 14px; color: #1f2b28;">کتری و قوری</a>
+        <a class="chip" href="#c17" style="padding: 9px 16px; border: 1px solid #e0e4e2; border-radius: var(--r); background: #ffffff; font-size: 14px; color: #1f2b28;">گوشت‌کوب برقی</a>
+        <a class="chip" href="#c18" style="padding: 9px 16px; border: 1px solid #e0e4e2; border-radius: var(--r); background: #ffffff; font-size: 14px; color: #1f2b28;">پنکه</a>
+        <a class="chip" href="#c19" style="padding: 9px 16px; border: 1px solid #e0e4e2; border-radius: var(--r); background: #ffffff; font-size: 14px; color: #1f2b28;">جاروشارژی</a>
+        <a class="chip" href="#c20" style="padding: 9px 16px; border: 1px solid #e0e4e2; border-radius: var(--r); background: #ffffff; font-size: 14px; color: #1f2b28;">چرخ گوشت</a>
+        <a class="chip" href="#c21" style="padding: 9px 16px; border: 1px solid #e0e4e2; border-radius: var(--r); background: #ffffff; font-size: 14px; color: #1f2b28;">ساندویچ‌ساز</a>
+        <a class="chip" href="#c22" style="padding: 9px 16px; border: 1px solid #e0e4e2; border-radius: var(--r); background: #ffffff; font-size: 14px; color: #1f2b28;">کلمن</a>
+        <a class="chip" href="#c23" style="padding: 9px 16px; border: 1px solid #e0e4e2; border-radius: var(--r); background: #ffffff; font-size: 14px; color: #1f2b28;">کفگیر و ملاقه</a>
+        <a class="chip" href="#c24" style="padding: 9px 16px; border: 1px solid #e0e4e2; border-radius: var(--r); background: #ffffff; font-size: 14px; color: #1f2b28;">قاشق و چنگال</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== پرفروش‌ترین‌ها ===== -->
+  <section id="shop" style="background: #ffffff; border-top: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb;">
+    <div style="max-width: 1310px; margin-inline: auto; padding: 96px 32px;">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 40px;">
+        <div>
+          <span style="display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; color: #8a6100;">
+            <span style="display: inline-block; width: 24px; height: 2px; background: #f1a900;"></span>
+            انتخاب مشتریان
+          </span>
+          <h2 style="margin: 14px 0 8px; font-size: 32px; line-height: 1.5; font-weight: 800; color: #101828;">پرفروش‌ترین‌های این هفته</h2>
+          <p style="margin: 0; font-size: 15px; color: #5b6472;">همه با گارانتی رسمی و امکان پرداخت اقساطی.</p>
+        </div>
+        <a href="#shop-all" style="flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 20px; border: 1px solid #d4dbd8; border-radius: var(--r); font-size: 14px; font-weight: 700; color: #005949;">
+          همه محصولات
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>
+        </a>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px;">
+        <article style="position: relative; display: flex; flex-direction: column; background: #ffffff; border: 1px solid #e5e7eb; border-radius: var(--r); padding: 24px;">
+          <span style="position: absolute; top: 16px; inset-inline-start: 16px; z-index: 3; padding: 5px 10px; border-radius: var(--r); background: #e0563f; color: #ffffff; font-size: 12px; font-weight: 700; line-height: 1.4;">٪۱۷ تخفیف</span>
+          <span style="display: block; aspect-ratio: 1 / 1; border-radius: var(--r); background: #f7f8f9; display: grid; place-items: center;">
+            <svg width="88" height="88" viewBox="0 0 48 48" fill="none" stroke="#b9c3c9" stroke-width="1.4" aria-hidden="true"><rect x="9" y="12" width="30" height="26" rx="3"></rect><rect x="15" y="19" width="18" height="13" rx="2"></rect><circle cx="24" cy="25.5" r="3"></circle></svg>
+          </span>
+          <h3 style="margin: 20px 0 0; font-size: 15px; font-weight: 600; line-height: 1.8; color: #1f2b28; min-height: 54px;">سرخ کن بدون روغن دلمونتی DL۷۵۰ شش لیتری</h3>
+          <div style="margin-top: 14px; display: flex; align-items: baseline; gap: 8px;">
+            <span style="font-size: 18px; font-weight: 800; color: #005949;"><bdi>۱۱,۸۰۰,۰۰۰ <span style="font-size: .8em; font-weight: 600;">تومان</span></bdi></span>
+            <del style="font-size: 13px; color: #9ca3af;" aria-hidden="true"><bdi>۱۴,۲۰۰,۰۰۰</bdi></del>
+          </div>
+          <a href="#p1" style="margin-top: 20px; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; border-radius: var(--r); background: #005949; color: #ffffff; font-size: 14px; font-weight: 700;">افزودن به سبد</a>
+        </article>
+
+        <article style="position: relative; display: flex; flex-direction: column; background: #ffffff; border: 1px solid #e5e7eb; border-radius: var(--r); padding: 24px;">
+          <span style="display: block; aspect-ratio: 1 / 1; border-radius: var(--r); background: #f7f8f9; display: grid; place-items: center;">
+            <svg width="88" height="88" viewBox="0 0 48 48" fill="none" stroke="#b9c3c9" stroke-width="1.4" aria-hidden="true"><path d="M14 18h16v16a4 4 0 01-4 4h-8a4 4 0 01-4-4z"></path><path d="M30 22h4a3 3 0 010 6h-4"></path><path d="M18 14c0-2 2-2.5 2-4.5"></path></svg>
+          </span>
+          <h3 style="margin: 20px 0 0; font-size: 15px; font-weight: 600; line-height: 1.8; color: #1f2b28; min-height: 54px;">چای ساز بیم مدل TM ۲۸۱۶ با قوری استیل</h3>
+          <div style="margin-top: 14px; display: flex; align-items: baseline; gap: 8px;">
+            <span style="font-size: 18px; font-weight: 800; color: #005949;"><bdi>۴,۳۵۰,۰۰۰ <span style="font-size: .8em; font-weight: 600;">تومان</span></bdi></span>
+          </div>
+          <a href="#p2" style="margin-top: 20px; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; border-radius: var(--r); background: #005949; color: #ffffff; font-size: 14px; font-weight: 700;">افزودن به سبد</a>
+        </article>
+
+        <article style="position: relative; display: flex; flex-direction: column; background: #ffffff; border: 1px solid #e5e7eb; border-radius: var(--r); padding: 24px;">
+          <span style="position: absolute; top: 16px; inset-inline-start: 16px; z-index: 3; display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: var(--r); background: #fff6e2; color: #8a6100; font-size: 12px; font-weight: 800;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="#f1a900" aria-hidden="true"><path d="M12 2l3 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.9 21l1.2-6.8-5-4.9 6.9-1z"></path></svg>
+            <bdi>۴.۸</bdi>
+          </span>
+          <span style="display: block; aspect-ratio: 1 / 1; border-radius: var(--r); background: #f7f8f9; display: grid; place-items: center;">
+            <svg width="88" height="88" viewBox="0 0 48 48" fill="none" stroke="#b9c3c9" stroke-width="1.4" aria-hidden="true"><path d="M14 20h20l-2 16a3 3 0 01-3 2.6H19a3 3 0 01-3-2.6z"></path><path d="M16 20v-4a8 8 0 0116 0v4"></path></svg>
+          </span>
+          <h3 style="margin: 20px 0 0; font-size: 15px; font-weight: 600; line-height: 1.8; color: #1f2b28; min-height: 54px;">غذاساز دلمونتی DL۱۲۰ چندکاره ۲۰ کاره</h3>
+          <div style="margin-top: 14px; display: flex; align-items: baseline; gap: 8px;">
+            <span style="font-size: 18px; font-weight: 800; color: #005949;"><bdi>۹,۶۵۰,۰۰۰ <span style="font-size: .8em; font-weight: 600;">تومان</span></bdi></span>
+          </div>
+          <a href="#p3" style="margin-top: 20px; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; border-radius: var(--r); background: #005949; color: #ffffff; font-size: 14px; font-weight: 700;">افزودن به سبد</a>
+        </article>
+
+        <article style="position: relative; display: flex; flex-direction: column; background: #ffffff; border: 1px solid #e5e7eb; border-radius: var(--r); padding: 24px;">
+          <span style="display: block; aspect-ratio: 1 / 1; border-radius: var(--r); background: #f7f8f9; display: grid; place-items: center;">
+            <svg width="88" height="88" viewBox="0 0 48 48" fill="none" stroke="#b9c3c9" stroke-width="1.4" aria-hidden="true"><path d="M19 8h10l1.5 7h-13z"></path><path d="M17.5 15h13l2 21a4 4 0 01-4 4.3h-9a4 4 0 01-4-4.3z"></path></svg>
+          </span>
+          <h3 style="margin: 20px 0 0; font-size: 15px; font-weight: 600; line-height: 1.8; color: #1f2b28; min-height: 54px;">فلاسک یونیک ۱.۵ لیتری درب فشاری</h3>
+          <div style="margin-top: 14px; display: flex; align-items: baseline; gap: 8px;">
+            <span style="font-size: 18px; font-weight: 800; color: #005949;"><bdi>۱,۲۹۰,۰۰۰ <span style="font-size: .8em; font-weight: 600;">تومان</span></bdi></span>
+          </div>
+          <span style="margin-top: 20px; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; border-radius: var(--r); background: #eceeed; color: #5f6b68; font-size: 14px; font-weight: 700;">ناموجود</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== نوار اقساط ===== -->
+  <section id="aghsat" style="background: #f4f4f4;">
+    <div style="max-width: 1310px; margin-inline: auto; padding: 72px 32px;">
+      <div style="background: #005949; border-radius: var(--r); padding: 48px 56px; display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap;">
+        <div style="flex: 1 1 520px; min-width: 0;">
+          <span style="display: inline-block; padding: 6px 12px; border-radius: var(--r); background: #f1a900; color: #1a1a1a; font-size: 12px; font-weight: 800;">سعادت‌پی</span>
+          <h2 style="margin: 18px 0 10px; font-size: 28px; line-height: 1.6; font-weight: 800; color: #ffffff;">جهیزیه‌ات را کامل بخر، اقساطی پرداخت کن</h2>
+          <p style="margin: 0; font-size: 15px; line-height: 2; color: #cfe0db;">۴ قسط بدون سود با ۲۰٪ پیش‌پرداخت، یا ۱۲ ماهه بدون پیش‌پرداخت — فقط با چک صیادی و بدون ضامن.</p>
+        </div>
+        <a href="#aghsat-form" style="flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; min-height: 52px; padding: 0 32px; border-radius: var(--r); background: #ffffff; color: #005949; font-size: 15px; font-weight: 700;">
+          مشاهده شرایط
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== وبلاگ (بخش موجود) ===== -->
+  <section id="blog" style="background: #f6f8f7; border-top: 1px solid #e5e7eb;">
+    <div style="max-width: 1310px; margin-inline: auto; padding: 96px 32px;">
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 40px;">
+        <div>
+          <span style="display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; color: #8a6100;">
+            <span style="display: inline-block; width: 24px; height: 2px; background: #f1a900;"></span>
+            وبلاگ سعادت
+          </span>
+          <h2 style="margin: 14px 0 8px; font-size: 32px; line-height: 1.5; font-weight: 800; color: #101828;">قبل از خرید، این‌ها را بخوانید</h2>
+          <p style="margin: 0; font-size: 15px; color: #5b6472;">راهنماهای خرید و بررسی‌های واقعی، نوشته‌ی تیم خانه سعادت.</p>
+        </div>
+        <a href="#blog-all" style="flex: 0 0 auto; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 20px; border: 1px solid #d4dbd8; border-radius: var(--r); background: #ffffff; font-size: 14px; font-weight: 700; color: #005949;">
+          همه مقاله‌ها
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>
+        </a>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px;">
+        <a href="#b1" style="display: flex; flex-direction: column; background: #ffffff; border: 1px solid #e5e7eb; border-radius: var(--r); overflow: hidden; color: #101828;">
+          <span style="position: relative; display: block; aspect-ratio: 16 / 10; background: #e9efec; display: grid; place-items: center;">
+            <svg width="92" height="92" viewBox="0 0 48 48" fill="none" stroke="#9db5ad" stroke-width="1.3" aria-hidden="true"><path d="M14 20h20l-2 16a3 3 0 01-3 2.6H19a3 3 0 01-3-2.6z"></path><path d="M16 20v-4a8 8 0 0116 0v4"></path></svg>
+            <span style="position: absolute; top: 14px; inset-inline-start: 14px; display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: var(--r); background: #ffffff; font-size: 12px; font-weight: 700; color: #1f2b28;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2"></rect><path d="M4 10h16M9 3v4M15 3v4"></path></svg>
+              <bdi>۱۵ شهریور ۱۴۰۵</bdi>
+            </span>
+          </span>
+          <span style="display: block; padding: 24px;">
+            <span style="display: block; font-size: 16px; font-weight: 700; line-height: 1.8; color: #101828;">آموزش کار، نقد و بررسی غذاساز دلمونتی ۲۰ کاره مدل DL۱۲۰</span>
+            <span style="display: block; margin-top: 12px; font-size: 14px; line-height: 2; color: #5b6472;">اگر دنبال دستگاهی هستید که جای چند وسیله آشپزخانه را یک‌جا بگیرد، بررسی غذاساز دلمونتی DL۱۲۰ نقطه…</span>
+            <span style="display: inline-flex; align-items: center; gap: 6px; margin-top: 18px; font-size: 14px; font-weight: 700; color: #005949;">ادامه مطلب
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>
+            </span>
+          </span>
+        </a>
+
+        <a href="#b2" style="display: flex; flex-direction: column; background: #ffffff; border: 1px solid #e5e7eb; border-radius: var(--r); overflow: hidden; color: #101828;">
+          <span style="position: relative; display: block; aspect-ratio: 16 / 10; background: #e4ece8; display: grid; place-items: center;">
+            <svg width="92" height="92" viewBox="0 0 48 48" fill="none" stroke="#9db5ad" stroke-width="1.3" aria-hidden="true"><rect x="9" y="12" width="30" height="26" rx="3"></rect><rect x="15" y="19" width="18" height="13" rx="2"></rect><circle cx="24" cy="25.5" r="3"></circle></svg>
+            <span style="position: absolute; top: 14px; inset-inline-start: 14px; display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: var(--r); background: #ffffff; font-size: 12px; font-weight: 700; color: #1f2b28;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2"></rect><path d="M4 10h16M9 3v4M15 3v4"></path></svg>
+              <bdi>۱۹ شهریور ۱۴۰۵</bdi>
+            </span>
+          </span>
+          <span style="display: block; padding: 24px;">
+            <span style="display: block; font-size: 16px; font-weight: 700; line-height: 1.8; color: #101828;">راهنمای خرید سرخ کن بدون روغن؛ توان، المنت و انتخاب مدل</span>
+            <span style="display: block; margin-top: 12px; font-size: 14px; line-height: 2; color: #5b6472;">راستش بیشتر کسانی که از خرید سرخ کن پشیمان می‌شوند، دستگاه بی‌کیفیت نخریده‌اند؛ دستگاهی خریده‌اند…</span>
+            <span style="display: inline-flex; align-items: center; gap: 6px; margin-top: 18px; font-size: 14px; font-weight: 700; color: #005949;">ادامه مطلب
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>
+            </span>
+          </span>
+        </a>
+
+        <a href="#b3" style="display: flex; flex-direction: column; background: #ffffff; border: 1px solid #e5e7eb; border-radius: var(--r); overflow: hidden; color: #101828;">
+          <span style="position: relative; display: block; aspect-ratio: 16 / 10; background: #eaf0ec; display: grid; place-items: center;">
+            <svg width="92" height="92" viewBox="0 0 48 48" fill="none" stroke="#9db5ad" stroke-width="1.3" aria-hidden="true"><rect x="7" y="16" width="12" height="20" rx="2"></rect><rect x="21" y="13" width="14" height="23" rx="2"></rect><rect x="37" y="18" width="6" height="18" rx="2"></rect></svg>
+            <span style="position: absolute; top: 14px; inset-inline-start: 14px; display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: var(--r); background: #ffffff; font-size: 12px; font-weight: 700; color: #1f2b28;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2"></rect><path d="M4 10h16M9 3v4M15 3v4"></path></svg>
+              <bdi>۲۱ شهریور ۱۴۰۵</bdi>
+            </span>
+          </span>
+          <span style="display: block; padding: 24px;">
+            <span style="display: block; font-size: 16px; font-weight: 700; line-height: 1.8; color: #101828;">سرخ کن بدون روغن چند لیتری بخرم؟ راهنمای انتخاب ظرفیت</span>
+            <span style="display: block; margin-top: 12px; font-size: 14px; line-height: 2; color: #5b6472;">سوال «چند لیتری بخرم» ساده به نظر می‌رسد اما رایج‌ترین نقطه اشتباه در خرید سرخ کن…</span>
+            <span style="display: inline-flex; align-items: center; gap: 6px; margin-top: 18px; font-size: 14px; font-weight: 700; color: #005949;">ادامه مطلب
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>
+            </span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== باکس راهنمای خرید / محتوای سئو (بخش موجود) ===== -->
+  <section style="background: #f4f4f4;">
+    <div style="max-width: 1310px; margin-inline: auto; padding: 0 32px 96px;">
+      <div style="position: relative; background: #fbf7ef; border: 1px solid #efe6d6; border-radius: var(--r); padding: 56px 56px 40px;">
+        <span style="display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; color: #8a6100;">
+          <span style="display: inline-block; width: 24px; height: 2px; background: #f1a900;"></span>
+          راهنمای خرید
+        </span>
+        <h2 style="margin: 18px 0 24px; font-size: 30px; line-height: 1.6; font-weight: 800; color: #101828;">خرید لوازم خانگی؛ راهنمای انتخاب، قیمت و خرید مطمئن</h2>
+        <p style="margin: 0 0 20px; font-size: 15px; line-height: 2.2; color: #3f4a47;">خرید لوازم خانگی یکی از تصمیم‌های مهم هر خانه است؛ از یخچال فریزر و ماشین لباسشویی گرفته تا لوازم برقی کوچک آشپزخانه، کیفیت و قیمت این کالاها مستقیماً روی راحتی زندگی روزمره اثر می‌گذارد. فروشگاه اینترنتی خانه سعادت با تنوع محصولات اصل، نمایش شفاف قیمت و امکان خرید آنلاین و اقساطی، مسیر خرید لوازم خانگی را ساده و مطمئن کرده است.</p>
+        <h3 style="margin: 32px 0 14px; font-size: 19px; font-weight: 700; color: #101828;">لوازم خانگی را آنلاین بخریم یا حضوری؟</h3>
+        <p style="margin: 0 0 20px; font-size: 15px; line-height: 2.2; color: #3f4a47;">خرید اینترنتی لوازم خانگی این امکان را می‌دهد که ده‌ها مدل را کنار هم مقایسه کنید، قیمت‌ها را ببینید و در هر ساعت از شبانه‌روز سفارش دهید. در خانه سعادت می‌توانید محصول موردنظرتان را آنلاین انتخاب و ثبت کنید و بدون رفت‌وآمد، خریدتان را کامل کنید. برای شروع می‌توانید وارد <a href="#shop" style="font-weight: 700; border-bottom: 2px solid #005949;">محصولات خانه سعادت</a> شوید و محصولات را ببینید.</p>
+        <h3 style="margin: 32px 0 14px; font-size: 19px; font-weight: 700; color: #101828;">قیمت لوازم خانگی به چه چیزهایی بستگی دارد؟</h3>
+        <p style="margin: 0; font-size: 15px; line-height: 2.2; color: #3f4a47;">برند، کشور سازنده، توان مصرفی و امکانات دستگاه مهم‌ترین عامل‌های قیمت‌اند. در کنار این‌ها، نوع گارانتی و خدمات پس از فروش تفاوت قیمت دو مدل مشابه را توضیح می‌دهد.</p>
+        <div style="position: relative; margin-top: 8px; height: 96px;">
+          <span style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(251,247,239,0), #fbf7ef 72%);"></span>
+        </div>
+        <div style="display: flex; justify-content: center;">
+          <button type="button" style="display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 28px; border: 1px solid #e0d6c2; border-radius: var(--r); background: #ffffff; font: inherit; font-size: 15px; font-weight: 700; color: #1f2b28; cursor: pointer;">
+            مشاهده بیشتر
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER (unchanged from the live site) ===== -->
+  <footer style="background: #f4f4f4; padding: 0 12px 20px;">
+    <div style="max-width: 1310px; margin-inline: auto; background: linear-gradient(190deg, #02392f 34%, #017a64 100%); border-radius: 20px; color: #ffffff;">
+      <div style="padding: 40px 40px 28px;">
+        <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; padding-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.38);">
+          <span style="display: block; line-height: 1.3;">
+            <span style="display: block; font-size: 24px; font-weight: 800;">خانه سعادت</span>
+            <span style="display: block; margin-top: 6px; font-size: 12px; font-weight: 600; color: #cfe0db;">لوازم خانگی همدان — از سال ۱۳۵۷</span>
+          </span>
+          <span style="display: inline-flex; align-items: center; gap: 12px;">
+            <a href="#ig" aria-label="اینستاگرام" style="display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,0.12); color: #ffffff;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 7.2A4.8 4.8 0 1012 16.8 4.8 4.8 0 0012 7.2zm0 7.9a3.1 3.1 0 110-6.2 3.1 3.1 0 010 6.2zM17 2H7a5 5 0 00-5 5v10a5 5 0 005 5h10a5 5 0 005-5V7a5 5 0 00-5-5zm3.2 15A3.2 3.2 0 0117 20.2H7A3.2 3.2 0 013.8 17V7A3.2 3.2 0 017 3.8h10A3.2 3.2 0 0120.2 7v10zm-2.9-9.9a1.15 1.15 0 11-2.3 0 1.15 1.15 0 012.3 0z"></path></svg></a>
+            <a href="#tg" aria-label="تلگرام" style="display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,0.12); color: #ffffff;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.5 4.3L2.9 11.4c-.9.3-.9.9-.2 1.1l4.1 1.3 1.6 4.8c.2.5.4.6.8.2l2.2-2 4.3 3.2c.6.4 1 .2 1.2-.6l3-14c.2-.9-.3-1.3-1-1.1zM9.4 14.3l8-5-6.6 6-.2 2.6-1.2-3.6z"></path></svg></a>
+          </span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; padding: 32px 0;">
+          <div>
+            <h4 style="margin: 0 0 14px; font-size: 15px; font-weight: 700; color: #ffffff;">دسته‌بندی‌ها</h4>
+            <ul style="list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 14px; color: #d8e6e2;">
+              <li><a href="#c1" style="color: #d8e6e2;">نوشیدنی‌ساز</a></li>
+              <li><a href="#c5" style="color: #d8e6e2;">آماده‌سازی غذا</a></li>
+              <li><a href="#c6" style="color: #d8e6e2;">لوازم پخت‌وپز</a></li>
+              <li><a href="#c3" style="color: #d8e6e2;">شستشو و نظافت</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 style="margin: 0 0 14px; font-size: 15px; font-weight: 700; color: #ffffff;">خدمات مشتریان</h4>
+            <ul style="list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 14px; color: #d8e6e2;">
+              <li><a href="#aghsat" style="color: #d8e6e2;">خرید اقساطی</a></li>
+              <li><a href="#warranty" style="color: #d8e6e2;">گارانتی و خدمات پس از فروش</a></li>
+              <li><a href="#shipping" style="color: #d8e6e2;">رویه ارسال سفارش</a></li>
+              <li><a href="#returns" style="color: #d8e6e2;">بازگشت کالا</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 style="margin: 0 0 14px; font-size: 15px; font-weight: 700; color: #ffffff;">خانه سعادت</h4>
+            <ul style="list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 14px; color: #d8e6e2;">
+              <li><a href="#about" style="color: #d8e6e2;">درباره ما</a></li>
+              <li><a href="#blog" style="color: #d8e6e2;">وبلاگ سعادت</a></li>
+              <li><a href="#video" style="color: #d8e6e2;">ویدیوها</a></li>
+              <li><a href="#contact" style="color: #d8e6e2;">تماس با ما</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 style="margin: 0 0 14px; font-size: 15px; font-weight: 700; color: #ffffff;">تماس</h4>
+            <ul style="list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 14px; line-height: 1.9; color: #d8e6e2;">
+              <li>همدان، میدان عین‌القضات، بلوار علویان شرقی</li>
+              <li><bdi style="direction: ltr;">۰۹۰۰۱۱۱۰۵۶۲</bdi></li>
+              <li>شنبه تا پنجشنبه، ۸ تا ۲۰</li>
+            </ul>
+          </div>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; justify-content: space-between; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.38); font-size: 14px; color: #d8e6e2;">
+          <span>خرید اقساطی <strong style="color: #f2a900; font-weight: 800;">بدون ضامن</strong> با چک صیادی</span>
+          <span>© همه حقوق برای فروشگاه خانه سعادت محفوظ است.</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"radius":{"editor":"int","default":4,"min":0,"max":20,"unit":"px","section":"شکل"},"$preview":{"width":1440,"height":4400}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { radius: this.props.radius ?? 4 };
+  }
+}
+</script>
+</body>
+</html>

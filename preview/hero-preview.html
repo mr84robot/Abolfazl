@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>پیش‌نمایش هیرو — خانه سعادت</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--brand:#005949;--accent:#F2A900;--ink:#1f2b28;--hero-font:"Yekan Bakh FaNum","Vazirmatn",system-ui,-apple-system,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#05080a;font-family:var(--hero-font);color:#fff}
+
+/* ===== هدرِ توپُر که با اسکرول ظاهر می‌شود (نمایندهٔ هدر سراسری) ===== */
+.site-hdr{position:fixed;top:0;inset-inline:0;z-index:50;background:#fff;box-shadow:0 6px 24px rgb(0 0 0 / .08);transform:translateY(-100%);transition:transform .35s cubic-bezier(.22,1,.36,1);direction:rtl}
+.site-hdr.is-shown{transform:none}
+.site-hdr__inner{max-width:1310px;margin-inline:auto;padding:9px clamp(16px,3vw,24px);display:flex;align-items:center;gap:16px}
+.site-hdr__logo{display:inline-flex;align-items:center;gap:8px;color:var(--ink);text-decoration:none}
+.site-hdr__logo-mark{width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;border-radius:9px;background:rgb(0 89 73 / .1);color:var(--brand)}
+.site-hdr__logo-mark svg{width:17px;height:17px}
+.site-hdr__logo-word{font-weight:800;letter-spacing:.12em;font-size:16px;color:var(--ink)}
+.site-hdr__nav{display:flex;align-items:center;gap:2px;flex:1}
+.site-hdr__nav a{color:var(--ink);text-decoration:none;font-size:14px;padding:10px 12px;position:relative}
+.site-hdr__nav a::after{content:"";position:absolute;inset-inline:12px;bottom:6px;height:2px;background:var(--accent);transform:scaleX(0);transition:transform .25s ease}
+.site-hdr__nav a:hover{color:var(--brand)}
+.site-hdr__nav a:hover::after{transform:scaleX(1)}
+.site-hdr__act{display:flex;align-items:center;gap:6px}
+.site-hdr__ico{width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;border-radius:11px;color:var(--brand);background:#f3f6f5;text-decoration:none}
+.site-hdr__ico svg{width:20px;height:20px}
+@media (max-width:1023px){.site-hdr__nav{display:none}}
+
+/* ===================== HERO ===================== */
+.hero{min-height:100dvh;background:#05080a;padding:10px;display:flex}
+.hero__frame{flex:1;position:relative;border-radius:24px;overflow:hidden;min-height:calc(100dvh - 20px);display:flex;align-items:center;justify-content:center;isolation:isolate}
+.hero__video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+.hero__ov{position:absolute;inset:0;pointer-events:none;z-index:2}
+.hero__ov--solid{background:rgb(0 0 0 / .68)}
+.hero__ov--vignette{background:radial-gradient(120% 90% at 50% 42%, transparent 0%, rgb(0 0 0 / .35) 70%, rgb(0 0 0 / .72) 100%)}
+.hero__ov--bottom{background:linear-gradient(to top, rgb(0 0 0 / .92) 0%, rgb(0 0 0 / .35) 26%, transparent 55%)}
+
+/* نوار عمودی کناری */
+.hero__side{position:absolute;inset-inline-start:18px;top:50%;transform:translateY(-50%);z-index:5;display:flex;flex-direction:column;align-items:center;gap:14px;pointer-events:none}
+.hero__side svg{width:16px;height:16px;color:rgb(255 255 255 / .55)}
+.hero__side-name{writing-mode:vertical-rl;transform:rotate(180deg);font-size:10px;letter-spacing:.42em;color:rgb(255 255 255 / .6);text-transform:uppercase;font-weight:600}
+
+/* هسته */
+.hero__core{position:relative;z-index:4;display:flex;flex-direction:column;align-items:center;text-align:center;padding:40px clamp(16px,4vw,24px) 48px;max-width:900px}
+.hero__glow{position:absolute;top:0;inset-inline:18%;height:190px;background:var(--brand);filter:blur(72px);opacity:.3;border-radius:50%;z-index:-1;pointer-events:none}
+
+/* wordmark — پیش‌فرض فقط outline؛ با موس روی حروف سفید پر می‌شود */
+.hero__wordmark{position:relative;direction:ltr;font-weight:800;letter-spacing:.08em;font-size:clamp(2.5rem,7vw,6rem);line-height:1;user-select:none;cursor:default}
+.hero__wm-base{color:transparent;-webkit-text-stroke:1.5px rgb(255 255 255 / .55)}
+.hero__wm-fill{position:absolute;inset:0;color:#fff;-webkit-text-stroke:0}
+@media (hover:hover) and (pointer:fine){
+  .hero__wm-fill{opacity:0;transition:opacity .3s ease;
+    -webkit-mask-image:radial-gradient(circle var(--rev,95px) at var(--mx,50%) var(--my,50%), #000 0%, #000 55%, transparent 100%);
+            mask-image:radial-gradient(circle var(--rev,95px) at var(--mx,50%) var(--my,50%), #000 0%, #000 55%, transparent 100%)}
+  .hero__wordmark:hover .hero__wm-fill{opacity:1}
+}
+@media (hover:none){
+  .hero__wm-fill{-webkit-mask-image:linear-gradient(90deg,transparent 40%,#000 48%,#000 52%,transparent 60%);
+            mask-image:linear-gradient(90deg,transparent 40%,#000 48%,#000 52%,transparent 60%);
+    -webkit-mask-size:250% 100%;mask-size:250% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+    animation:hero-sweep 5s ease-in-out infinite}
+}
+@keyframes hero-sweep{0%{-webkit-mask-position:100% 0;mask-position:100% 0}100%{-webkit-mask-position:-150% 0;mask-position:-150% 0}}
+
+.hero__title{margin:18px 0 0;font-weight:700;color:#fff;font-size:clamp(1.25rem,2.5vw,2rem);line-height:1.5}
+.hero__title-em{color:var(--accent)}
+.hero__sub{margin:14px auto 0;max-width:34rem;color:rgb(255 255 255 / .72);font-size:.95rem;line-height:1.9}
+.hero__cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:26px}
+.hero__btn{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:.9rem 1.75rem;border-radius:10px;font-weight:600;font-size:15px;text-decoration:none;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.hero__btn svg{width:18px;height:18px}
+.hero__btn--primary{background:var(--accent);color:#2a1d00;box-shadow:0 0 45px -8px rgb(242 169 0 / .7);animation:hero-breath 3s ease-in-out infinite}
+.hero__btn--primary:hover{transform:translateY(-2px);box-shadow:0 0 60px -6px rgb(242 169 0 / .95)}
+.hero__btn--primary:active{transform:translateY(0)}
+@keyframes hero-breath{0%,100%{box-shadow:0 0 40px -10px rgb(242 169 0 / .6)}50%{box-shadow:0 0 54px -6px rgb(242 169 0 / 1)}}
+.hero__btn--ghost{background:rgb(255 255 255 / .06);color:#fff;border:1px solid rgb(255 255 255 / .4)}
+.hero__btn--ghost:hover{background:rgb(255 255 255 / .14);transform:translateY(-2px)}
+.hero__btn:focus-visible{outline:3px solid #fff;outline-offset:3px}
+
+.hero__scroll{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:5;width:28px;height:46px;border:2px solid rgb(255 255 255 / .35);border-radius:16px;display:flex;justify-content:center;padding-top:8px}
+.hero__scroll-dot{width:4px;height:8px;border-radius:2px;background:rgb(255 255 255 / .8);animation:hero-scroll 1.8s ease-in-out infinite}
+@keyframes hero-scroll{0%{transform:translateY(0);opacity:.2}50%{opacity:1}100%{transform:translateY(12px);opacity:.2}}
+
+.hero-animate{opacity:0;animation:hero-in .6s cubic-bezier(.22,1,.36,1) both;animation-delay:var(--d,0ms)}
+.hero__wordmark.hero-animate{animation-name:hero-in-wm}
+@keyframes hero-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes hero-in-wm{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+
+@media (max-width:1023px){.hero__side{display:none}}
+@media (max-width:600px){.hero__core{padding-top:52px}}
+@media (prefers-reduced-motion:reduce){
+  .hero-animate{opacity:1;transform:none;animation:none}
+  .hero__wm-fill{display:none}
+  .hero__btn--primary,.hero__scroll-dot{animation:none}
+  .hero__btn--primary{box-shadow:0 0 40px -10px rgb(242 169 0 / .7)}
+}
+.demo-next{min-height:70vh;background:#0c1512;display:grid;place-items:center;color:#8aa39b;font-size:14px}
+</style>
+</head>
+<body>
+
+<!-- هدری که فقط با اسکرول می‌آید -->
+<header class="site-hdr" data-site-hdr>
+  <div class="site-hdr__inner">
+    <a class="site-hdr__logo" href="#" aria-label="خانه سعادت">
+      <span class="site-hdr__logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 4l9 6.5"/><path d="M5.5 9.5V20h13V9.5"/></svg></span>
+      <span class="site-hdr__logo-word">SAADAT</span>
+    </a>
+    <nav class="site-hdr__nav" aria-label="منوی اصلی">
+      <a href="#">دسته‌بندی محصولات</a><a href="#">فروشگاه</a><a href="#">خرید اقساطی</a><a href="#">وبلاگ</a><a href="#">تماس با ما</a>
+    </nav>
+    <div class="site-hdr__act">
+      <a class="site-hdr__ico" href="#" aria-label="جستجو"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-3.6-3.6"/></svg></a>
+      <a class="site-hdr__ico" href="#" aria-label="سبد خرید"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 3.5 4.8 7.2V19a1.8 1.8 0 0 0 1.8 1.8h10.8A1.8 1.8 0 0 0 19.2 19V7.2l-2.7-3.7z"/><path d="M4.8 7.2h14.4"/><path d="M15.4 10.8a3.4 3.4 0 0 1-6.8 0"/></svg></a>
+    </div>
+  </div>
+</header>
+
+<section class="hero" aria-label="معرفی خانه سعادت">
+  <div class="hero__frame">
+
+    <video class="hero__video" autoplay muted loop playsinline preload="metadata" aria-hidden="true"
+           poster="https://khanehsaadat.com/wp-content/uploads/2026/01/بنر-سعادت-پی-scaled-1.webp">
+      <source src="https://khanehsaadat.com/wp-content/uploads/2026/10/hiro-video-saadat.webm" type="video/webm">
+    </video>
+
+    <div class="hero__ov hero__ov--solid"></div>
+    <div class="hero__ov hero__ov--vignette"></div>
+    <div class="hero__ov hero__ov--bottom"></div>
+
+    <div class="hero__side" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r="1.1" fill="currentColor" stroke="none"/></svg>
+      <span class="hero__side-name">KHANEH SAADAT</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 4.2h3l1.3 3.4-2 1.4a11 11 0 0 0 5.2 5.2l1.4-2 3.4 1.3v3a1.6 1.6 0 0 1-1.8 1.6C10.6 17.6 6.4 13.4 5 6.1a1.6 1.6 0 0 1 1.5-1.9z"/></svg>
+    </div>
+
+    <div class="hero__core">
+      <div class="hero__glow" aria-hidden="true"></div>
+
+      <div class="hero__wordmark hero-animate" data-wm style="--d:0ms" aria-hidden="true">
+        <span class="hero__wm-base">SAADAT</span>
+        <span class="hero__wm-fill">SAADAT</span>
+      </div>
+
+      <h1 class="hero__title hero-animate" style="--d:120ms">خانه سعادت؛ فراتر از <span class="hero__title-em">یک خرید…</span></h1>
+
+      <p class="hero__sub hero-animate" style="--d:240ms">از سال ۱۳۵۷ در کنار شما؛ لوازم خانگی اصل با ضمانت واقعی، مشاوره تخصصی و پشتیبانی بعد از فروش.</p>
+
+      <div class="hero__cta hero-animate" style="--d:360ms">
+        <a class="hero__btn hero__btn--primary" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg>
+          مشاهده محصولات
+        </a>
+        <a class="hero__btn hero__btn--ghost" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2.4"/><path d="M3 10h18"/></svg>
+          شرایط اقساطی
+        </a>
+      </div>
+    </div>
+
+    <a class="hero__scroll" href="#hero-next" aria-label="رفتن به بخش بعدی"><span class="hero__scroll-dot"></span></a>
+
+  </div>
+</section>
+
+<div class="demo-next" id="hero-next">بخش بعدی صفحه… (اسکرول کن تا هدر از بالا بیاید)</div>
+
+<script>
+(function(){
+  // هدر: فقط بعد از کمی اسکرول بیاید
+  var sh=document.querySelector('[data-site-hdr]');
+  if(sh){ var onS=function(){ sh.classList.toggle('is-shown', window.scrollY>60); }; onS(); window.addEventListener('scroll',onS,{passive:true}); }
+
+  // wordmark: پرشدن سفید با حرکت موس روی حروف (فقط دستگاه‌های دارای موس)
+  var wm=document.querySelector('[data-wm]');
+  if(wm && window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+    wm.addEventListener('pointermove', function(e){
+      var r=wm.getBoundingClientRect();
+      wm.style.setProperty('--mx', ((e.clientX-r.left)/r.width*100)+'%');
+      wm.style.setProperty('--my', ((e.clientY-r.top)/r.height*100)+'%');
+    });
+  }
+
+  // ویدیو: با کاهش‌حرکت پخش نشود
+  var v=document.querySelector('.hero__video');
+  if(v && window.matchMedia('(prefers-reduced-motion: reduce)').matches){ v.removeAttribute('autoplay'); try{v.pause();}catch(e){} }
+})();
+</script>
+</body>
+</html>

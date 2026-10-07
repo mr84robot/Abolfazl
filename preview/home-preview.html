@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>پیش‌نمایش هوم — خانه سعادت</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--brand:#005949;--accent:#F2A900;--ink:#1f2b28;--muted:#5b6472;--line:#e5e7eb;--hero-font:"Yekan Bakh FaNum","Vazirmatn",system-ui,-apple-system,sans-serif;--r:4px}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#05080a;font-family:var(--hero-font);color:#fff}
+
+/* ===== هدرِ توپُر که با اسکرول ظاهر می‌شود ===== */
+.site-hdr{position:fixed;top:0;inset-inline:0;z-index:50;background:#fff;box-shadow:0 6px 24px rgb(0 0 0 / .08);transform:translateY(-100%);transition:transform .35s cubic-bezier(.22,1,.36,1);direction:rtl}
+.site-hdr.is-shown{transform:none}
+.site-hdr__inner{max-width:1310px;margin-inline:auto;padding:9px clamp(16px,3vw,24px);display:flex;align-items:center;gap:16px}
+.site-hdr__logo{display:inline-flex;align-items:center;gap:8px;color:var(--ink);text-decoration:none}
+.site-hdr__logo-mark{width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;border-radius:9px;background:rgb(0 89 73 / .1);color:var(--brand)}
+.site-hdr__logo-mark svg{width:17px;height:17px}
+.site-hdr__logo-word{font-weight:800;letter-spacing:.12em;font-size:16px;color:var(--ink)}
+.site-hdr__nav{display:flex;align-items:center;gap:2px;flex:1}
+.site-hdr__nav a{color:var(--ink);text-decoration:none;font-size:14px;padding:10px 12px;position:relative}
+.site-hdr__nav a::after{content:"";position:absolute;inset-inline:12px;bottom:6px;height:2px;background:var(--accent);transform:scaleX(0);transition:transform .25s ease}
+.site-hdr__nav a:hover{color:var(--brand)}
+.site-hdr__nav a:hover::after{transform:scaleX(1)}
+.site-hdr__act{display:flex;align-items:center;gap:6px}
+.site-hdr__ico{width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;border-radius:11px;color:var(--brand);background:#f3f6f5;text-decoration:none}
+.site-hdr__ico svg{width:20px;height:20px}
+@media (max-width:1023px){.site-hdr__nav{display:none}}
+
+/* ===================== HERO ===================== */
+.hero{min-height:100dvh;background:#05080a;padding:10px;display:flex}
+.hero__frame{flex:1;position:relative;border-radius:24px;overflow:hidden;min-height:calc(100dvh - 20px);display:flex;align-items:center;justify-content:center;isolation:isolate}
+.hero__video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+.hero__ov{position:absolute;inset:0;pointer-events:none;z-index:2}
+.hero__ov--solid{background:rgb(0 0 0 / .68)}
+.hero__ov--vignette{background:radial-gradient(120% 90% at 50% 42%, transparent 0%, rgb(0 0 0 / .35) 70%, rgb(0 0 0 / .72) 100%)}
+.hero__ov--bottom{background:linear-gradient(to top, rgb(0 0 0 / .92) 0%, rgb(0 0 0 / .35) 26%, transparent 55%)}
+.hero__side{position:absolute;inset-inline-start:18px;top:50%;transform:translateY(-50%);z-index:5;display:flex;flex-direction:column;align-items:center;gap:14px;pointer-events:none}
+.hero__side svg{width:16px;height:16px;color:rgb(255 255 255 / .55)}
+.hero__side-name{writing-mode:vertical-rl;transform:rotate(180deg);font-size:10px;letter-spacing:.42em;color:rgb(255 255 255 / .6);text-transform:uppercase;font-weight:600}
+.hero__core{position:relative;z-index:4;display:flex;flex-direction:column;align-items:center;text-align:center;padding:40px clamp(16px,4vw,24px) 48px;max-width:900px}
+.hero__glow{position:absolute;top:0;inset-inline:18%;height:190px;background:var(--brand);filter:blur(72px);opacity:.3;border-radius:50%;z-index:-1;pointer-events:none}
+.hero__wordmark{position:relative;direction:ltr;display:inline-flex;gap:.06em;font-weight:800;line-height:1;font-size:clamp(3.25rem,12vw,9rem);user-select:none;cursor:default}
+.hero__ltr{display:inline-block;color:transparent;-webkit-text-stroke:1.6px rgb(255 255 255 / .5);transition:color .35s cubic-bezier(.16,1,.3,1),-webkit-text-stroke-color .35s ease,transform .35s cubic-bezier(.16,1,.3,1),text-shadow .35s ease}
+@media (hover:hover) and (pointer:fine){.hero__wordmark:hover .hero__ltr{-webkit-text-stroke-color:rgb(255 255 255 / .28)}.hero__ltr:hover{color:#fff;-webkit-text-stroke-color:transparent;transform:translateY(-6px);text-shadow:0 14px 46px rgb(255 255 255 / .3)}}
+@media (hover:none){.hero__ltr{animation:hero-ltr 4.8s cubic-bezier(.16,1,.3,1) infinite;animation-delay:calc(var(--i,0) * .16s)}}
+@keyframes hero-ltr{0%,66%,100%{color:transparent;-webkit-text-stroke-color:rgb(255 255 255 / .5)}10%,26%{color:#fff;-webkit-text-stroke-color:transparent}}
+.hero__title{margin:18px 0 0;font-weight:700;color:#fff;font-size:clamp(1.25rem,2.5vw,2rem);line-height:1.5}
+.hero__title-em{color:var(--accent)}
+.hero__sub{margin:14px auto 0;max-width:34rem;color:rgb(255 255 255 / .72);font-size:.95rem;line-height:1.9}
+.hero__cta{display:flex;flex-wrap:nowrap;gap:12px;justify-content:center;margin-top:26px}
+.hero__btn{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:.9rem 1.75rem;border-radius:10px;font-weight:600;font-size:15px;text-decoration:none;cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.hero__btn svg{width:18px;height:18px}
+.hero__btn--primary{background:var(--accent);color:#2a1d00;box-shadow:0 0 45px -8px rgb(242 169 0 / .7);animation:hero-breath 3s ease-in-out infinite}
+.hero__btn--primary:hover{transform:translateY(-2px);box-shadow:0 0 60px -6px rgb(242 169 0 / .95)}
+@keyframes hero-breath{0%,100%{box-shadow:0 0 40px -10px rgb(242 169 0 / .6)}50%{box-shadow:0 0 54px -6px rgb(242 169 0 / 1)}}
+.hero__btn--ghost{background:rgb(255 255 255 / .06);color:#fff;border:1px solid rgb(255 255 255 / .4)}
+.hero__btn--ghost:hover{background:rgb(255 255 255 / .14);transform:translateY(-2px)}
+.hero__btn:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.hero__scroll{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:5;width:28px;height:46px;border:2px solid rgb(255 255 255 / .35);border-radius:16px;display:none;justify-content:center;padding-top:8px}
+.hero__scroll-dot{width:4px;height:8px;border-radius:2px;background:rgb(255 255 255 / .8);animation:hero-scroll 1.8s ease-in-out infinite}
+@keyframes hero-scroll{0%{transform:translateY(0);opacity:.2}50%{opacity:1}100%{transform:translateY(12px);opacity:.2}}
+.hero-animate{opacity:0;animation:hero-in .6s cubic-bezier(.22,1,.36,1) both;animation-delay:var(--d,0ms)}
+.hero__wordmark.hero-animate{animation-name:hero-in-wm}
+@keyframes hero-in{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes hero-in-wm{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+@media (max-width:1023px){.hero__side{display:none}}
+@media (max-width:600px){.hero__core{padding-top:52px}.hero__cta{gap:10px}.hero__btn{padding:.75rem 1rem;font-size:13px}.hero__btn svg{width:15px;height:15px}}
+
+/* ===================== TRUST / FEATURES (نوار تمام‌عرض، یک‌ردیفه، بی‌فاصله) ===================== */
+.trust{position:relative;z-index:6;background:#fff;color:var(--ink);direction:rtl;border-bottom:1px solid #ededed}
+.trust__grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr)}
+.trust__grid>li{border-inline-start:1px solid #ededed}
+.trust__grid>li:first-child{border-inline-start:0}
+.trust__card{height:100%;display:flex;align-items:center;gap:13px;padding:clamp(16px,2.2vw,26px) clamp(14px,2vw,30px)}
+.trust__ic{flex:0 0 auto;width:46px;height:46px;display:grid;place-items:center;color:var(--brand)}
+.trust__ic svg{width:30px;height:30px}
+.trust__grid>li:nth-child(even) .trust__ic{color:#c9870a}
+.trust__tx{min-width:0}
+.trust__t{margin:0;font-size:clamp(14px,1vw,15.5px);font-weight:800;color:#101828;line-height:1.5}
+.trust__d{margin:3px 0 0;font-size:clamp(12px,.9vw,13px);color:var(--muted);line-height:1.6}
+.trust--anim .trust__grid>li{opacity:0;transform:translateY(16px);transition:opacity .55s cubic-bezier(.16,1,.3,1),transform .55s cubic-bezier(.16,1,.3,1);transition-delay:calc(var(--i,0) * 70ms)}
+.trust--anim .trust__grid>li.is-in{opacity:1;transform:none}
+@media (max-width:640px){.trust__card{flex-direction:column;text-align:center;gap:8px;padding:16px 4px}.trust__ic{width:40px;height:40px}.trust__ic svg{width:26px;height:26px}.trust__t{font-size:clamp(9.5px,2.95vw,12px);line-height:1.35;white-space:nowrap}.trust__d{display:none}}
+
+/* ===================== CATEGORIES ===================== */
+.cats{background:#f4f4f4;color:var(--ink);direction:rtl}
+.cats__in{max-width:1310px;margin-inline:auto;padding:clamp(56px,8vw,96px) clamp(16px,3vw,32px)}
+.cats__head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:40px}
+.cats__eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:#8a6100}
+.cats__eyebrow::before{content:"";width:24px;height:2px;background:var(--accent)}
+.cats__title{margin:14px 0 8px;font-size:clamp(24px,3.4vw,32px);line-height:1.4;font-weight:800;color:#101828;white-space:nowrap}
+.cats__sub{margin:0;font-size:15px;color:var(--muted)}
+.cats__all{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 20px;border:1px solid #d4dbd8;border-radius:var(--r);background:#fff;font-size:14px;font-weight:700;color:var(--brand);text-decoration:none;transition:border-color .2s ease,background .2s ease}
+.cats__all:hover{border-color:var(--brand);background:#f3f8f6}
+.cats__all svg{width:16px;height:16px}
+.cats__railwrap{position:relative}
+.cats__rail{display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,1fr);grid-auto-columns:150px;gap:20px;overflow-x:auto;scroll-snap-type:x proximity;padding-bottom:6px;scrollbar-width:thin}
+.cats__rail::-webkit-scrollbar{height:6px}
+.cats__rail::-webkit-scrollbar-thumb{background:#cfd8d5;border-radius:3px}
+.cat{scroll-snap-align:start;display:block;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:20px 16px 16px;text-align:center;color:var(--ink);text-decoration:none;transition:border-color .2s ease,transform .2s ease,box-shadow .2s ease}
+.cat:hover{border-color:#b9d2cb;transform:translateY(-3px);box-shadow:0 14px 30px -18px rgb(0 89 73 / .4)}
+.cat__ic{display:grid;place-items:center;aspect-ratio:1/1;border-radius:var(--r)}
+.cat__ic svg{width:34px;height:34px;color:var(--brand)}
+.cat__name{display:block;margin-top:12px;font-size:clamp(11.5px,1vw,13.5px);font-weight:600;color:var(--ink);white-space:nowrap}
+.cat__ic img{width:86%;height:86%;object-fit:contain;mix-blend-mode:multiply}
+.cats__arrow{position:absolute;top:calc(50% + 24px);transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:#fff;border:1px solid #d4dbd8;color:var(--brand);display:none;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 10px 24px -12px rgb(0 0 0 / .25);z-index:3}
+.cats__arrow svg{width:20px;height:20px}
+.cats__arrow:hover{background:#f3f8f6;border-color:var(--brand)}
+.cats__arrow--next{inset-inline-start:-6px}
+.cats__arrow--prev{inset-inline-end:-6px}
+@media (min-width:1024px){.cats__rail{grid-auto-flow:row;grid-template-columns:repeat(10,1fr);grid-template-rows:auto;grid-auto-columns:auto;gap:16px;overflow-x:visible;scroll-snap-type:none;padding-bottom:0}.cat{padding:16px 10px 12px}.cats__arrow{display:none}}
+@media (max-width:600px){.cats__head{flex-direction:column;align-items:flex-start;gap:14px;margin-bottom:28px}}
+
+@media (prefers-reduced-motion:reduce){
+  .hero-animate{opacity:1;transform:none;animation:none}
+  .hero__ltr{animation:none;transition:none;transform:none}.hero__btn--primary,.hero__scroll-dot{animation:none}
+  .hero__btn--primary{box-shadow:0 0 40px -10px rgb(242 169 0 / .7)}
+  html{scroll-behavior:auto}
+  .cat:hover{transform:none}
+  .trust__card{transition:none}.trust__card:hover{transform:none}.trust--anim .trust__grid>li{opacity:1;transform:none;transition:none}
+}
+
+/* ===================== SALE / DISCOUNTED (کاروسل ساده و لبه‌تیز) ===================== */
+.sale{background:#fff;color:var(--ink);direction:rtl}
+.sale__in{max-width:1310px;margin-inline:auto;padding:clamp(48px,7vw,84px) clamp(16px,3vw,32px)}
+.sale__head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:26px}
+.sale__eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:#8a6100}
+.sale__eyebrow::before{content:"";width:24px;height:2px;background:var(--accent)}
+.sale__title{margin:12px 0 6px;font-size:clamp(22px,3.2vw,30px);font-weight:800;color:#101828;line-height:1.4}
+.sale__sub{margin:0;font-size:14.5px;color:var(--muted)}
+.sale__nav{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.sale__all{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:0 18px;border:1px solid #d4dbd8;border-radius:var(--r);background:#fff;font-size:14px;font-weight:700;color:var(--brand);text-decoration:none;transition:border-color .2s,background .2s}
+.sale__all:hover{border-color:var(--brand);background:#f3f8f6}
+.sale__all svg{width:16px;height:16px}
+.sale__arrows{display:flex;gap:8px}
+.sale__arrow{width:42px;height:42px;border-radius:var(--r);border:1px solid #d4dbd8;background:#fff;color:var(--brand);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s,background .2s}
+.sale__arrow:hover{border-color:var(--brand);background:#f3f8f6}
+.sale__arrow svg{width:19px;height:19px}
+.sale__rail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x proximity;padding:4px 2px 12px;scrollbar-width:none}
+.sale__rail::-webkit-scrollbar{display:none}
+.sale__card{flex:0 0 240px;scroll-snap-align:start;display:flex;flex-direction:column;background:#fff;border:1px solid #e7eae9;border-radius:var(--r);overflow:hidden;transition:border-color .2s,transform .2s,box-shadow .2s}
+.sale__card:hover{border-color:#b9d2cb;transform:translateY(-3px);box-shadow:0 16px 34px -20px rgb(0 89 73 / .4)}
+.sale__link{text-decoration:none;color:inherit;display:block}
+.sale__media{position:relative;aspect-ratio:1/1;background:#f6f7f7}
+.sale__media img{width:100%;height:100%;object-fit:contain;padding:14px;mix-blend-mode:multiply}
+.sale__badge{position:absolute;inset-block-start:10px;inset-inline-start:10px;background:var(--accent);color:#2a1d00;font-size:12.5px;font-weight:800;padding:4px 9px;border-radius:var(--r);line-height:1}
+.sale__name{margin:0;padding:12px 13px 0;font-size:14px;font-weight:600;line-height:1.65;color:var(--ink);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.95em}
+.sale__foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 13px 14px}
+.sale__price{font-size:13px;line-height:1.35;min-width:0}
+.sale__price del{color:#9aa3a0;font-size:11.5px;font-weight:500}
+.sale__price ins{text-decoration:none;color:var(--brand);font-weight:800;font-size:15px;display:block}
+.sale__cart{flex:0 0 auto;width:40px;height:40px;border-radius:var(--r);background:var(--brand);color:#fff;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;transition:background .2s}
+.sale__cart:hover{background:#00493b}
+.sale__cart svg{width:19px;height:19px}
+@media (max-width:640px){.sale__card{flex-basis:62vw;max-width:270px}.sale__arrows{display:none}}
+@media (prefers-reduced-motion:reduce){.sale__card:hover{transform:none}.sale__rail{scroll-behavior:auto}}
+
+/* ===================== PRODUCTS (کاروسل با تبِ دسته‌ای AJAX) ===================== */
+.prod{background:#f4f4f4;color:var(--ink);direction:rtl}
+.prod__in{max-width:1310px;margin-inline:auto;padding:clamp(48px,7vw,84px) clamp(16px,3vw,32px)}
+.prod__head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:18px}
+.prod__eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:#8a6100}
+.prod__eyebrow::before{content:"";width:24px;height:2px;background:var(--accent)}
+.prod__title{margin:12px 0 6px;font-size:clamp(22px,3.2vw,30px);font-weight:800;color:#101828;line-height:1.4;white-space:nowrap}
+.prod__sub{margin:0;font-size:14.5px;color:var(--muted)}
+.prod__nav{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.prod__arrows{display:flex;gap:8px}
+.prod__arrow{width:42px;height:42px;border-radius:var(--r);border:1px solid #d4dbd8;background:#fff;color:var(--brand);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s,background .2s}
+.prod__arrow:hover{border-color:var(--brand);background:#f3f8f6}
+.prod__arrow svg{width:19px;height:19px}
+.prod__all{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:0 18px;border:1px solid #d4dbd8;border-radius:var(--r);background:#fff;font-size:14px;font-weight:700;color:var(--brand);text-decoration:none;transition:border-color .2s,background .2s}
+.prod__all:hover{border-color:var(--brand);background:#f3f8f6}
+.prod__all svg{width:16px;height:16px}
+.prod__tabs{display:flex;gap:8px;margin:0 0 22px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.prod__tabs::-webkit-scrollbar{display:none}
+.prod__tab{flex:0 0 auto;appearance:none;cursor:pointer;border:1px solid #d4dbd8;background:#fff;color:var(--ink);border-radius:var(--r);padding:9px 16px;font-family:inherit;font-size:14px;font-weight:700;white-space:nowrap;transition:background .2s,border-color .2s,color .2s}
+.prod__tab:hover{border-color:var(--brand);color:var(--brand)}
+.prod__tab.is-active{background:var(--brand);border-color:var(--brand);color:#fff}
+.prod__railwrap{position:relative}
+.prod__rail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x proximity;padding:4px 2px 12px;scrollbar-width:none;transition:opacity .2s ease}
+.prod__rail::-webkit-scrollbar{display:none}
+.prod.is-loading .prod__rail{opacity:.5}
+.prod__card{flex:0 0 240px;scroll-snap-align:start;display:flex;flex-direction:column;background:#fff;border:1px solid #e7eae9;border-radius:var(--r);overflow:hidden;transition:border-color .2s,transform .2s,box-shadow .2s}
+.prod__card:hover{border-color:#b9d2cb;transform:translateY(-3px);box-shadow:0 16px 34px -20px rgb(0 89 73 / .4)}
+.prod__link{text-decoration:none;color:inherit;display:block}
+.prod__media{position:relative;aspect-ratio:1/1;background:#f6f7f7}
+.prod__media img{width:100%;height:100%;object-fit:contain;padding:14px;mix-blend-mode:multiply}
+.prod__badge{position:absolute;inset-block-start:10px;inset-inline-start:10px;background:var(--accent);color:#2a1d00;font-size:12.5px;font-weight:800;padding:4px 9px;border-radius:var(--r);line-height:1}
+.prod__name{margin:0;padding:12px 13px 0;font-size:14px;font-weight:600;line-height:1.65;color:var(--ink);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.95em}
+.prod__foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 13px 14px}
+.prod__price{font-size:13px;line-height:1.35;min-width:0}
+.prod__price del{color:#9aa3a0;font-size:11.5px;font-weight:500}
+.prod__price ins{text-decoration:none;color:var(--brand);font-weight:800;font-size:15px;display:block}
+.prod__cart{flex:0 0 auto;width:40px;height:40px;border-radius:var(--r);background:var(--brand);color:#fff;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;transition:background .2s}
+.prod__cart:hover{background:#00493b}
+.prod__cart svg{width:19px;height:19px}
+@media (max-width:640px){.prod__card{flex-basis:62vw;max-width:270px}.prod__arrows{display:none}.prod__head{flex-direction:column;align-items:flex-start;gap:12px;margin-bottom:14px}.prod__sub{font-size:13px}}
+@media (prefers-reduced-motion:reduce){.prod__card:hover{transform:none}.prod__rail{scroll-behavior:auto}}
+
+/* ===================== BRANDS (logo-cloud متنی، افکت هاور) ===================== */
+.brands{background:#f4f4f4;color:var(--ink);direction:rtl}
+.brands__in{max-width:1310px;margin-inline:auto;padding:clamp(48px,7vw,84px) clamp(16px,3vw,32px)}
+.brands__head{text-align:center;margin-bottom:34px}
+.brands__eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:#8a6100}
+.brands__eyebrow::before,.brands__eyebrow::after{content:"";width:22px;height:2px;background:var(--accent)}
+.brands__title{margin:12px 0 6px;font-size:clamp(22px,3.2vw,30px);font-weight:800;color:#101828;line-height:1.4}
+.brands__sub{margin:0;font-size:14.5px;color:var(--muted)}
+.brands__gridwrap{position:relative}
+.brands__grid{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid #e7eae9;border-inline-start:1px solid #e7eae9;border-radius:var(--r);overflow:hidden;background:#fff}
+@media (min-width:768px){.brands__grid{grid-template-columns:repeat(4,1fr)}}
+.brand{position:relative;display:flex;align-items:center;justify-content:center;min-height:clamp(92px,12vw,128px);padding:22px 14px;background:#fff;border-inline-end:1px solid #e7eae9;border-block-end:1px solid #e7eae9;text-decoration:none;transition:background .25s ease}
+.brand__wm{font-family:"Montserrat","Helvetica Neue",Arial,sans-serif;font-weight:800;font-size:clamp(18px,2.3vw,25px);letter-spacing:.06em;text-transform:uppercase;color:#adb5b2;line-height:1;transition:color .25s ease,transform .25s cubic-bezier(.16,1,.3,1)}
+.brand:hover{background:rgb(0 89 73 / .04)}
+.brand:hover .brand__wm{color:var(--brand);transform:translateY(-2px) scale(1.05)}
+.brand:focus-visible{outline:2px solid var(--brand);outline-offset:-2px}
+.brands__plus{position:absolute;width:13px;height:13px;transform:translate(-50%,-50%);z-index:2;pointer-events:none;color:#c6cdca}
+.brands__plus::before,.brands__plus::after{content:"";position:absolute;background:currentColor}
+.brands__plus::before{inset-inline:0;top:50%;height:1px;transform:translateY(-50%)}
+.brands__plus::after{inset-block:0;left:50%;width:1px;transform:translateX(-50%)}
+.brands__plus--d{display:none}
+@media (min-width:768px){.brands__plus--m{display:none}.brands__plus--d{display:block}}
+@media (prefers-reduced-motion:reduce){.brand:hover .brand__wm{transform:none}}
+
+/* ===================== SAADAT PAY (باکس سبزِ اقساطی) ===================== */
+.pay{background:#f4f4f4;direction:rtl}
+.pay__in{max-width:1310px;margin-inline:auto;padding:clamp(34px,4.5vw,56px) clamp(16px,3vw,32px) clamp(34px,4vw,52px)}
+.pay__box{position:relative;border-radius:6px;display:grid;grid-template-columns:1.4fr .76fr;gap:clamp(18px,3vw,38px);align-items:center;padding:clamp(18px,2.3vw,28px) clamp(22px,2.8vw,36px)}
+.pay__bg{position:absolute;inset:0;z-index:0;border-radius:inherit;overflow:hidden;background:linear-gradient(200deg,#02392F 32%,#017A64 100%)}
+.pay__bg::after{content:"";position:absolute;inset-block-start:-34%;inset-inline-end:-6%;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgb(242 169 0 / .2),transparent 60%)}
+.pay__body{position:relative;z-index:2;color:#fff;padding-block:6px}
+.pay__brandtag{display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:800;color:var(--accent);letter-spacing:.04em}
+.pay__brandtag::before{content:"";width:20px;height:2px;background:var(--accent)}
+.pay__title{margin:12px 0 10px;font-size:clamp(28px,5.4vw,50px);font-weight:900;line-height:1.1;letter-spacing:-.015em;color:#fff}
+.pay__title .pay__accent{color:var(--accent)}
+.pay__desc{margin:0;max-width:34rem;font-size:clamp(14px,1.1vw,16px);line-height:1.9;color:rgb(255 255 255 / .84)}
+.pay__cta{display:inline-flex;align-items:center;gap:9px;margin-top:20px;min-height:50px;padding:0 26px;border-radius:8px;background:var(--accent);color:#2a1d00;font-size:15px;font-weight:800;text-decoration:none;animation:pay-live 2.4s ease-in-out infinite;will-change:box-shadow,transform}
+.pay__cta:hover{animation:none;transform:translateY(-2px);box-shadow:0 0 60px -6px rgb(242 169 0 / .98)}
+.pay__cta svg{width:18px;height:18px}
+@keyframes pay-live{0%,100%{box-shadow:0 0 34px -12px rgb(242 169 0 / .5);transform:translateY(0)}50%{box-shadow:0 0 58px -4px rgb(242 169 0 / .95);transform:translateY(-2px)}}
+.pay__art{position:relative;z-index:2;align-self:center;display:flex;align-items:center;justify-content:center}
+.pay__card{position:relative;overflow:hidden;width:min(116%,348px);min-height:clamp(224px,24vw,250px);margin-block:calc(-1 * clamp(24px,3.2vw,42px));display:flex;flex-direction:column;justify-content:space-between;gap:14px;border-radius:16px;padding:22px;background:linear-gradient(140deg,rgb(255 255 255 / .22) 0%,rgb(255 255 255 / .07) 55%,rgb(255 255 255 / .13) 100%);border:1px solid rgb(255 255 255 / .34);box-shadow:0 40px 72px -30px rgb(0 0 0 / .78),inset 0 1px 0 rgb(255 255 255 / .4);transform:rotate(-4deg) translateX(-3%)}
+.pay__card::before{content:"";position:absolute;inset:0;background:linear-gradient(118deg,transparent 32%,rgb(255 255 255 / .14) 47%,transparent 61%);pointer-events:none}
+.pay__card-top{display:flex;align-items:center;justify-content:space-between}
+.pay__chip{width:44px;height:33px;border-radius:7px;background:linear-gradient(135deg,#F2A900,#cf8a04);position:relative}
+.pay__chip::after{content:"";position:absolute;inset:7px 9px;border:1px solid rgb(0 0 0 / .22);border-radius:3px}
+.pay__card-brand{font-size:clamp(21px,2.5vw,27px);font-weight:800;color:var(--accent);letter-spacing:.01em;line-height:1}
+.pay__card-amtwrap{display:flex;flex-direction:column;gap:3px}
+.pay__card-cap{font-size:11px;color:rgb(255 255 255 / .62)}
+.pay__card-amt{font-size:clamp(21px,2.7vw,29px);font-weight:800;color:#fff;white-space:nowrap;line-height:1.08}
+.pay__card-foot{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.pay__card-col{display:flex;flex-direction:column;gap:2px}
+.pay__card-lbl{font-size:10px;color:rgb(255 255 255 / .55)}
+.pay__card-val{font-size:12.5px;font-weight:700;color:#fff}
+@media (max-width:820px){.pay__in{padding:clamp(28px,5vw,40px) 0 0}.pay__box{grid-template-columns:1fr;gap:12px;border-radius:0;padding:clamp(26px,6vw,34px) clamp(18px,5vw,26px) clamp(30px,7vw,40px)}.pay__art{order:-1}.pay__card{transform:rotate(-3deg);width:min(90%,320px);margin-block:4px -8px}}
+@media (prefers-reduced-motion:reduce){.pay__cta{animation:none}}
+
+/* ===================== SHOWROOM VIDEO (۸۰vh سفید) ===================== */
+.show{background:#fff;direction:rtl;min-height:80vh;display:flex;align-items:center}
+.show__in{width:100%;max-width:1180px;margin-inline:auto;padding:clamp(80px,12vw,168px) clamp(16px,3vw,32px) clamp(40px,6vw,84px)}
+.show__frame{position:relative;max-width:590px;margin-inline:auto;aspect-ratio:16/9;border-radius:6px;overflow:hidden;cursor:pointer;background:linear-gradient(140deg,#063e33 0%,#032a22 55%,#021713 100%);box-shadow:0 44px 84px -42px rgb(0 0 0 / .5);opacity:0;transform:translateY(42px) scale(.96);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1.15s cubic-bezier(.16,1,.3,1)}
+.show__frame.is-in{opacity:1;transform:none}
+.show__glow{position:absolute;inset-block-start:-26%;inset-inline:6%;height:72%;background:radial-gradient(ellipse at center,rgb(242 169 0 / .18),transparent 62%);pointer-events:none}
+.show__ov{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgb(0 0 0 / .5) 0%,rgb(0 0 0 / .12) 46%,transparent 100%)}
+.show__play{position:absolute;inset:0;margin:auto;width:clamp(58px,7vw,76px);height:clamp(58px,7vw,76px);border:0;border-radius:50%;background:rgb(255 255 255 / .18);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .3s ease,background .3s ease}
+.show__frame:hover .show__play{transform:scale(1.09);background:rgb(255 255 255 / .3)}
+.show__play svg{width:38%;height:38%;margin-inline-start:6%}
+.show__play::after{content:"";position:absolute;inset:-7px;border-radius:50%;border:1px solid rgb(255 255 255 / .35);animation:show-pulse 2.6s ease-out infinite}
+@keyframes show-pulse{0%{transform:scale(1);opacity:.75}100%{transform:scale(1.32);opacity:0}}
+.show__cap{position:absolute;inset-inline:0;inset-block-end:0;padding:clamp(16px,2.4vw,28px);z-index:2;pointer-events:none}
+.show__title{margin:0;color:#fff;font-size:clamp(17px,2.2vw,24px);font-weight:800;line-height:1.5;text-shadow:0 2px 18px rgb(0 0 0 / .4)}
+.show__sub{margin:6px 0 0;color:rgb(255 255 255 / .85);font-size:clamp(12px,1.1vw,14px);line-height:1.7}
+.show__modal{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:clamp(14px,3vw,28px);background:rgb(0 0 0 / .86);-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);animation:show-fade .25s ease both}
+.show__modal[hidden]{display:none}
+@keyframes show-fade{from{opacity:0}to{opacity:1}}
+.show__modal-in{width:100%;max-width:1000px;aspect-ratio:16/9}
+.show__modal-video{width:100%;height:100%;border-radius:12px;background:#000;display:block}
+.show__close{position:absolute;inset-block-start:18px;inset-inline-end:18px;width:46px;height:46px;border:0;border-radius:50%;background:rgb(255 255 255 / .12);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s ease}
+.show__close:hover{background:rgb(255 255 255 / .24)}
+.show__close svg{width:22px;height:22px}
+@media (max-width:640px){.show{min-height:auto}}
+@media (prefers-reduced-motion:reduce){.show__frame{opacity:1;transform:none;transition:none}.show__play::after{animation:none}.show__modal{animation:none}}
+</style>
+</head>
+<body>
+
+<!-- هدر که فقط با اسکرول می‌آید -->
+<header class="site-hdr" data-site-hdr>
+  <div class="site-hdr__inner">
+    <a class="site-hdr__logo" href="#"><span class="site-hdr__logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 4l9 6.5"/><path d="M5.5 9.5V20h13V9.5"/></svg></span><span class="site-hdr__logo-word">SAADAT</span></a>
+    <nav class="site-hdr__nav" aria-label="منوی اصلی"><a href="#">دسته‌بندی محصولات</a><a href="#">فروشگاه</a><a href="#">خرید اقساطی</a><a href="#">وبلاگ</a><a href="#">تماس با ما</a></nav>
+    <div class="site-hdr__act"><a class="site-hdr__ico" href="#" aria-label="جستجو"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-3.6-3.6"/></svg></a><a class="site-hdr__ico" href="#" aria-label="سبد خرید"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 3.5 4.8 7.2V19a1.8 1.8 0 0 0 1.8 1.8h10.8A1.8 1.8 0 0 0 19.2 19V7.2l-2.7-3.7z"/><path d="M4.8 7.2h14.4"/><path d="M15.4 10.8a3.4 3.4 0 0 1-6.8 0"/></svg></a></div>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero" aria-label="معرفی خانه سعادت">
+  <div class="hero__frame">
+    <video class="hero__video" autoplay muted loop playsinline preload="metadata" aria-hidden="true" poster="https://khanehsaadat.com/wp-content/uploads/2026/01/بنر-سعادت-پی-scaled-1.webp">
+      <source src="https://khanehsaadat.com/wp-content/uploads/2026/10/hiro-video-saadat.webm" type="video/webm">
+    </video>
+    <div class="hero__ov hero__ov--solid"></div>
+    <div class="hero__ov hero__ov--vignette"></div>
+    <div class="hero__ov hero__ov--bottom"></div>
+    <div class="hero__side" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r="1.1" fill="currentColor" stroke="none"/></svg>
+      <span class="hero__side-name">KHANEH SAADAT</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 4.2h3l1.3 3.4-2 1.4a11 11 0 0 0 5.2 5.2l1.4-2 3.4 1.3v3a1.6 1.6 0 0 1-1.8 1.6C10.6 17.6 6.4 13.4 5 6.1a1.6 1.6 0 0 1 1.5-1.9z"/></svg>
+    </div>
+    <div class="hero__core">
+      <div class="hero__glow" aria-hidden="true"></div>
+      <div class="hero__wordmark hero-animate" style="--d:0ms" aria-hidden="true"><span class="hero__ltr" style="--i:0">S</span><span class="hero__ltr" style="--i:1">A</span><span class="hero__ltr" style="--i:2">A</span><span class="hero__ltr" style="--i:3">D</span><span class="hero__ltr" style="--i:4">A</span><span class="hero__ltr" style="--i:5">T</span></div>
+      <h1 class="hero__title hero-animate" style="--d:120ms">خانه سعادت؛ فراتر از <span class="hero__title-em">یک خرید…</span></h1>
+      <p class="hero__sub hero-animate" style="--d:240ms">از سال ۱۳۵۷ در کنار شما؛ لوازم خانگی اصل با ضمانت واقعی، مشاوره تخصصی و پشتیبانی بعد از فروش.</p>
+      <div class="hero__cta hero-animate" style="--d:360ms">
+        <a class="hero__btn hero__btn--primary" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg>مشاهده محصولات</a>
+        <a class="hero__btn hero__btn--ghost" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2.4"/><path d="M3 10h18"/></svg>شرایط اقساطی</a>
+      </div>
+    </div>
+    <a class="hero__scroll" href="#categories" aria-label="رفتن به دسته‌بندی‌ها"><span class="hero__scroll-dot"></span></a>
+  </div>
+</section>
+
+<!-- ===== TRUST / FEATURES (نوار تمام‌عرض، یک‌ردیفه) ===== -->
+<section class="trust" aria-label="مزایای خرید از خانه سعادت" data-trust>
+  <ul class="trust__grid">
+    <li style="--i:0"><div class="trust__card"><span class="trust__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="13" rx="2"/><path d="M3 9.2h18"/><path d="M6.4 14.3h3.4"/><path d="m13.6 14.8 1.7 1.7 3.1-3.3"/></svg></span><div class="trust__tx"><h3 class="trust__t">اقساط بدون ضامن</h3><p class="trust__d">۴ قسط بدون سود با چک صیادی</p></div></div></li>
+    <li style="--i:1"><div class="trust__card"><span class="trust__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 5 5.8v4.9c0 4.2 2.9 7.4 7 8.6 4.1-1.2 7-4.4 7-8.6V5.8z"/><path d="m9.1 11.6 2 2 3.9-4.1"/></svg></span><div class="trust__tx"><h3 class="trust__t">گارانتی رسمی</h3><p class="trust__d">۱۸ تا ۲۴ ماه، مستقیم از برند</p></div></div></li>
+    <li style="--i:2"><div class="trust__card"><span class="trust__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.6 6.6h10.9v8.2H2.6z"/><path d="M13.5 9.4h3.3l2.6 2.7v2.7h-5.9z"/><circle cx="6.4" cy="17.3" r="1.7"/><circle cx="16" cy="17.3" r="1.7"/><path d="M1 9.6h2.2M.4 12.4h2"/></svg></span><div class="trust__tx"><h3 class="trust__t">ارسال سریع</h3><p class="trust__d">همدان همان‌روز، سراسر ایران</p></div></div></li>
+    <li style="--i:3"><div class="trust__card"><span class="trust__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.6v-1.1a7 7 0 0 1 14 0v1.1"/><rect x="3.3" y="12.4" width="3.4" height="6" rx="1.6"/><rect x="17.3" y="12.4" width="3.4" height="6" rx="1.6"/><path d="M18.8 18.4a4 4 0 0 1-3.8 2.8h-2"/><circle cx="12.6" cy="21.2" r="1"/></svg></span><div class="trust__tx"><h3 class="trust__t">مشاوره تخصصی</h3><p class="trust__d">دو شعبه حضوری + پشتیبانی تلفنی</p></div></div></li>
+  </ul>
+</section>
+
+<!-- ===== CATEGORIES ===== -->
+<section class="cats" id="categories" aria-label="دسته‌بندی محصولات">
+  <!-- آیکن‌ها (یک‌بار تعریف، با use استفاده می‌شوند) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+    <g id="ic-thermos"><rect x="8.5" y="7" width="7" height="14" rx="2"/><path d="M9 7V4.5h6V7"/><path d="M8.5 12h7"/></g>
+    <g id="ic-jug"><rect x="6" y="8" width="11" height="12" rx="2"/><path d="M17 11h2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2"/><path d="M8 8V6h7v2"/></g>
+    <g id="ic-blender"><path d="M8 3h8l-1 10H9z"/><rect x="9.5" y="13" width="5" height="7" rx="1.5"/><path d="M9.5 20h5"/></g>
+    <g id="ic-grinder"><rect x="4" y="9" width="8" height="6" rx="1"/><path d="M12 11h4l3-2v8l-3-2h-4"/><path d="M8 15v4h4"/></g>
+    <g id="ic-chopper"><path d="M5 12h14"/><path d="M6 12a6 6 0 0 0 12 0"/><rect x="10.5" y="4" width="3" height="8" rx="1.5"/></g>
+    <g id="ic-processor"><rect x="7" y="4" width="10" height="9" rx="2"/><path d="M6 13h12l-1 7H7z"/><circle cx="12" cy="8.5" r="2.3"/></g>
+    <g id="ic-stick"><path d="M11 3h2v9h-2z"/><path d="M9.5 12h5l-1 4a1.5 1.5 0 0 1-3 0z"/></g>
+    <g id="ic-mixer"><path d="M7 4h7l-1 7H8z"/><path d="M10 11v3"/><path d="M8.5 20a2 2 0 0 0 4 0v-6"/><path d="M14 6h3a2 2 0 0 1 2 2v2"/></g>
+    <g id="ic-whisk"><path d="M8 4h6l-1.5 8h-3z"/><path d="M9.5 12v4a2.5 2.5 0 0 0 5 0"/><path d="M11 4V2.5"/></g>
+    <g id="ic-fan"><circle cx="12" cy="9" r="6"/><circle cx="12" cy="9" r="1.6"/><path d="M12 15v5"/><path d="M9 20h6"/></g>
+    <g id="ic-iron"><path d="M3 15a8 8 0 0 1 8-6h7l2 3v3z"/><path d="M3 18h17"/><path d="M8 9V6h7"/></g>
+    <g id="ic-steam"><rect x="8" y="12" width="8" height="8" rx="2"/><path d="M12 12V8a3 3 0 0 1 3-3"/><path d="M6.5 7c0-1 1-1 1-2M9.5 6c0-1 1-1 1-2"/></g>
+    <g id="ic-vacuum"><circle cx="8" cy="16" r="4"/><path d="M8 16l6-9a3 3 0 0 1 5.5 1.7V12"/><circle cx="8" cy="16" r="1.1"/></g>
+    <g id="ic-pot"><path d="M5 10h14v6a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3z"/><path d="M3 10h2M19 10h2"/><path d="M8.5 10V8h7v2"/></g>
+    <g id="ic-pots"><path d="M6 13h12v3a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2z"/><path d="M8 13v-3h8v3"/><path d="M10 7h4"/></g>
+    <g id="ic-utensil"><path d="M8 3v9m-2 0h4v1a2 2 0 0 1-4 0z"/><path d="M16 3c-2 .5-3 2.5-3 4.5s1 3.5 3 3.5v9"/></g>
+    <g id="ic-knife"><path d="M4 14 16 4c2.8 1 2.8 6 0 8L8 18z"/><path d="M8 18l-3 2.5"/></g>
+    <g id="ic-flask"><path d="M9 3h6v4l2.6 10a2 2 0 0 1-2 2.5H8.4a2 2 0 0 1-2-2.5L9 7z"/><path d="M8.6 7h6.8"/></g>
+    <g id="ic-microwave"><rect x="3" y="6" width="18" height="12" rx="2"/><rect x="5.5" y="8.5" width="9" height="7" rx="1"/><path d="M17.5 12.5h1.5"/><circle cx="18.2" cy="9.5" r=".6" fill="currentColor" stroke="none"/></g>
+    <g id="ic-oven"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/><path d="M6 8h2"/><rect x="6" y="12.5" width="12" height="3.5" rx="1"/></g>
+    <g id="ic-rice"><path d="M5 11h14v3a5 5 0 0 1-5 5h-4a5 5 0 0 1-5-5z"/><path d="M4 11a8 8 0 0 1 16 0"/><circle cx="12" cy="7.5" r="1"/></g>
+    <g id="ic-toaster"><path d="M4 11a8 8 0 0 1 16 0v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M9 7V5M14 7V5"/><path d="M16.5 13.5h2"/></g>
+    <g id="ic-pcooker"><rect x="5" y="9" width="14" height="9" rx="3"/><path d="M4 9h2M18 9h2"/><path d="M9 9V6h6v3"/><circle cx="12" cy="5.4" r="1.1"/></g>
+    <g id="ic-pcooker-gas"><rect x="5" y="9" width="14" height="9" rx="3"/><path d="M4 9h2M18 9h2"/><circle cx="12" cy="6" r="2"/><path d="M12 8V9"/></g>
+    <g id="ic-sandwich"><path d="M4 9h16l-2 3H6z"/><path d="M5 12h14v3a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z"/><path d="M18 7l2.2-2"/></g>
+    <g id="ic-fryer"><rect x="6" y="8" width="12" height="10" rx="2"/><path d="M6 11.5h12"/><path d="M9 8V6h6v2"/><circle cx="15" cy="14.5" r="1"/></g>
+    <g id="ic-juicer"><path d="M8 4h8l-1 5H9z"/><rect x="9.5" y="9" width="5" height="4" rx="1"/><path d="M8 13h8l-1 6H9z"/><path d="M10 19h4"/></g>
+    <g id="ic-espresso"><rect x="5" y="4" width="14" height="7" rx="1.5"/><path d="M10 11v2h4v-2"/><path d="M11 13l-.8 5h3.6l-.8-5"/><path d="M5 20h14"/></g>
+    <g id="ic-teapot"><path d="M6 12h10.5a4 4 0 0 1-4 7H10a4 4 0 0 1-4-4z"/><path d="M16.5 13h2a2 2 0 0 1 0 4h-1.2"/><path d="M9 12c0-2 .8-3 .8-4M12.5 12c0-2 .8-3 .8-4"/></g>
+  </defs></svg>
+
+  <div class="cats__in">
+    <div class="cats__head">
+      <div>
+        <span class="cats__eyebrow">خرید بر اساس دسته</span>
+        <h2 class="cats__title">دسته‌بندی محصولات</h2>
+        <p class="cats__sub">دسته‌های منتخب؛ از آشپزخانه تا نظافت و سرمایشی.</p>
+      </div>
+    </div>
+
+    <div class="cats__railwrap">
+      <div class="cats__rail" data-rail>
+        <a class="cat" href="https://khanehsaadat.com/product-category/flask/"><span class="cat__ic"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1.webp" alt="فلاسک" loading="lazy" decoding="async"></span><span class="cat__name">فلاسک</span></a>
+        <a class="cat" href="https://khanehsaadat.com/product-category/noshidani/kettle-and-teapot/"><span class="cat__ic"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy.webp" alt="کتری و قوری" loading="lazy" decoding="async"></span><span class="cat__name">کتری و قوری</span></a>
+        <a class="cat" href="https://khanehsaadat.com/product-category/food-preparation/ghazasaz/"><span class="cat__ic"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-10.webp" alt="غذاساز" loading="lazy" decoding="async"></span><span class="cat__name">غذاساز</span></a>
+        <a class="cat" href="https://khanehsaadat.com/product-category/noshidani/abmeve/"><span class="cat__ic"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-11.webp" alt="آبمیوه‌گیری" loading="lazy" decoding="async"></span><span class="cat__name">آبمیوه‌گیری</span></a>
+        <a class="cat" href="https://khanehsaadat.com/product-category/nezafat/jarobarghi/"><span class="cat__ic"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-8.webp" alt="جاروبرقی" loading="lazy" decoding="async"></span><span class="cat__name">جاروبرقی</span></a>
+        <a class="cat" href="https://khanehsaadat.com/product-category/pokhopaz/tosternan/"><span class="cat__ic"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-7.webp" alt="توستر نان" loading="lazy" decoding="async"></span><span class="cat__name">توستر نان</span></a>
+        <a class="cat" href="https://khanehsaadat.com/product-category/nezafat/otobokhar/"><span class="cat__ic"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-6.webp" alt="اتو بخار" loading="lazy" decoding="async"></span><span class="cat__name">اتو بخار</span></a>
+        <a class="cat" href="https://khanehsaadat.com/product-category/pokhopaz/sorkhkon/"><span class="cat__ic"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-5.webp" alt="سرخ‌کن" loading="lazy" decoding="async"></span><span class="cat__name">سرخ‌کن</span></a>
+        <a class="cat" href="https://khanehsaadat.com/product-category/noshidani/espersosaz/"><span class="cat__ic"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-4.webp" alt="اسپرسوساز" loading="lazy" decoding="async"></span><span class="cat__name">اسپرسوساز</span></a>
+        <a class="cat" href="https://khanehsaadat.com/product-category/house-dish/pot/"><span class="cat__ic"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-3.webp" alt="سرویس قابلمه" loading="lazy" decoding="async"></span><span class="cat__name">سرویس قابلمه</span></a>
+        <a class="cat" href="https://khanehsaadat.com/product-category/noshidani/chaeisaz/"><span class="cat__ic"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-2.webp" alt="چای‌ساز" loading="lazy" decoding="async"></span><span class="cat__name">چای‌ساز</span></a>
+        <a class="cat" href="https://khanehsaadat.com/product-category/pokhopaz/polopaz/"><span class="cat__ic"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-9.webp" alt="پلوپز" loading="lazy" decoding="async"></span><span class="cat__name">پلوپز</span></a>
+        <a class="cat" href="https://khanehsaadat.com/product-category/pokhopaz/microwave/"><span class="cat__ic"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-22.webp" alt="مایکروویو" loading="lazy" decoding="async"></span><span class="cat__name">مایکروویو</span></a>
+        <a class="cat" href="https://khanehsaadat.com/product-category/water-jug/"><span class="cat__ic"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-20.webp" alt="کلمن" loading="lazy" decoding="async"></span><span class="cat__name">کلمن</span></a>
+        <a class="cat" href="https://khanehsaadat.com/product-category/pokhopaz/sandevich/"><span class="cat__ic"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-19.webp" alt="ساندویچ‌ساز" loading="lazy" decoding="async"></span><span class="cat__name">ساندویچ‌ساز</span></a>
+        <a class="cat" href="https://khanehsaadat.com/product-category/pokhopaz/zodpaz-barghi/"><span class="cat__ic"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-18.webp" alt="زودپز برقی" loading="lazy" decoding="async"></span><span class="cat__name">زودپز برقی</span></a>
+        <a class="cat" href="https://khanehsaadat.com/product-category/food-preparation/charkhgosht/"><span class="cat__ic"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-16.webp" alt="چرخ‌گوشت" loading="lazy" decoding="async"></span><span class="cat__name">چرخ‌گوشت</span></a>
+        <a class="cat" href="https://khanehsaadat.com/product-category/food-preparation/asiab/"><span class="cat__ic"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-15.webp" alt="آسیاب و بلندر" loading="lazy" decoding="async"></span><span class="cat__name">آسیاب و بلندر</span></a>
+        <a class="cat" href="https://khanehsaadat.com/product-category/sarmagarma/pankeestade/"><span class="cat__ic"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-13.webp" alt="پنکه ایستاده" loading="lazy" decoding="async"></span><span class="cat__name">پنکه ایستاده</span></a>
+        <a class="cat" href="https://khanehsaadat.com/product-category/food-preparation/goshtkob/"><span class="cat__ic"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-12.webp" alt="گوشت‌کوب برقی" loading="lazy" decoding="async"></span><span class="cat__name">گوشت‌کوب برقی</span></a>
+      
+      </div>
+      <button class="cats__arrow cats__arrow--prev" data-rail-prev aria-label="قبلی"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button>
+      <button class="cats__arrow cats__arrow--next" data-rail-next aria-label="بعدی"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SALE / DISCOUNTED (کاروسل) ===== -->
+<section class="sale" id="home-sec-4" aria-label="محصولات تخفیف‌دار">
+  <div class="sale__in">
+    <div class="sale__head">
+      <div>
+        <span class="sale__eyebrow">پیشنهاد ویژه</span>
+        <h2 class="sale__title">محصولات تخفیف‌دار</h2>
+        <p class="sale__sub">تخفیف‌های فعال؛ تا پایان موجودی.</p>
+      </div>
+      <div class="sale__nav">
+        <div class="sale__arrows">
+          <button class="sale__arrow" data-sale-next aria-label="بعدی" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></button>
+          <button class="sale__arrow" data-sale-prev aria-label="قبلی" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button>
+        </div>
+        <a class="sale__all" href="#">مشاهده همه <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></a>
+      </div>
+    </div>
+
+    <div class="sale__rail" data-sale-rail>
+      <div class="sale__card"><a class="sale__link" href="#"><div class="sale__media"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-4.webp" alt="اسپرسوساز خانگی دلمونتی" loading="lazy" decoding="async"><span class="sale__badge">۱۸٪</span></div><h3 class="sale__name">اسپرسوساز خانگی دلمونتی</h3></a><div class="sale__foot"><div class="sale__price"><del>۶٬۲۰۰٬۰۰۰</del><ins>۵٬۰۸۰٬۰۰۰ تومان</ins></div><a class="sale__cart" href="#" aria-label="افزودن به سبد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17.5" cy="20" r="1.4"/><path d="M3 4h2.2l2 11a1.6 1.6 0 0 0 1.6 1.3h7.8a1.6 1.6 0 0 0 1.6-1.2L20.4 8H6"/></svg></a></div></div>
+      <div class="sale__card"><a class="sale__link" href="#"><div class="sale__media"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-8.webp" alt="جاروبرقی کیسه‌ای پرقدرت" loading="lazy" decoding="async"><span class="sale__badge">۲۲٪</span></div><h3 class="sale__name">جاروبرقی کیسه‌ای پرقدرت</h3></a><div class="sale__foot"><div class="sale__price"><del>۴٬۹۵۰٬۰۰۰</del><ins>۳٬۸۶۰٬۰۰۰ تومان</ins></div><a class="sale__cart" href="#" aria-label="افزودن به سبد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17.5" cy="20" r="1.4"/><path d="M3 4h2.2l2 11a1.6 1.6 0 0 0 1.6 1.3h7.8a1.6 1.6 0 0 0 1.6-1.2L20.4 8H6"/></svg></a></div></div>
+      <div class="sale__card"><a class="sale__link" href="#"><div class="sale__media"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-10.webp" alt="غذاساز چندکاره" loading="lazy" decoding="async"><span class="sale__badge">۱۵٪</span></div><h3 class="sale__name">غذاساز چندکاره</h3></a><div class="sale__foot"><div class="sale__price"><del>۳٬۷۵۰٬۰۰۰</del><ins>۳٬۱۹۰٬۰۰۰ تومان</ins></div><a class="sale__cart" href="#" aria-label="افزودن به سبد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17.5" cy="20" r="1.4"/><path d="M3 4h2.2l2 11a1.6 1.6 0 0 0 1.6 1.3h7.8a1.6 1.6 0 0 0 1.6-1.2L20.4 8H6"/></svg></a></div></div>
+      <div class="sale__card"><a class="sale__link" href="#"><div class="sale__media"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-11.webp" alt="آبمیوه‌گیری تمام‌استیل" loading="lazy" decoding="async"><span class="sale__badge">۳۰٪</span></div><h3 class="sale__name">آبمیوه‌گیری تمام‌استیل</h3></a><div class="sale__foot"><div class="sale__price"><del>۲٬۸۰۰٬۰۰۰</del><ins>۱٬۹۶۰٬۰۰۰ تومان</ins></div><a class="sale__cart" href="#" aria-label="افزودن به سبد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17.5" cy="20" r="1.4"/><path d="M3 4h2.2l2 11a1.6 1.6 0 0 0 1.6 1.3h7.8a1.6 1.6 0 0 0 1.6-1.2L20.4 8H6"/></svg></a></div></div>
+      <div class="sale__card"><a class="sale__link" href="#"><div class="sale__media"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-5.webp" alt="سرخ‌کن بدون روغن" loading="lazy" decoding="async"><span class="sale__badge">۲۵٪</span></div><h3 class="sale__name">سرخ‌کن بدون روغن</h3></a><div class="sale__foot"><div class="sale__price"><del>۳٬۲۰۰٬۰۰۰</del><ins>۲٬۴۰۰٬۰۰۰ تومان</ins></div><a class="sale__cart" href="#" aria-label="افزودن به سبد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17.5" cy="20" r="1.4"/><path d="M3 4h2.2l2 11a1.6 1.6 0 0 0 1.6 1.3h7.8a1.6 1.6 0 0 0 1.6-1.2L20.4 8H6"/></svg></a></div></div>
+      <div class="sale__card"><a class="sale__link" href="#"><div class="sale__media"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-2.webp" alt="چای‌ساز استیل" loading="lazy" decoding="async"><span class="sale__badge">۱۲٪</span></div><h3 class="sale__name">چای‌ساز استیل</h3></a><div class="sale__foot"><div class="sale__price"><del>۱٬۹۵۰٬۰۰۰</del><ins>۱٬۷۱۶٬۰۰۰ تومان</ins></div><a class="sale__cart" href="#" aria-label="افزودن به سبد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17.5" cy="20" r="1.4"/><path d="M3 4h2.2l2 11a1.6 1.6 0 0 0 1.6 1.3h7.8a1.6 1.6 0 0 0 1.6-1.2L20.4 8H6"/></svg></a></div></div>
+      <div class="sale__card"><a class="sale__link" href="#"><div class="sale__media"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-22.webp" alt="مایکروویو ۲۵ لیتری" loading="lazy" decoding="async"><span class="sale__badge">۲۰٪</span></div><h3 class="sale__name">مایکروویو ۲۵ لیتری</h3></a><div class="sale__foot"><div class="sale__price"><del>۵٬۴۰۰٬۰۰۰</del><ins>۴٬۳۲۰٬۰۰۰ تومان</ins></div><a class="sale__cart" href="#" aria-label="افزودن به سبد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17.5" cy="20" r="1.4"/><path d="M3 4h2.2l2 11a1.6 1.6 0 0 0 1.6 1.3h7.8a1.6 1.6 0 0 0 1.6-1.2L20.4 8H6"/></svg></a></div></div>
+      <div class="sale__card"><a class="sale__link" href="#"><div class="sale__media"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-18.webp" alt="زودپز برقی دیجیتال" loading="lazy" decoding="async"><span class="sale__badge">۱۷٪</span></div><h3 class="sale__name">زودپز برقی دیجیتال</h3></a><div class="sale__foot"><div class="sale__price"><del>۲٬۶۵۰٬۰۰۰</del><ins>۲٬۲۰۰٬۰۰۰ تومان</ins></div><a class="sale__cart" href="#" aria-label="افزودن به سبد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17.5" cy="20" r="1.4"/><path d="M3 4h2.2l2 11a1.6 1.6 0 0 0 1.6 1.3h7.8a1.6 1.6 0 0 0 1.6-1.2L20.4 8H6"/></svg></a></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BRANDS (logo-cloud متنی) ===== -->
+<section class="brands" id="home-sec-5" aria-label="برندهای همکار">
+  <div class="brands__in">
+    <div class="brands__head">
+      <span class="brands__eyebrow">برندهای معتبر</span>
+      <h2 class="brands__title">برندهای خانه سعادت</h2>
+      <p class="brands__sub">عرضهٔ مستقیم و اصل، با گارانتی رسمی.</p>
+    </div>
+    <div class="brands__gridwrap">
+      <div class="brands__grid">
+        <a class="brand" href="https://khanehsaadat.com/brand/unique/" aria-label="برند Unique"><span class="brand__wm">Unique</span></a>
+        <a class="brand" href="https://khanehsaadat.com/brand/mgs/" aria-label="برند MGS"><span class="brand__wm">MGS</span></a>
+        <a class="brand" href="https://khanehsaadat.com/brand/honira/" aria-label="برند HONIRA"><span class="brand__wm">HONIRA</span></a>
+        <a class="brand" href="https://khanehsaadat.com/brand/migel/" aria-label="برند MIGEL"><span class="brand__wm">MIGEL</span></a>
+        <a class="brand" href="https://khanehsaadat.com/brand/sapor/" aria-label="برند SAPOR"><span class="brand__wm">SAPOR</span></a>
+        <a class="brand" href="https://khanehsaadat.com/brand/delmonti/" aria-label="برند Delmonti"><span class="brand__wm">Delmonti</span></a>
+        <a class="brand" href="https://khanehsaadat.com/brand/beem/" aria-label="برند BEEM"><span class="brand__wm">BEEM</span></a>
+        <a class="brand" href="https://khanehsaadat.com/brand/janome/" aria-label="برند JANOME"><span class="brand__wm">JANOME</span></a>
+      </div>
+      <span class="brands__plus brands__plus--m" style="left:50%;top:25%"></span>
+      <span class="brands__plus brands__plus--m" style="left:50%;top:50%"></span>
+      <span class="brands__plus brands__plus--m" style="left:50%;top:75%"></span>
+      <span class="brands__plus brands__plus--d" style="left:25%;top:50%"></span>
+      <span class="brands__plus brands__plus--d" style="left:50%;top:50%"></span>
+      <span class="brands__plus brands__plus--d" style="left:75%;top:50%"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRODUCTS (کاروسل با تبِ دسته‌ای AJAX) ===== -->
+<section class="prod" id="home-sec-6" aria-label="محصولات بر اساس دسته" data-prod data-active="tea">
+  <div class="prod__in">
+    <div class="prod__head">
+      <div>
+        <span class="prod__eyebrow">با خانه سعادت بروز باش</span>
+        <h2 class="prod__title">جدیدترین محصولات خانه سعادت</h2>
+        <p class="prod__sub">تازه‌ترین لوازم خانگیِ اصل را زودتر از همه ببینید؛ با بهترین قیمت و گارانتی رسمی.</p>
+      </div>
+      <div class="prod__nav">
+        <div class="prod__arrows">
+          <button class="prod__arrow" data-prod-next aria-label="بعدی" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></button>
+          <button class="prod__arrow" data-prod-prev aria-label="قبلی" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button>
+        </div>
+      </div>
+    </div>
+    <div class="prod__tabs" role="tablist">
+      <button class="prod__tab is-active" type="button" role="tab" data-cat="tea" aria-selected="true">چای‌ساز</button>
+      <button class="prod__tab" type="button" role="tab" data-cat="espresso" aria-selected="false">اسپرسوساز</button>
+      <button class="prod__tab" type="button" role="tab" data-cat="fryer" aria-selected="false">سرخ‌کن</button>
+      <button class="prod__tab" type="button" role="tab" data-cat="flask" aria-selected="false">فلاسک</button>
+      <button class="prod__tab" type="button" role="tab" data-cat="iron" aria-selected="false">اتو بخار</button>
+    </div>
+    <div class="prod__railwrap">
+      <div class="prod__rail" data-prod-rail>
+        <div class="prod__card"><a class="prod__link" href="#"><div class="prod__media"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-2.webp" alt="چای‌ساز استیل مدل ۲۰۲" loading="lazy" decoding="async"></div><h3 class="prod__name">چای‌ساز استیل مدل ۲۰۲</h3></a><div class="prod__foot"><div class="prod__price"><ins>۱٬۹۵۰٬۰۰۰ تومان</ins></div><a class="prod__cart" href="#" aria-label="افزودن به سبد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17.5" cy="20" r="1.4"/><path d="M3 4h2.2l2 11a1.6 1.6 0 0 0 1.6 1.3h7.8a1.6 1.6 0 0 0 1.6-1.2L20.4 8H6"/></svg></a></div></div>
+        <div class="prod__card"><a class="prod__link" href="#"><div class="prod__media"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-2.webp" alt="چای‌ساز روهمی دیجیتال" loading="lazy" decoding="async"><span class="prod__badge">۱۶٪</span></div><h3 class="prod__name">چای‌ساز روهمی دیجیتال</h3></a><div class="prod__foot"><div class="prod__price"><del>۲٬۹۰۰٬۰۰۰</del><ins>۲٬۴۵۰٬۰۰۰ تومان</ins></div><a class="prod__cart" href="#" aria-label="افزودن به سبد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17.5" cy="20" r="1.4"/><path d="M3 4h2.2l2 11a1.6 1.6 0 0 0 1.6 1.3h7.8a1.6 1.6 0 0 0 1.6-1.2L20.4 8H6"/></svg></a></div></div>
+        <div class="prod__card"><a class="prod__link" href="#"><div class="prod__media"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-2.webp" alt="چای‌ساز و قوری استیل" loading="lazy" decoding="async"></div><h3 class="prod__name">چای‌ساز و قوری استیل</h3></a><div class="prod__foot"><div class="prod__price"><ins>۲٬۱۰۰٬۰۰۰ تومان</ins></div><a class="prod__cart" href="#" aria-label="افزودن به سبد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17.5" cy="20" r="1.4"/><path d="M3 4h2.2l2 11a1.6 1.6 0 0 0 1.6 1.3h7.8a1.6 1.6 0 0 0 1.6-1.2L20.4 8H6"/></svg></a></div></div>
+        <div class="prod__card"><a class="prod__link" href="#"><div class="prod__media"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-2.webp" alt="چای‌ساز کنترل‌دار" loading="lazy" decoding="async"></div><h3 class="prod__name">چای‌ساز کنترل‌دار</h3></a><div class="prod__foot"><div class="prod__price"><ins>۳٬۲۰۰٬۰۰۰ تومان</ins></div><a class="prod__cart" href="#" aria-label="افزودن به سبد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17.5" cy="20" r="1.4"/><path d="M3 4h2.2l2 11a1.6 1.6 0 0 0 1.6 1.3h7.8a1.6 1.6 0 0 0 1.6-1.2L20.4 8H6"/></svg></a></div></div>
+        <div class="prod__card"><a class="prod__link" href="#"><div class="prod__media"><img src="https://khanehsaadat.com/wp-content/uploads/2026/05/Artboard-1-copy-2.webp" alt="سماور برقی ۵ لیتری" loading="lazy" decoding="async"><span class="prod__badge">۱۰٪</span></div><h3 class="prod__name">سماور برقی ۵ لیتری</h3></a><div class="prod__foot"><div class="prod__price"><del>۴٬۳۰۰٬۰۰۰</del><ins>۳٬۸۵۰٬۰۰۰ تومان</ins></div><a class="prod__cart" href="#" aria-label="افزودن به سبد"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17.5" cy="20" r="1.4"/><path d="M3 4h2.2l2 11a1.6 1.6 0 0 0 1.6 1.3h7.8a1.6 1.6 0 0 0 1.6-1.2L20.4 8H6"/></svg></a></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SAADAT PAY (باکس سبز) ===== -->
+<section class="pay" id="home-sec-7" aria-label="خرید اقساطی با سعادت‌پی">
+  <div class="pay__in">
+    <div class="pay__box">
+      <span class="pay__bg" aria-hidden="true"></span>
+      <div class="pay__body">
+        <span class="pay__brandtag">سعادت‌پی</span>
+        <h2 class="pay__title">قسطی بخر، <span class="pay__accent">بدون دردسر!</span></h2>
+        <p class="pay__desc">با «سعادت‌پی» لوازم خانگی‌تان را از ۴ تا ۲۴ قسط با کمترین سود تهیه کنید.</p>
+        <a class="pay__cta" href="#">شرایط و ثبت‌نام <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></a>
+      </div>
+      <div class="pay__art" aria-hidden="true">
+        <div class="pay__card">
+          <div class="pay__card-top"><span class="pay__chip"></span><span class="pay__card-brand">سعادت‌پی</span></div>
+          <div class="pay__card-amtwrap"><span class="pay__card-cap">اعتبارِ خرید</span><span class="pay__card-amt">تا ۵۰۰٬۰۰۰٬۰۰۰ تومان</span></div>
+          <div class="pay__card-foot"><div class="pay__card-col"><span class="pay__card-lbl">اقساط</span><span class="pay__card-val">۴ تا ۲۴ ماهه</span></div><div class="pay__card-col"><span class="pay__card-lbl">سود</span><span class="pay__card-val">کمترین</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SHOWROOM VIDEO (۸۰vh سفید) ===== -->
+<section class="show" id="home-sec-8" aria-label="ویدیوی شوروم خانه سعادت">
+  <div class="show__in">
+    <div class="show__frame" data-show role="button" tabindex="0" aria-label="پخش ویدیو: نمایی از شوروم بزرگ خانه سعادت">
+      <span class="show__glow" aria-hidden="true"></span>
+      <span class="show__ov" aria-hidden="true"></span>
+      <button class="show__play" type="button" data-show-play aria-label="پخش ویدیو"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.52.86l10.5-6.86a1 1 0 0 0 0-1.72L9.52 4.28A1 1 0 0 0 8 5.14z"/></svg></button>
+      <div class="show__cap">
+        <h2 class="show__title">نمایی از شوروم بزرگ خانه سعادت</h2>
+        <p class="show__sub">تنها و قوی‌ترین شوروم غرب کشور - خانه سعادت</p>
+      </div>
+    </div>
+  </div>
+  <div class="show__modal" data-show-modal hidden>
+    <button class="show__close" type="button" data-show-close aria-label="بستن ویدیو"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div class="show__modal-in"><video class="show__modal-video" data-show-modal-video controls playsinline preload="none"><source src="https://khanehsaadat.com/wp-content/uploads/2026/10/showroom-saadat.webm" type="video/webm"></video></div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var sh=document.querySelector('[data-site-hdr]');
+  if(sh){ var onS=function(){ sh.classList.toggle('is-shown', window.scrollY>60); }; onS(); window.addEventListener('scroll',onS,{passive:true}); }
+  // سکشن مزایا: ریویلِ حرکتی با IntersectionObserver (نه scroll-listener)
+  var ts=document.querySelector('[data-trust]');
+  if(ts && !window.matchMedia('(prefers-reduced-motion: reduce)').matches && ('IntersectionObserver' in window)){
+    ts.classList.add('trust--anim');
+    var tio=new IntersectionObserver(function(es){ es.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('is-in'); tio.unobserve(en.target); } }); },{threshold:.2});
+    ts.querySelectorAll('.trust__grid > li').forEach(function(li){ tio.observe(li); });
+  }
+  var v=document.querySelector('.hero__video');
+  if(v && window.matchMedia('(prefers-reduced-motion: reduce)').matches){ v.removeAttribute('autoplay'); try{v.pause();}catch(e){} }
+  // rail arrows (RTL)
+  var rail=document.querySelector('[data-rail]');
+  function scrollRail(dir){ if(rail) rail.scrollBy({left:dir*470,behavior:'smooth'}); }
+  var pn=document.querySelector('[data-rail-next]'), pp=document.querySelector('[data-rail-prev]');
+  pn&&pn.addEventListener('click',function(){scrollRail(-1);});
+  pp&&pp.addEventListener('click',function(){scrollRail(1);});
+  // sale carousel arrows (RTL)
+  var srail=document.querySelector('[data-sale-rail]');
+  function saleScroll(dir){ if(srail) srail.scrollBy({left:dir*512,behavior:'smooth'}); }
+  var sn=document.querySelector('[data-sale-next]'), sp=document.querySelector('[data-sale-prev]');
+  sn&&sn.addEventListener('click',function(){saleScroll(1);});
+  sp&&sp.addEventListener('click',function(){saleScroll(-1);});
+  // sale load-more (پیش‌نمایش: کلونِ کارت‌ها؛ روی سایت زنده = Store API صفحهٔ بعد)
+  if(srail){
+    var saleSeed=srail.innerHTML, saleCycles=0;
+    srail.addEventListener('scroll',function(){ if(saleCycles>=3)return; if(Math.abs(srail.scrollLeft)+srail.clientWidth>=srail.scrollWidth-320){ saleCycles++; srail.insertAdjacentHTML('beforeend',saleSeed); } },{passive:true});
+  }
+
+  // ===== Products carousel (پیش‌نمایش: دادهٔ نمونه؛ روی سایت زنده = Store API) =====
+  var psec=document.querySelector('[data-prod]');
+  if(psec){
+    var prail=psec.querySelector('[data-prod-rail]');
+    var IMG='https://khanehsaadat.com/wp-content/uploads/2026/05/';
+    var CART='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="17.5" cy="20" r="1.4"/><path d="M3 4h2.2l2 11a1.6 1.6 0 0 0 1.6 1.3h7.8a1.6 1.6 0 0 0 1.6-1.2L20.4 8H6"/></svg>';
+    var M={
+      tea:{img:IMG+'Artboard-1-copy-2.webp',items:[['چای‌ساز استیل مدل ۲۰۲','۱٬۹۵۰٬۰۰۰','',0],['چای‌ساز روهمی دیجیتال','۲٬۴۵۰٬۰۰۰','۲٬۹۰۰٬۰۰۰',16],['چای‌ساز و قوری استیل','۲٬۱۰۰٬۰۰۰','',0],['چای‌ساز کنترل‌دار','۳٬۲۰۰٬۰۰۰','',0],['سماور برقی ۵ لیتری','۳٬۸۵۰٬۰۰۰','۴٬۳۰۰٬۰۰۰',10]]},
+      espresso:{img:IMG+'Artboard-1-copy-4.webp',items:[['اسپرسوساز خانگی دلمونتی','۵٬۰۸۰٬۰۰۰','۶٬۲۰۰٬۰۰۰',18],['اسپرسوساز نیمه‌صنعتی','۸٬۹۰۰٬۰۰۰','',0],['اسپرسو و کاپوچینوساز','۶٬۵۰۰٬۰۰۰','',0],['قهوه‌ساز فیلتری','۲٬۳۰۰٬۰۰۰','۲٬۷۰۰٬۰۰۰',15],['اسپرسوساز پیستونی','۴٬۲۰۰٬۰۰۰','',0]]},
+      fryer:{img:IMG+'Artboard-1-copy-5.webp',items:[['سرخ‌کن بدون روغن','۲٬۴۰۰٬۰۰۰','۳٬۲۰۰٬۰۰۰',25],['سرخ‌کن ۵ لیتری دیجیتال','۳٬۱۰۰٬۰۰۰','',0],['سرخ‌کن دو مخزنه','۴٬۵۰۰٬۰۰۰','',0],['سرخ‌کن کم‌ظرفیت','۱٬۸۵۰٬۰۰۰','۲٬۱۰۰٬۰۰۰',12],['ایرفرایر لمسی','۳٬۶۰۰٬۰۰۰','',0]]},
+      flask:{img:IMG+'Artboard-1.webp',items:[['فلاسک استیل ۲ لیتری','۸۵۰٬۰۰۰','',0],['فلاسک دوقلو یونیک','۱٬۲۰۰٬۰۰۰','۱٬۴۵۰٬۰۰۰',17],['فلاسک کوهستان','۹۵۰٬۰۰۰','',0],['قمقمه استیل','۴۵۰٬۰۰۰','',0],['فلاسک گنبدی استیل','۱٬۱۰۰٬۰۰۰','',0]]},
+      iron:{img:IMG+'Artboard-1-copy-6.webp',items:[['اتو بخار مخزن‌دار','۱٬۹۵۰٬۰۰۰','',0],['اتو پرس بخار','۴٬۸۰۰٬۰۰۰','۵٬۵۰۰٬۰۰۰',13],['اتو بخار سرامیکی','۱٬۶۵۰٬۰۰۰','',0],['اتو مسافرتی','۸۵۰٬۰۰۰','',0],['ایستگاه اتو بخار','۶٬۲۰۰٬۰۰۰','',0]]}
+    };
+    var pstate={cat:psec.getAttribute('data-active'),cycles:0,max:3};
+    function pcard(it,img){var old=it[2],pct=it[3];
+      return '<div class="prod__card"><a class="prod__link" href="#"><div class="prod__media"><img src="'+img+'" alt="'+it[0]+'" loading="lazy" decoding="async">'+(pct?'<span class="prod__badge">'+pct+'٪</span>':'')+'</div><h3 class="prod__name">'+it[0]+'</h3></a><div class="prod__foot"><div class="prod__price">'+(old?'<del>'+old+'</del>':'')+'<ins>'+it[1]+' تومان</ins></div><a class="prod__cart" href="#" aria-label="افزودن به سبد">'+CART+'</a></div></div>';
+    }
+    function prender(cat,replace){var c=M[cat];if(!c)return;var html='';c.items.forEach(function(it){html+=pcard(it,c.img);});if(replace){prail.innerHTML=html;}else{prail.insertAdjacentHTML('beforeend',html);}}
+    psec.querySelectorAll('[data-cat]').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        if(btn.classList.contains('is-active'))return;
+        psec.querySelectorAll('[data-cat]').forEach(function(b){b.classList.remove('is-active');b.setAttribute('aria-selected','false');});
+        btn.classList.add('is-active');btn.setAttribute('aria-selected','true');
+        pstate.cat=btn.getAttribute('data-cat');pstate.cycles=0;
+        psec.classList.add('is-loading');
+        setTimeout(function(){prender(pstate.cat,true);psec.classList.remove('is-loading');try{prail.scrollTo({left:0});}catch(e){prail.scrollLeft=0;}},260);
+      });
+    });
+    prail.addEventListener('scroll',function(){
+      if(pstate.cycles>=pstate.max)return;
+      var nearEnd=Math.abs(prail.scrollLeft)+prail.clientWidth>=prail.scrollWidth-320;
+      if(nearEnd){pstate.cycles++;prender(pstate.cat,false);}
+    },{passive:true});
+    function ps(d){prail.scrollBy({left:d*512,behavior:'smooth'});}
+    var pn=psec.querySelector('[data-prod-next]'),pp=psec.querySelector('[data-prod-prev]');
+    pn&&pn.addEventListener('click',function(){ps(1);});
+    pp&&pp.addEventListener('click',function(){ps(-1);});
+  }
+
+  // ===== Showroom video (teaser + modal) =====
+  var shF=document.querySelector('[data-show]');
+  if(shF){
+    var shModal=document.querySelector('[data-show-modal]'), shMV=document.querySelector('[data-show-modal-video]');
+    if('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){ var shIO=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){shF.classList.add('is-in');shIO.disconnect();}});},{threshold:.25}); shIO.observe(shF); } else { shF.classList.add('is-in'); }
+    var shOpen=function(){ if(!shModal)return; shModal.hidden=false; document.body.style.overflow='hidden'; try{shMV.load();var p=shMV.play();if(p&&p.catch)p.catch(function(){});}catch(e){} };
+    var shClose=function(){ if(!shModal)return; shModal.hidden=true; document.body.style.overflow=''; try{shMV.pause();}catch(e){} };
+    var shPlay=shF.querySelector('[data-show-play]'); shPlay&&shPlay.addEventListener('click',function(e){e.stopPropagation();shOpen();});
+    shF.addEventListener('click',shOpen);
+    shF.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();shOpen();}});
+    var shCl=document.querySelector('[data-show-close]'); shCl&&shCl.addEventListener('click',shClose);
+    shModal&&shModal.addEventListener('click',function(e){if(e.target===shModal)shClose();});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&shModal&&!shModal.hidden)shClose();});
+  }
+})();
+</script>
+</body>
+</html>
