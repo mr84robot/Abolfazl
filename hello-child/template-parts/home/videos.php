@@ -16,6 +16,11 @@
  *   - شورت‌کد را صدا نمی‌زنیم چون گریدِ صفحه‌بندی‌شده با CSS خودش می‌دهد، نه کاروسل.
  *
  * اگر افزونه یا ماژولِ ویدیوی آن خاموش باشد، یا محصولی ویدیو نداشته باشد، سکشن چاپ نمی‌شود.
+ *
+ * ⚡ کاورها: افزونه آدرسِ فایلِ اصلی را ذخیره می‌کند (مثلاً ۱۹۲۰px) و کارت حداکثر ~۴۰۰px است. از روی آدرس،
+ *    پیوستِ کتابخانهٔ رسانه پیدا می‌شود و srcset با اندازه‌هایی که وردپرس هنگامِ آپلود ساخته (۳۰۰/۷۶۸/۱۰۲۴) چاپ می‌شود؛
+ *    مرورگر کوچک‌ترین نسخه‌ای را که برای عرضِ کارت و تراکمِ صفحه‌نمایش کافی است می‌گیرد. سقف ۱۰۲۴px است تا
+ *    گوشی‌های ۳x هم فایلِ اصلی را نگیرند. اگر پیوست پیدا نشود (آدرسِ بیرونی)، همان آدرس مثلِ قبل.
  */
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
@@ -26,6 +31,50 @@ if ( ! function_exists( 'wc_get_product' )
 	|| ! class_exists( 'CodeLock_Settings' )
 	|| ! CodeLock_Settings::is_on( 'enable_videos' ) ) {
 	return;
+}
+
+if ( ! function_exists( 'ks_vid_attachment_id' ) ) {
+	/** شناسهٔ پیوست از روی آدرس؛ نسخهٔ کوچک‌شده (‎-768x432) و «‎-scaled» هم شناخته می‌شوند. */
+	function ks_vid_attachment_id( $url ) {
+		$key = 'ks_vid_att_' . md5( $url );
+		$id  = wp_cache_get( $key, 'ks' );
+		if ( false === $id ) {
+			$id = attachment_url_to_postid( $url );
+			if ( ! $id ) {
+				$base = preg_replace( '/-\d+x\d+(?=\.\w+$)/', '', $url );
+				$id   = $base !== $url ? attachment_url_to_postid( $base ) : 0;
+				if ( ! $id ) { $id = attachment_url_to_postid( preg_replace( '/(\.\w+)$/', '-scaled$1', $base ) ); }
+			}
+			wp_cache_set( $key, (int) $id, 'ks', DAY_IN_SECONDS );
+		}
+		return (int) $id;
+	}
+}
+
+if ( ! function_exists( 'ks_vid_cover_img' ) ) {
+	/** <img> کاور با srcset تا ۱۰۲۴px و sizes دقیقِ عرضِ کارت در هر بریک‌پوینت (۳ / ۲ / ۱ ستون). */
+	function ks_vid_cover_img( $url, $id, $alt ) {
+		if ( ! $id && $url ) { $id = ks_vid_attachment_id( $url ); }
+		$src = $url; $w = 768; $h = 432; $set = array();
+		if ( $id ) {
+			foreach ( array( 'medium', 'medium_large', 'large' ) as $size ) {
+				$im = wp_get_attachment_image_src( $id, $size );
+				if ( $im && (int) $im[1] > 0 && (int) $im[1] <= 1024 ) { $set[ (int) $im[1] ] = $im; }
+			}
+			ksort( $set );
+			if ( $set && max( array_keys( $set ) ) < 600 ) { $set = array(); } // فقط بندانگشتیِ کوچک ساخته شده: همان اصلی، نه عکسِ تار
+			if ( $set ) {
+				$mid = isset( $set[768] ) ? $set[768] : end( $set ); // پیش‌فرضِ مرورگرهای بدونِ srcset
+				list( $src, $w, $h ) = $mid;
+			}
+		}
+		if ( ! $src ) { return ''; }
+		$srcset = array();
+		foreach ( $set as $width => $im ) { $srcset[] = esc_url( $im[0] ) . ' ' . (int) $width . 'w'; }
+		return '<img src="' . esc_url( $src ) . '"'
+			. ( count( $srcset ) > 1 ? ' srcset="' . implode( ', ', $srcset ) . '" sizes="(min-width:1310px) 400px, (min-width:1025px) calc(33vw - 36px), (min-width:641px) calc(47vw - 12px), calc(100vw - 36px)"' : '' )
+			. ' width="' . (int) $w . '" height="' . (int) $h . '" alt="' . esc_attr( $alt ) . '" loading="lazy" decoding="async">';
+	}
 }
 
 // همان شرطِ کوئریِ آرشیوِ افزونه: محصولاتی که لینک ویدیوی غیرخالی دارند
@@ -54,6 +103,7 @@ foreach ( $ks_vid_q->posts as $ks_p ) {
 	$ks_vids[] = array(
 		'url'      => CodeLock_Videos::video_url( $ks_p->ID ),
 		'cover'    => '' !== $ks_v['cover'] ? $ks_v['cover'] : (string) get_the_post_thumbnail_url( $ks_p->ID, 'medium_large' ),
+		'cover_id' => '' !== $ks_v['cover'] ? 0 : (int) get_post_thumbnail_id( $ks_p->ID ), // بدونِ کاور: عکسِ محصول (شناسه‌اش معلوم است)
 		'title'    => '' !== $ks_v['title'] ? $ks_v['title'] : get_the_title( $ks_p->ID ),
 		'text'     => $ks_v['text'],
 		'duration' => $ks_v['duration'],
@@ -100,9 +150,7 @@ if ( ! function_exists( 'ks_fa_digits' ) ) {
         <article class="ks-vid__card">
           <a class="ks-vid__link" href="<?php echo esc_url( $ks_v['url'] ); ?>">
             <span class="ks-vid__media">
-              <?php if ( $ks_v['cover'] ) : ?>
-                <img src="<?php echo esc_url( $ks_v['cover'] ); ?>" width="768" height="432" alt="<?php echo esc_attr( $ks_v['title'] ); ?>" loading="lazy" decoding="async">
-              <?php endif; ?>
+              <?php echo ks_vid_cover_img( $ks_v['cover'], $ks_v['cover_id'], $ks_v['title'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped — داخلِ تابع escape شده ?>
               <span class="ks-vid__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.52.86l10.5-6.86a1 1 0 0 0 0-1.72L9.52 4.28A1 1 0 0 0 8 5.14z"/></svg></span>
               <?php if ( '' !== $ks_v['duration'] ) : ?>
                 <span class="ks-vid__dur"><span class="ks-vid__sr">مدت ویدیو: </span><?php echo esc_html( ks_fa_digits( $ks_v['duration'] ) ); ?></span>

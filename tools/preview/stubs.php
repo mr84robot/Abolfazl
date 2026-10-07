@@ -147,6 +147,18 @@ function get_the_excerpt() { return rec()['excerpt']; }
 function has_post_thumbnail() { return ! empty( rec()['thumb'] ); }
 function the_post_thumbnail( $size, $attr ) { $r = rec(); echo '<img src="' . esc_url( $r['thumb'] ) . '" class="' . esc_attr( $attr['class'] ) . '" alt="' . esc_attr( $attr['alt'] ) . '" loading="lazy" decoding="async" width="768" height="538">'; }
 function get_the_post_thumbnail_url( $id, $s ) { return $GLOBALS['PRODS'][ $id ]['img'] ?? ''; }
+function get_post_thumbnail_id( $id ) { return 0; }
+// کتابخانهٔ رسانه برای کاورِ ویدیوها: هر کاورِ img/vid-*.webp یک پیوست با اندازه‌های ۳۰۰/۷۶۸/۱۰۲۴ (پیش‌نمایش: همان فایل با ‎?w=)
+if ( ! defined( 'DAY_IN_SECONDS' ) ) { define( 'DAY_IN_SECONDS', 86400 ); }
+function wp_cache_get( $k, $g = '' ) { return $GLOBALS['WPCACHE'][ $g ][ $k ] ?? false; }
+function wp_cache_set( $k, $v, $g = '', $t = 0 ) { $GLOBALS['WPCACHE'][ $g ][ $k ] = $v; return true; }
+function attachment_url_to_postid( $url ) { return preg_match( '#^img/vid-[\w-]+\.webp$#', $url ) ? 7000 + crc32( $url ) % 1000 : 0; }
+function wp_get_attachment_image_src( $id, $size ) {
+	foreach ( $GLOBALS['VIDEOS'] as $v ) { if ( attachment_url_to_postid( $v['cover'] ) === (int) $id ) { $f = $v['cover']; break; } }
+	if ( empty( $f ) ) { return false; }
+	$d = array( 'medium' => array( 300, 169 ), 'medium_large' => array( 768, 432 ), 'large' => array( 1024, 576 ) )[ $size ] ?? array( 1920, 1080 );
+	return array( $f . '?w=' . $d[0], $d[0], $d[1], true );
+}
 
 /* ---------------- ووکامرس ---------------- */
 function term_slug( $id ) { foreach ( $GLOBALS['CATS'] as $c ) { if ( (int) $c['id'] === (int) $id ) { return $c['slug']; } } return 'x' . $id; }
