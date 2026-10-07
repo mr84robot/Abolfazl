@@ -69,7 +69,7 @@ $ks_seo = array(
 @media (prefers-reduced-motion:reduce){.ks-seo__content,.ks-seo__fade,.ks-seo__btn,.ks-seo__btn svg{transition:none}}
 </style>
 
-<section class="ks-seo" id="home-sec-9" aria-label="راهنمای خرید لوازم خانگی">
+<section class="ks-seo" id="home-sec-10" aria-label="راهنمای خرید لوازم خانگی">
   <div class="ks-seo__in">
     <div class="ks-seo__wrap">
       <span class="ks-seo__eyebrow">راهنمای خرید</span>

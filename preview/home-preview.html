@@ -285,6 +285,45 @@ body{background:#05080a;font-family:var(--hero-font);color:#fff}
 @media (max-width:640px){.show{min-height:auto}}
 @media (prefers-reduced-motion:reduce){.show__frame{opacity:1;transform:none;transition:none}.show__play::after{animation:none}.show__modal{animation:none}}
 
+/* ===================== BLOG (کاروسل مقاله‌ها) ===================== */
+.blog{background:#f6f8f7;color:var(--ink);direction:rtl}
+.blog__in{max-width:1310px;margin-inline:auto;padding:clamp(48px,7vw,84px) clamp(16px,3vw,32px)}
+.blog__head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:26px}
+.blog__eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:#8a6100}
+.blog__eyebrow::before{content:"";width:24px;height:2px;background:var(--accent)}
+.blog__title{margin:12px 0 6px;font-size:clamp(22px,3.2vw,30px);font-weight:800;color:#101828;line-height:1.4}
+.blog__sub{margin:0;font-size:14.5px;color:var(--muted);line-height:1.8}
+.blog__nav{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.blog__all{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:0 18px;border:1px solid #d4dbd8;border-radius:var(--r);background:#fff;font-size:14px;font-weight:700;color:var(--brand);text-decoration:none;transition:border-color .2s,background .2s}
+.blog__all:hover{border-color:var(--brand);background:#f3f8f6}
+.blog__all svg{width:16px;height:16px}
+.blog__arrows{display:flex;gap:8px}
+.blog__arrow{width:42px;height:42px;border-radius:var(--r);border:1px solid #d4dbd8;background:#fff;color:var(--brand);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s,background .2s}
+.blog__arrow:hover{border-color:var(--brand);background:#f3f8f6}
+.blog__arrow svg{width:19px;height:19px}
+.blog__rail{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x proximity;padding:4px 2px 12px;scrollbar-width:none}
+.blog__rail::-webkit-scrollbar{display:none}
+.blog__card{flex:0 0 clamp(300px,31%,406px);scroll-snap-align:start;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:border-color .2s,transform .2s,box-shadow .2s}
+.blog__card:hover{border-color:#b9d2cb;transform:translateY(-3px);box-shadow:0 16px 34px -20px rgb(0 89 73 / .4)}
+.blog__link{text-decoration:none;color:inherit;display:flex;flex-direction:column;height:100%}
+.blog__media{position:relative;aspect-ratio:768/538;background:#e9efec;overflow:hidden}
+.blog__media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s cubic-bezier(.16,1,.3,1)}
+.blog__card:hover .blog__media img{transform:scale(1.05)}
+.blog__date{position:absolute;inset-block-start:12px;inset-inline-start:12px;z-index:2;display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:var(--r);background:rgb(255 255 255 / .94);color:var(--ink);font-size:12px;font-weight:700;line-height:1;box-shadow:0 4px 14px -6px rgb(0 0 0 / .35)}
+.blog__date svg{width:13px;height:13px;color:var(--brand)}
+.blog__ov{position:absolute;inset:0;z-index:1;display:grid;place-items:center;background:linear-gradient(to top,rgb(2 36 29 / .78),rgb(2 36 29 / .34));opacity:0;transition:opacity .3s ease}
+.blog__card:hover .blog__ov{opacity:1}
+.blog__more{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;border:1.5px solid rgb(255 255 255 / .75);border-radius:var(--r);color:#fff;font-size:14px;font-weight:700;transform:translateY(8px);transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.blog__card:hover .blog__more{transform:none}
+.blog__more svg{width:15px;height:15px}
+.blog__body{display:flex;flex-direction:column;gap:9px;padding:16px 16px 18px}
+.blog__name{margin:0;font-size:15.5px;font-weight:700;line-height:1.75;color:var(--ink);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:3.5em}
+.blog__card:hover .blog__name{color:var(--brand)}
+.blog__ex{margin:0;font-size:13.5px;line-height:1.95;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+@media (max-width:860px){.blog__card{flex-basis:78vw;max-width:360px}}
+@media (max-width:640px){.blog__arrows{display:none}}
+@media (prefers-reduced-motion:reduce){.blog__card:hover{transform:none}.blog__card:hover .blog__media img{transform:none}.blog__rail{scroll-behavior:auto}.blog__more{transform:none}}
+
 /* ===================== SEO GUIDE (باکس راهنمای خرید — بدون JS) ===================== */
 .seo{--gold-d:#cf9100;--seo-ink:#10322a;--seo-body:#46554f;--cream:#faf7f0;--seo-line:#ece7dc;--soft:#e9f2ef;background:#f4f4f4;direction:rtl;text-align:right}
 .seo__in{max-width:1310px;margin-inline:auto;padding:clamp(56px,8vw,96px) clamp(16px,3vw,32px) clamp(64px,9vw,96px)}
@@ -575,8 +614,147 @@ body{background:#05080a;font-family:var(--hero-font);color:#fff}
   </div>
 </section>
 
+<!-- ===== BLOG (کاروسل مقاله‌ها) ===== -->
+<section class="blog" id="home-sec-9" aria-label="تازه‌های وبلاگ سعادت" data-blog>
+  <div class="blog__in">
+    <div class="blog__head">
+      <div>
+        <span class="blog__eyebrow">وبلاگ سعادت</span>
+        <h2 class="blog__title">قبل از خرید، این‌ها را بخوانید</h2>
+        <p class="blog__sub">راهنماهای خرید و بررسی‌های واقعی، نوشتهٔ تیم خانه سعادت.</p>
+      </div>
+      <div class="blog__nav">
+        <div class="blog__arrows">
+          <button class="blog__arrow" data-blog-next aria-label="بعدی" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></button>
+          <button class="blog__arrow" data-blog-prev aria-label="قبلی" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 6-6 6 6 6"/></svg></button>
+        </div>
+        <a class="blog__all" href="https://khanehsaadat.com/blog/">همه مقاله‌ها <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></a>
+      </div>
+    </div>
+    <div class="blog__rail" data-blog-rail>
+      <article class="blog__card">
+        <a class="blog__link" href="https://khanehsaadat.com/blog/what-size-air-fryer-should-i-buy/">
+          <span class="blog__media">
+            <img src="https://khanehsaadat.com/wp-content/uploads/2026/09/Comparing-Air-Fryer-Capacities-What-Size-Should-You-Buy-768x538.webp" alt="سرخ کن بدون روغن چند لیتری بخرم؟ راهنمای انتخاب ظرفیت" loading="lazy" decoding="async" width="768" height="538">
+            <span class="blog__date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17"/><path d="M8 3.5v3"/><path d="M16 3.5v3"/></svg><time datetime="2026-09-21">۲۰۲۶-۰۹-۲۱</time></span>
+            <span class="blog__ov" aria-hidden="true"><span class="blog__more">مطالعه مقاله <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg></span></span>
+          </span>
+          <span class="blog__body">
+            <h3 class="blog__name">سرخ کن بدون روغن چند لیتری بخرم؟ راهنمای انتخاب ظرفیت</h3>
+            <p class="blog__ex">سوال «چند لیتری بخرم» ساده به نظر می رسد اما رایج ترین نقطه اشتباه در خرید سرخ کن…</p>
+          </span>
+        </a>
+      </article>
+      <article class="blog__card">
+        <a class="blog__link" href="https://khanehsaadat.com/blog/air-fryer-buying-guide/">
+          <span class="blog__media">
+            <img src="https://khanehsaadat.com/wp-content/uploads/2026/09/Air-Fryer-Buying-Guide-768x538.webp" alt="راهنمای خرید سرخ کن بدون روغن؛ توان، المنت و انتخاب مدل" loading="lazy" decoding="async" width="768" height="538">
+            <span class="blog__date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17"/><path d="M8 3.5v3"/><path d="M16 3.5v3"/></svg><time datetime="2026-09-19">۲۰۲۶-۰۹-۱۹</time></span>
+            <span class="blog__ov" aria-hidden="true"><span class="blog__more">مطالعه مقاله <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg></span></span>
+          </span>
+          <span class="blog__body">
+            <h3 class="blog__name">راهنمای خرید سرخ کن بدون روغن؛ توان، المنت و انتخاب مدل</h3>
+            <p class="blog__ex">راستش بیشتر کسانی که از خرید سرخ کن پشیمان می شوند، دستگاه بی کیفیت نخریده اند؛ دستگاهی خریده…</p>
+          </span>
+        </a>
+      </article>
+      <article class="blog__card">
+        <a class="blog__link" href="https://khanehsaadat.com/blog/delmonti-dl120-food-processor-review/">
+          <span class="blog__media">
+            <img src="https://khanehsaadat.com/wp-content/uploads/2026/09/ghazasaz-delmonti-dl120-768x538.webp" alt="آموزش کار، نقد و بررسی غذاساز دلمونتی ۲۰ کاره مدل DL120" loading="lazy" decoding="async" width="768" height="538">
+            <span class="blog__date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17"/><path d="M8 3.5v3"/><path d="M16 3.5v3"/></svg><time datetime="2026-09-15">۲۰۲۶-۰۹-۱۵</time></span>
+            <span class="blog__ov" aria-hidden="true"><span class="blog__more">مطالعه مقاله <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg></span></span>
+          </span>
+          <span class="blog__body">
+            <h3 class="blog__name">آموزش کار، نقد و بررسی غذاساز دلمونتی ۲۰ کاره مدل DL120</h3>
+            <p class="blog__ex">اگر دنبال دستگاهی هستید که جای چند وسیله آشپزخانه را یک جا بگیرد، بررسی غذاساز دلمونتی DL120 نقطه…</p>
+          </span>
+        </a>
+      </article>
+      <article class="blog__card">
+        <a class="blog__link" href="https://khanehsaadat.com/blog/comparison-of-delmonti-food-processors/">
+          <span class="blog__media">
+            <img src="https://khanehsaadat.com/wp-content/uploads/2026/08/مقایسه-غذاساز-دلمونتی-DL120-با-بوش-و-فیلیپس-از-زبان-خریداران-768x538.webp" alt="مقایسه غذاساز دلمونتی DL120 با بوش و فیلیپس از زبان خریداران" loading="lazy" decoding="async" width="768" height="538">
+            <span class="blog__date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17"/><path d="M8 3.5v3"/><path d="M16 3.5v3"/></svg><time datetime="2026-08-30">۲۰۲۶-۰۸-۳۰</time></span>
+            <span class="blog__ov" aria-hidden="true"><span class="blog__more">مطالعه مقاله <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg></span></span>
+          </span>
+          <span class="blog__body">
+            <h3 class="blog__name">مقایسه غذاساز دلمونتی DL120 با بوش و فیلیپس از زبان خریداران</h3>
+            <p class="blog__ex">مقایسه غذاساز دلمونتی DL120 با بوش و فیلیپس از زبان خریداران بیشتر مقایسه های غذاساز، جدولی از اعداد…</p>
+          </span>
+        </a>
+      </article>
+      <article class="blog__card">
+        <a class="blog__link" href="https://khanehsaadat.com/blog/multifunctional-food-processor-uses/">
+          <span class="blog__media">
+            <img src="https://khanehsaadat.com/wp-content/uploads/2026/08/۱۰-کاربرد-غذاساز-چندکاره-که-وقت-آشپزی-را-نصف-می-کند-۱-768x538.webp" alt="۱۰ کاربرد غذاساز چندکاره که وقت آشپزی را نصف می کند" loading="lazy" decoding="async" width="768" height="538">
+            <span class="blog__date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17"/><path d="M8 3.5v3"/><path d="M16 3.5v3"/></svg><time datetime="2026-08-27">۲۰۲۶-۰۸-۲۷</time></span>
+            <span class="blog__ov" aria-hidden="true"><span class="blog__more">مطالعه مقاله <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg></span></span>
+          </span>
+          <span class="blog__body">
+            <h3 class="blog__name">۱۰ کاربرد غذاساز چندکاره که وقت آشپزی را نصف می کند</h3>
+            <p class="blog__ex">۱۰ کاربرد شگفت انگیز غذاساز چندکاره که کار در آشپزخانه را نصف می کند یک کیلو سبزی قورمه،…</p>
+          </span>
+        </a>
+      </article>
+      <article class="blog__card">
+        <a class="blog__link" href="https://khanehsaadat.com/blog/food-processor-buying-guide/">
+          <span class="blog__media">
+            <img src="https://khanehsaadat.com/wp-content/uploads/2026/08/راهنمای-جامع-خرید-بهترین-غذاساز-768x538.webp" alt="راهنمای جامع خرید بهترین غذاساز خانگی و جهیزیه عروس" loading="lazy" decoding="async" width="768" height="538">
+            <span class="blog__date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17"/><path d="M8 3.5v3"/><path d="M16 3.5v3"/></svg><time datetime="2026-08-22">۲۰۲۶-۰۸-۲۲</time></span>
+            <span class="blog__ov" aria-hidden="true"><span class="blog__more">مطالعه مقاله <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg></span></span>
+          </span>
+          <span class="blog__body">
+            <h3 class="blog__name">راهنمای جامع خرید بهترین غذاساز خانگی و جهیزیه عروس</h3>
+            <p class="blog__ex">راهنمای خرید غذاساز خانگی و جهیزیه عروس بیشتر کسانی که غذاساز می خرند، آن را به خاطر یک…</p>
+          </span>
+        </a>
+      </article>
+      <article class="blog__card">
+        <a class="blog__link" href="https://khanehsaadat.com/blog/how-to-wash-a-water-bottle/">
+          <span class="blog__media">
+            <img src="https://khanehsaadat.com/wp-content/uploads/2026/08/روش-شستن-قمقمه-و-از-بین-بردن-بوی-آن-768x538.webp" alt="روش شستن قمقمه و از بین بردن بوی آن | خانه سعادت" loading="lazy" decoding="async" width="768" height="538">
+            <span class="blog__date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17"/><path d="M8 3.5v3"/><path d="M16 3.5v3"/></svg><time datetime="2026-08-17">۲۰۲۶-۰۸-۱۷</time></span>
+            <span class="blog__ov" aria-hidden="true"><span class="blog__more">مطالعه مقاله <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg></span></span>
+          </span>
+          <span class="blog__body">
+            <h3 class="blog__name">روش شستن قمقمه و از بین بردن بوی آن | خانه سعادت</h3>
+            <p class="blog__ex">روش شستن قمقمه و از بین بردن بوی بد آن هر روز آبکشش می کنید، هفته ای یک…</p>
+          </span>
+        </a>
+      </article>
+      <article class="blog__card">
+        <a class="blog__link" href="https://khanehsaadat.com/blog/the-best-unique-water-bottle-for-the-gym/">
+          <span class="blog__media">
+            <img src="https://khanehsaadat.com/wp-content/uploads/2026/08/بهترین-قمقمه-یونیک-برای-باشگاه-768x538.webp" alt="بهترین قمقمه یونیک برای باشگاه | راهنمای ظرفیت و انتخاب" loading="lazy" decoding="async" width="768" height="538">
+            <span class="blog__date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17"/><path d="M8 3.5v3"/><path d="M16 3.5v3"/></svg><time datetime="2026-08-16">۲۰۲۶-۰۸-۱۶</time></span>
+            <span class="blog__ov" aria-hidden="true"><span class="blog__more">مطالعه مقاله <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg></span></span>
+          </span>
+          <span class="blog__body">
+            <h3 class="blog__name">بهترین قمقمه یونیک برای باشگاه | راهنمای ظرفیت و انتخاب</h3>
+            <p class="blog__ex">بهترین قمقمه یونیک برای باشگاه؛ راهنمای انتخاب ظرفیت وسط ست چهارم می فهمید قمقمه خالی شده و باید…</p>
+          </span>
+        </a>
+      </article>
+      <article class="blog__card">
+        <a class="blog__link" href="https://khanehsaadat.com/blog/the-best-unique-water-bottle-for-school/">
+          <span class="blog__media">
+            <img src="https://khanehsaadat.com/wp-content/uploads/2026/08/بهترین-قمقمه-یونیک-برای-مدرسه-768x538.webp" alt="بهترین قمقمه یونیک برای مدرسه؛ راهنمای انتخاب ظرفیت و مدل" loading="lazy" decoding="async" width="768" height="538">
+            <span class="blog__date"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 9.5h17"/><path d="M8 3.5v3"/><path d="M16 3.5v3"/></svg><time datetime="2026-08-14">۲۰۲۶-۰۸-۱۴</time></span>
+            <span class="blog__ov" aria-hidden="true"><span class="blog__more">مطالعه مقاله <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m14 6-6 6 6 6"/></svg></span></span>
+          </span>
+          <span class="blog__body">
+            <h3 class="blog__name">بهترین قمقمه یونیک برای مدرسه؛ راهنمای انتخاب ظرفیت و مدل</h3>
+            <p class="blog__ex">بهترین قمقمه یونیک برای مدرسه؛ راهنمای انتخاب ظرفیت و مدل اواخر شهریور، همان قمقمه ای که پارسال با…</p>
+          </span>
+        </a>
+      </article>
+    </div>
+  </div>
+</section>
+
 <!-- ===== SEO GUIDE (باکس راهنمای خرید — «مشاهده بیشتر» بدون JS) ===== -->
-<section class="seo" id="home-sec-9" aria-label="راهنمای خرید لوازم خانگی">
+<section class="seo" id="home-sec-10" aria-label="راهنمای خرید لوازم خانگی">
   <div class="seo__in">
     <div class="seo__wrap">
       <span class="seo__eyebrow">راهنمای خرید</span>
@@ -694,6 +872,17 @@ body{background:#05080a;font-family:var(--hero-font);color:#fff}
     var pn=psec.querySelector('[data-prod-next]'),pp=psec.querySelector('[data-prod-prev]');
     pn&&pn.addEventListener('click',function(){ps(1);});
     pp&&pp.addEventListener('click',function(){ps(-1);});
+  }
+
+  // ===== Blog carousel arrows (RTL) =====
+  var bsec=document.querySelector('[data-blog]');
+  if(bsec){
+    var brail=bsec.querySelector('[data-blog-rail]');
+    // RTL: scrollLeft منفی می‌شود، پس «بعدی» باید منفی اسکرول کند
+    var bs=function(d){ var rtl=getComputedStyle(brail).direction==='rtl'; brail.scrollBy({left:(rtl?-d:d)*Math.max(brail.clientWidth*0.8,320),behavior:'smooth'}); };
+    var bn=bsec.querySelector('[data-blog-next]'), bp=bsec.querySelector('[data-blog-prev]');
+    bn&&bn.addEventListener('click',function(){bs(1);});
+    bp&&bp.addEventListener('click',function(){bs(-1);});
   }
 
   // ===== Showroom video (teaser + modal) =====
