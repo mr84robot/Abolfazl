@@ -74,6 +74,8 @@ var ksHome = (function(){
    * دوباره حساب می‌کرد و حرکت می‌ایستاد. حالا:
    *   - درخواست همین که ریل نزدیکِ دید رسید فرستاده می‌شود (قبل از این‌که کاربر شروع به کشیدن کند)؛
    *   - هیچ تغییری در ریل داده نمی‌شود تا وقتی انگشت روی ریل است یا ریل هنوز در حالِ حرکت است.
+   * پشتیبان: اگر IntersectionObserver به هر دلیلی خبر ندهد (مثلاً سافاری)، اولین لمس یا اسکرولِ ریل هم درخواست را می‌فرستد،
+   * و اگر رویدادِ پایانِ لمس هرگز به ریل نرسد، «لمس» بعد از ۳ ثانیه بی‌حرکتی خودبه‌خود آزاد می‌شود تا محصولاتِ آمده جا نمانند.
    */
   function finite(rail, px, fetchMore, accept){
     var ids = (rail.getAttribute('data-ids')||'').split(',').filter(Boolean).map(Number);
@@ -81,12 +83,15 @@ var ksHome = (function(){
     var state = rail.getAttribute('data-more') === '1' ? 'idle' : 'done';
     if ( state === 'done' ) { if ( href ) { rail.insertAdjacentHTML('beforeend', endCard(px, href, label)); } return { check:function(){} }; }
 
-    var touching = false, moving = false, idleT = null, pending = null;
+    var touching = false, moving = false, idleT = null, touchT = null, pending = null;
     function busy(){ return touching || moving; }
     function settle(){ clearTimeout(idleT); idleT = setTimeout(function(){ moving = false; flush(); }, 220); }
-    rail.addEventListener('touchstart', function(){ touching = true; }, { passive:true });
-    rail.addEventListener('touchend', function(){ touching = false; settle(); }, { passive:true });
-    rail.addEventListener('touchcancel', function(){ touching = false; settle(); }, { passive:true });
+    function release(){ clearTimeout(touchT); touching = false; settle(); }
+    function hold(){ touching = true; clearTimeout(touchT); touchT = setTimeout(release, 3000); } // پشتیبان اگر touchend نرسد
+    rail.addEventListener('touchstart', function(){ hold(); run(); }, { passive:true });
+    rail.addEventListener('touchmove', hold, { passive:true });
+    rail.addEventListener('touchend', release, { passive:true });
+    rail.addEventListener('touchcancel', release, { passive:true });
     rail.addEventListener('scroll', function(){ moving = true; settle(); run(); }, { passive:true });
 
     function flush(){
@@ -115,7 +120,7 @@ var ksHome = (function(){
       });
     }
     if ( 'IntersectionObserver' in window ) {
-      var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if ( e.isIntersecting ) { io.disconnect(); run(); } }); }, { rootMargin:'300px 0px' });
+      var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if ( e.isIntersecting ) { io.disconnect(); run(); } }); }, { rootMargin:'600px 0px' });
       io.observe(rail);
     } else { run(); }
     return { check: run };

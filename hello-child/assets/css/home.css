@@ -462,8 +462,10 @@
 
 /* ===================== lazy rendering ===================== */
 /* سکشن‌های پایینِ صفحه تا نزدیکِ دید نرسیده‌اند چیده و رسم نمی‌شوند (content-visibility)؛ کارِ اولیهٔ CPU روی
-   موبایل خیلی کم می‌شود. contain-intrinsic-size فقط حدسِ ارتفاع برای اسکرول‌بار است و بعد از اولین رندر به خاطر سپرده می‌شود. */
-.ks-cats,.ks-sale,.ks-prod,.ks-blog,.ks-vid{content-visibility:auto;contain-intrinsic-size:auto 620px}
+   موبایل خیلی کم می‌شود. contain-intrinsic-size فقط حدسِ ارتفاع برای اسکرول‌بار است و بعد از اولین رندر به خاطر سپرده می‌شود.
+   سکشن‌های کاروسل (دسته‌ها، تخفیف‌دار، محصولات، وبلاگ، ویدیو) عمداً این‌جا نیستند: در سافاری/آیفون محتوای
+   content-visibility که از دید بیرون و دوباره داخل می‌آید جای اسکرولِ افقیِ ریل را از دست می‌دهد و کشیدن/اسنپ گیر می‌کند،
+   و IntersectionObserverِ «بارگذاریِ ۶ محصولِ بعدی» هم روی آن قابل‌اعتماد نیست. */
 .ks-brands,.ks-pay,.ks-seo{content-visibility:auto;contain-intrinsic-size:auto 460px}
 .home .ks-footer{content-visibility:auto;contain-intrinsic-size:auto 760px}
 
